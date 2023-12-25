@@ -1,11 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { appState } from '../stores/store'
+import { useEventBusStore } from '@/stores/eventBus';
+
+const eventBusStore = useEventBusStore();
+const sharedData = ref(eventBusStore.sharedData);
+// Listen for changes in the store
+const unwatch = eventBusStore.$subscribe(() => {
+  sharedData.value = eventBusStore.$state.sharedData;
+});
+// Cleanup the subscription when the component is unmounted
+onBeforeUnmount(() => {
+  unwatch();
+});
+
 
 const formData = ref({
   from: '',
   to: '',
   subject: '',
-  html: ''
+  html: sharedData
 })
 
 const submitForm = () => {
@@ -13,6 +27,29 @@ const submitForm = () => {
   console.log('Form submitted:', formData.value)
   // You can send data to the server or perform any other necessary actions
 }
+
+watch(() => appState.selectedRadio, (newValue) => {
+  // Update formData.html directly from appState.livePreview
+  formData.value.html = sharedData.value;
+});
+
+watch(() => formData.value.html, (newValue) => {
+  eventBusStore.setSharedData(newValue);
+  saveToLocalStorage();
+});
+
+onMounted(() => {
+  // Load from local storage on component mount
+  formData.value.html = loadFromLocalStorage();
+});
+
+function saveToLocalStorage() {
+  localStorage.setItem('localLivePreviewValue', sharedData.value);
+}
+
+function loadFromLocalStorage() {
+  return localStorage.getItem('localLivePreviewValue') || '';
+}  
 </script>
 
 

@@ -4,7 +4,7 @@
       <input
         type="radio"
         :value="option.value"
-        v-model="selectedOption"
+        v-model="displayedRadioOptionValue"
       />
       {{ option.label }}
     </label>
@@ -18,15 +18,15 @@ import { appState } from '../stores/store';
 const options = [
   { value: 'option1', label: 'Vorlage 1' },
   { value: 'option2', label: 'Vorlage 2' },
-  { value: 'option3', label: 'Vorlage 4' },
+  { value: 'option3', label: 'Vorlage 3' },
   { value: 'option4', label: 'Vorlage 4' },
   { value: 'option5', label: 'Vorlage 5' }
 ];
 
 
-const selectedOption = ref(appState.selectedRadio);
+const displayedRadioOptionValue = ref(appState.selectedRadio);
 
-watch(selectedOption, (newValue) => {
+watch(displayedRadioOptionValue, (newValue) => {
   appState.selectedRadio = newValue;
 });
 </script>
