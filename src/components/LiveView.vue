@@ -1,37 +1,14 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
-import { appState } from '../stores/store'
-import { useEventBusStore } from '@/stores/eventBus'
+import { ref, watch, onMounted } from 'vue'
 
-const displayedRadioOptionValue = ref(appState.selectedRadio)
-const livePreviewValue = ref('')
+import { storeToRefs } from 'pinia'
+import { useRadioStore } from '@/stores/radio'
+const radioStore = useRadioStore()
+const { radiostring } = storeToRefs(radioStore) // to keep reactivity
 
-const eventBusStore = useEventBusStore()
-const sendDataToChildA = () => {
-  // Update the shared data in the store
-  eventBusStore.setSharedData(livePreviewValue.value)
-}
-
-watch(
-  () => appState.selectedRadio,
-  (newValue) => {
-    displayedRadioOptionValue.value = newValue
-    livePreviewValue.value = handleTemplateSelection(displayedRadioOptionValue.value)
-    sendDataToChildA()
-    saveToLocalStorage()
-  }
-)
-
-// get live data
-const sharedData = ref(eventBusStore.sharedData)
-// Listen for changes in the store
-const unwatch = eventBusStore.$subscribe(() => {
-  sharedData.value = eventBusStore.$state.sharedData
-})
-// Cleanup the subscription when the component is unmounted
-onBeforeUnmount(() => {
-  unwatch()
-})
+// import { makeAllEditable } from '@/stores/makeAllEditable'
+// Define a reactive variable to store the value of radiostring
+const MyradioString = ref<string>(radiostring.value)
 
 function handleTemplateSelection(selectedTemplate: string): string {
   switch (selectedTemplate) {
@@ -71,73 +48,46 @@ Promise.all(templateUrls.map((url) => fetch(url).then((res) => res.text())))
     template3 = templates[2]
     template4 = templates[3]
     template5 = templates[4]
+
+    // The problem was likely due to timing issues. The `onMounted()` hook was executing before the templates were fetched and processed, leading to `MyradioString.value` being set before the templates were available. Moving the logic to set `MyradioString.value` inside the `.then()` callback of the `Promise.all()` ensured that it was executed only after the templates had been successfully fetched and processed, resolving the timing issue.
+    // Set MyradioString.value after fetching and processing templates
+    MyradioString.value = handleTemplateSelection('option1')
   })
   .catch((error) => {
     console.error('There was a problem with the fetch operation:', error)
   })
 
+// watch((radioStringgg) => {
+//   selectedTemplate.value = handleTemplateSelection('option1')
+// //   // makeAllEditable()
+// })
+// watch(() => radioStore.radiostring, (newValue, oldValue) => {
+//   // Update the reactive variable with the new value
+//   MyradioString.value = handleTemplateSelection(radiostring.value);
+// });
+
+watch(
+  () => radioStore.radiostring,
+  (newValue) => {
+    MyradioString.value = handleTemplateSelection(newValue)
+  }
+)
+
 onMounted(() => {
-  // Load from local storage on component mount
-  livePreviewValue.value = loadFromLocalStorage()
-  makeAllEditable()
+  MyradioString.value = handleTemplateSelection(radiostring.value)
+  //   // makeAllEditable()
 })
+// function saveToLocalStorage() {
+//   // localStorage.setItem('localLivePreviewValue', livePreviewValue.value)
+// }
 
-function saveToLocalStorage() {
-  localStorage.setItem('localLivePreviewValue', livePreviewValue.value)
-}
-
-function loadFromLocalStorage() {
-  return localStorage.getItem('localLivePreviewValue') || ''
-}
-
-let htmlInput: HTMLInputElement | null
-let livePreview: HTMLElement | null
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Code to run when the DOM is ready
-  livePreview = document.getElementById('live')
-  htmlInput = document.getElementById('html-input') as HTMLInputElement | null
-
-  // Check if livePreview is not null before using it
-  if (livePreview !== null) {
-    makeAllEditable()
-  } else {
-    console.error("Element with id 'live' not found in the DOM.")
-  }
-})
-
-// Function to make all elements editable
-function makeAllEditable() {
-  const editableElements = document.querySelectorAll('[contenteditable="true"]')
-  editableElements.forEach((element) => {
-    makeEditable(element)
-  })
-}
-
-// Function to make an element editable
-function makeEditable(element: Element) {
-  element.addEventListener('input', editAndSaveToLocalStorage)
-}
-
-function editAndSaveToLocalStorage() {
-  if (livePreview !== null) {
-    if (htmlInput !== null) {
-    htmlInput.value = livePreview?.innerHTML ?? '';
-    const inputValue = htmlInput.value
-    localStorage.setItem('localLivePreviewValue', inputValue)
-    }else {
-    console.error("Element with id 'htmlInput' is null.")
-  }
-  } else {
-    console.error("Element with id 'live' is null.")
-  }
-}
-
+// function loadFromLocalStorage() {
+//   return localStorage.getItem('localLivePreviewValue') || ''
+// }
 </script>
 
 <template>
-  <!-- <div>{{ livePreviewValue }}</div> -->
-  <div id="live" v-html="sharedData" ref="liveElement"></div>
+  <div id="live" v-html="MyradioString"></div>
 
   <div id="editModal" class="modal">
     <div class="modal-content">
@@ -152,7 +102,6 @@ function editAndSaveToLocalStorage() {
       <input type="color" id="textColorInput" onchange="updateTextColor()" />
     </div>
   </div>
-  <!-- <button @click="provideUsername">Provide Username</button> -->
 </template>
 
 <style scoped>
