@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "name": "Die 10 wichtigsten Werkzeuge für jeden Gärtner",
+      "description": "Entdecken Sie die unverzichtbaren Werkzeuge für angehende Gärtner, um einen blühenden Garten zu kultivieren.",
+      "image": "/gallus-garten/images/projects/a.jpg",
+      "category": "popular"
+    },
+    {
+      "id": 2,
+      "name": "Die Schaffung eines nachhaltigen Gartens",
+      "description": "Erfahren Sie, wie Sie Ihren ökologischen Fußabdruck reduzieren und Nachhaltigkeit in Ihrem Garten fördern können.",
+      "image": "/gallus-garten/images/projects/c.jpg",
+      "category": "popular"
+    },
+    {
+      "id": 3,
+      "name": "Erfolgreiche Balkongärtnerei: Tipps für grüne Oasen",
+      "description": "Tauchen Sie ein in die Kunst der Balkongärtnerei und erfahren Sie, wie Sie auch in begrenztem Raum lebendige grüne Oasen schaffen können.",
+      "image": "/gallus-garten/images/projects/c.jpg",
+      "category": ""
+    },
+    {
+      "id": 4,
+      "name": "Gestaltung eines meditativen Gartens",
+      "description": "Erforschen Sie die Elemente eines friedlichen Meditationsgartens und lernen Sie, wie Sie einen ruhigen Außenrückzugsort gestalten können.",
+      "image": "/gallus-garten/images/projects/b.jpg",
+      "category": ""
+    }
+  ]
+  
