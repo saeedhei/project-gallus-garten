@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "name": "Project 1",
+      "description": "This is the description for Project 1.",
+      "price": 10.99,
+      "image": "/gallus-garten/images/projects/a.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Project 2",
+      "description": "This is the description for Project 2.",
+      "price": 19.99,
+      "image": "/gallus-garten/images/projects/a.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Project 3",
+      "description": "This is the description for Project 3.",
+      "price": 14.50,
+      "image": "/gallus-garten/images/projects/c.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Project 4",
+        "description": "This is the description for Project 4.",
+        "price": 15.50,
+        "image": "/gallus-garten/images/projects/b.jpg"
+      }
+  ]
+  
