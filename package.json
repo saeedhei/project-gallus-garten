@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@fortawesome/vue-fontawesome": "^3.0.6",
+    "gsap": "^3.12.5",
     "pinia": "^2.1.7",
     "swiper": "^11.1.5",
     "vue": "^3.3.4",

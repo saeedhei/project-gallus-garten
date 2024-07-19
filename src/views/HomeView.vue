@@ -7,14 +7,16 @@ import CSectionView from '../components/templates-layouts/sections/GallusCHome.v
 import CrookedSectionView from '../components/templates-layouts/sections/CrookedSection.vue'
 // import MainView from '../components/1-home/MainView.vue'
 import FooterView from '../components/templates-layouts/footers/FooterView.vue'
+
+import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue';
 </script>
 
 <template>
   <HeaderView />
   <main>
-   
+    <UnderConstructionPopup />
     <ASectionView id="sectiona" />
-    <ProjectSlider />
+    <!-- <ProjectSlider /> -->
     <BSectionView />
     <CrookedSectionView class="bg-emerald-200" />
     <CSectionView />
