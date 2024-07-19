@@ -4,7 +4,11 @@ import ChooseVorlage from '../components/ChooseVorlage.vue'
 import GallusHeader from '../components/GallusHeader.vue'
 import GallusVorschau from '../components/GallusVorschau.vue'
 import LiveView from '../components/LiveView.vue'
+<<<<<<< HEAD
 import { storeToRefs } from 'pinia'
+=======
+import { storeToRefs } from 'pinia';
+>>>>>>> 182cd04a80d1dfe6147e1cdd64ccade794a2f5b5
 import { useLiveStore } from '@/stores/live'
 const liveStore = useLiveStore()
 const { updateString } = liveStore

@@ -3,11 +3,18 @@ import { ref, watch, onMounted } from 'vue'
 
 import { storeToRefs } from 'pinia'
 import { useRadioStore } from '@/stores/radio'
+<<<<<<< HEAD
 // import { makeAllEditable } from '@/stores/makeAllEditable'
 
 const radioStore = useRadioStore()
 const { radiostring } = storeToRefs(radioStore) // to keep reactivity
 
+=======
+const radioStore = useRadioStore()
+const { radiostring } = storeToRefs(radioStore) // to keep reactivity
+
+// import { makeAllEditable } from '@/stores/makeAllEditable'
+>>>>>>> 182cd04a80d1dfe6147e1cdd64ccade794a2f5b5
 // Define a reactive variable to store the value of radiostring
 const MyradioString = ref<string>(radiostring.value)
 
@@ -71,10 +78,13 @@ watch(
   () => radioStore.radiostring,
   (newValue) => {
     MyradioString.value = handleTemplateSelection(newValue)
+<<<<<<< HEAD
     // Use nextTick to ensure MyradioString.value is updated before onMounted
     // nextTick(() => {
     //   console.log(`After Watch: ${MyradioString.value}`)
     // })
+=======
+>>>>>>> 182cd04a80d1dfe6147e1cdd64ccade794a2f5b5
   }
 )
 

@@ -32,7 +32,11 @@ const router = createRouter({
           }
         ]
       }
+<<<<<<< HEAD
     }
+=======
+    },
+>>>>>>> 182cd04a80d1dfe6147e1cdd64ccade794a2f5b5
     // {
     //   path: '/about',
     //   name: 'about',

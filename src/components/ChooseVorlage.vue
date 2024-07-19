@@ -1,5 +1,9 @@
 <script setup lang="ts">
+<<<<<<< HEAD
 import { storeToRefs } from 'pinia'
+=======
+import { storeToRefs } from 'pinia';
+>>>>>>> 182cd04a80d1dfe6147e1cdd64ccade794a2f5b5
 import { useRadioStore } from '@/stores/radio'
 const radioStore = useRadioStore()
 const { updateString } = radioStore
@@ -17,7 +21,11 @@ const options = [
 <template>
   <div class="radioButton" style="display: flex; justify-content: space-between; padding-top: 20px">
     <label v-for="option in options" :key="option.value">
+<<<<<<< HEAD
       <input type="radio" @click="updateString(option.value)" />
+=======
+      <input type="radio"  @click="updateString(option.value)" />
+>>>>>>> 182cd04a80d1dfe6147e1cdd64ccade794a2f5b5
       {{ option.label }}
     </label>
   </div>
