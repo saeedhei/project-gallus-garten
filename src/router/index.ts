@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import AdminView from '../views/AdminView.vue'
 import HomeView from '../views/HomeView.vue'
+import LegalView from '../components/LegalComponent.vue'
+import LegalViewImpressum from '../components/Legal-Impressum.vue'
+import LegalViewDatenschutz from '../components/Legal-Datenschutz.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,7 +12,69 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        title: 'Ein Garten für alle • GallusGarten',
+      }
+    },
+    {
+      path: '/ueber-uns',
+      name: 'über-uns',
+      component: () => import('../views/UeberUns.vue'),
+      meta: {
+        title: 'Ein Garten für alle • GallusGarten',
+      }
+    },
+    {
+      path: '/ueber-uns/team',
+      name: 'TeamView',
+      component: () => import('../views/UeberUnsTeam.vue'),
+      meta: {
+        title: 'Ein Garten für alle • GallusGarten',
+      }
+    },
+    {
+      path: '/ueber-uns/team/saeed-heidarizarei',
+      name: 'Team',
+      component: () => import('../views/UeberUnsTeamSaeed.vue'),
+      meta: {
+        title: 'Ein Garten für alle • GallusGarten',
+      }
+    },
+    {
+      path: '/ueber-uns/team/ralf-harth',
+      name: 'RalfHarth',
+      component: () => import('../views/UeberUnsTeamRalf.vue'),
+      meta: {
+        title: 'Ein Garten für alle • GallusGarten',
+      }
+    },
+    {
+      path: '/legal',
+      component: LegalView,
+      children: [
+        {
+          path: 'impressum',
+          name: 'Impressum',
+          component: LegalViewImpressum
+        },
+        {
+          path: 'datenschutz',
+          name: 'Datenschutz',
+          component: LegalViewDatenschutz
+        }
+      ]
+    },
+    {
+      path: '/docs',
+      component: () => import('../views/DocsView.vue'),
+      children: [
+        {
+          path: 'changelog',
+          name: 'Changelog',
+          component: () => import('../views/DocsChangelogView.vue')
+        }
+      ]
     },
     {
       path: '/admin',
@@ -33,14 +98,6 @@ const router = createRouter({
         ]
       }
     }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
   ]
 })
 

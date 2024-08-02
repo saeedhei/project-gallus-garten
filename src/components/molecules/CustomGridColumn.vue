@@ -1,10 +1,10 @@
 <template>
-  <div :class="columnClasses">
-    <slot />
-  </div>
+  <!-- <div :class="columnClasses"> -->
+  <slot />
+  <!-- </div> -->
 </template>
 
-<script>
+<script setup lang="ts">
 // export default {
 //   props: {
 //     // Add props for specific column customization (optional)
@@ -27,4 +27,5 @@
 //     }
 //   }
 // }
-// </script>
+//
+</script>

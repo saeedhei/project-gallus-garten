@@ -1,5 +1,5 @@
-import type { DirectiveBinding } from 'vue';
-import { gsap } from 'gsap';
+import type { DirectiveBinding } from 'vue'
+import { gsap } from 'gsap'
 
 // Define the animation functions
 const animations: { [key: string]: (element: HTMLElement, duration: number) => void } = {
@@ -17,36 +17,44 @@ const animations: { [key: string]: (element: HTMLElement, duration: number) => v
   scaleDown: (el, duration) => gsap.to(el, { scale: 0, duration }),
   rotateIn: (el, duration) => gsap.from(el, { rotation: -180, opacity: 0, duration }),
   rotateOut: (el, duration) => gsap.to(el, { rotation: 180, opacity: 0, duration }),
-  bounceIn: (el, duration) => gsap.from(el, { scale: 0.5, opacity: 0, ease: "bounce.out", duration }),
-  bounceOut: (el, duration) => gsap.to(el, { scale: 0.5, opacity: 0, ease: "bounce.in", duration }),
+  bounceIn: (el, duration) =>
+    gsap.from(el, { scale: 0.5, opacity: 0, ease: 'bounce.out', duration }),
+  bounceOut: (el, duration) => gsap.to(el, { scale: 0.5, opacity: 0, ease: 'bounce.in', duration }),
   zoomIn: (el, duration) => gsap.from(el, { scale: 0.5, opacity: 0, duration }),
   zoomOut: (el, duration) => gsap.to(el, { scale: 0.5, opacity: 0, duration }),
   flipInX: (el, duration) => gsap.from(el, { rotationX: -90, opacity: 0, duration }),
   flipInY: (el, duration) => gsap.from(el, { rotationY: -90, opacity: 0, duration }),
   flipOutX: (el, duration) => gsap.to(el, { rotationX: 90, opacity: 0, duration }),
   flipOutY: (el, duration) => gsap.to(el, { rotationY: 90, opacity: 0, duration }),
-  flash: (el, duration) => gsap.to(el, { opacity: 0, repeat: 3, yoyo: true, duration: duration / 3 }),
-  pulse: (el, duration) => gsap.to(el, { scale: 1.1, repeat: 3, yoyo: true, duration: duration / 3 }),
-  swing: (el, duration) => gsap.to(el, { x: 20, rotation: 15, repeat: 3, yoyo: true, duration: duration / 3 }),
-  tada: (el, duration) => gsap.to(el, { scale: 1.1, rotation: 15, repeat: 3, yoyo: true, duration: duration / 3 }),
-  wobble: (el, duration) => gsap.to(el, { x: 20, rotation: -5, repeat: 5, yoyo: true, duration: duration / 5 }),
-  jello: (el, duration) => gsap.to(el, { x: 20, skewX: 10, repeat: 5, yoyo: true, duration: duration / 5 }),
-  rubberBand: (el, duration) => gsap.to(el, { scaleX: 1.25, scaleY: 0.75, repeat: 3, yoyo: true, duration: duration / 3 }),
+  flash: (el, duration) =>
+    gsap.to(el, { opacity: 0, repeat: 3, yoyo: true, duration: duration / 3 }),
+  pulse: (el, duration) =>
+    gsap.to(el, { scale: 1.1, repeat: 3, yoyo: true, duration: duration / 3 }),
+  swing: (el, duration) =>
+    gsap.to(el, { x: 20, rotation: 15, repeat: 3, yoyo: true, duration: duration / 3 }),
+  tada: (el, duration) =>
+    gsap.to(el, { scale: 1.1, rotation: 15, repeat: 3, yoyo: true, duration: duration / 3 }),
+  wobble: (el, duration) =>
+    gsap.to(el, { x: 20, rotation: -5, repeat: 5, yoyo: true, duration: duration / 5 }),
+  jello: (el, duration) =>
+    gsap.to(el, { x: 20, skewX: 10, repeat: 5, yoyo: true, duration: duration / 5 }),
+  rubberBand: (el, duration) =>
+    gsap.to(el, { scaleX: 1.25, scaleY: 0.75, repeat: 3, yoyo: true, duration: duration / 3 }),
   shakeX: (el, duration) => gsap.to(el, { x: 20, repeat: 5, yoyo: true, duration: duration / 5 }),
-  shakeY: (el, duration) => gsap.to(el, { y: 20, repeat: 5, yoyo: true, duration: duration / 5 }),
-};
+  shakeY: (el, duration) => gsap.to(el, { y: 20, repeat: 5, yoyo: true, duration: duration / 5 })
+}
 
 const vAnimate = {
   mounted(el: HTMLElement, binding: DirectiveBinding) {
-    const { value, arg } = binding;
-    const duration = typeof value === 'number' ? value : 1;
+    const { value, arg } = binding
+    const duration = typeof value === 'number' ? value : 1
     if (arg && animations[arg]) {
-      animations[arg](el, duration);
+      animations[arg](el, duration)
     }
-  },
-};
+  }
+}
 
-export default vAnimate;
+export default vAnimate
 
 // <h1 v-animate:fadeIn="2">fadeIn Animation</h1>
 // <h1 v-animate:fadeOut="2">fadeOut Animation</h1>
@@ -79,4 +87,3 @@ export default vAnimate;
 // <h1 v-animate:rubberBand="2">rubberBand Animation</h1>
 // <h1 v-animate:shakeX="2">shakeX Animation</h1>
 // <h1 v-animate:shakeY="2">shakeY Animation</h1>
-

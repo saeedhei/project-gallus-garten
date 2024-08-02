@@ -8,15 +8,15 @@ import CrookedSectionView from '../components/templates-layouts/sections/Crooked
 // import MainView from '../components/1-home/MainView.vue'
 import FooterView from '../components/templates-layouts/footers/FooterView.vue'
 
-import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue';
+import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
 </script>
 
 <template>
   <HeaderView />
   <main>
     <UnderConstructionPopup />
-    <ASectionView id="sectiona" />
-    <!-- <ProjectSlider /> -->
+    <ProjectSlider id="sectiona" />
+    <ASectionView  />
     <BSectionView />
     <CrookedSectionView class="bg-emerald-200" />
     <CSectionView />
