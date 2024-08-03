@@ -16,7 +16,7 @@ import UnderConstructionPopup from '../components/molecules/UnderConstructionPop
   <main>
     <UnderConstructionPopup />
     <ProjectSlider id="sectiona" />
-    <ASectionView  />
+    <ASectionView />
     <BSectionView />
     <CrookedSectionView class="bg-emerald-200" />
     <CSectionView />

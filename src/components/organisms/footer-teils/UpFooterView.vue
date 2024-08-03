@@ -9,26 +9,32 @@
         <h6 class="text-sm text-gray-600 font-bold uppercase">Contact</h6>
 
         <div class="mt-4">
-          <a href="#" class="block text-md text-gray-900">hello@fairrate.com</a>
-          <a href="#" class="block text-md text-gray-900 mt-2">+62 202 555 0117</a>
+          <a href="mailto:GallusGarten-Galluswarte@web.de" class="block text-md text-gray-900"
+            >GallusGarten-Galluswarte@web.de</a
+          >
+          <a href="#" class="block text-md text-gray-900 mt-2"
+            >Gallusgarten II <br />60327 Frankfurt am Main</a
+          >
         </div>
       </div>
 
       <div class="mt-8 sm:w-1/2 sm:mt-0 lg:w-1/5 lg:mt-0">
-        <h6 class="text-sm text-gray-600 font-bold uppercase">Company</h6>
+        <h6 class="text-sm text-gray-600 font-bold uppercase">Unternehmen</h6>
         <ul class="mt-4">
-          <li><a href="#">Resources</a></li>
-          <li class="mt-2"><a href="#">Careers</a></li>
+          <li><a href="#">Service</a></li>
+          <li class="mt-2"><a href="#">Newsletter</a></li>
+          <li class="mt-2"><a href="#">Garten-Shop</a></li>
         </ul>
       </div>
 
       <div class="mt-8 sm:w-1/2 sm:mt-12 lg:w-1/5 lg:mt-0">
         <h6 class="text-sm text-gray-600 font-bold uppercase">Legal</h6>
         <ul class="mt-4">
-          <li><a href="#">NMLS Consumer Access</a></li>
-          <li class="mt-2"><a href="#">Privacy Policy</a></li>
-          <li class="mt-2"><a href="#">Terms of Use</a></li>
-          <li class="mt-2"><a href="#">Disclosures & Licensing</a></li>
+          <li><router-link to="/legal/impressum">Impressum</router-link></li>
+          <li class="mt-2"><router-link to="/legal/datenschutz">Datenschutz</router-link></li>
+          <li class="mt-2">
+            <router-link to="/legal/datenschutzeinstellungen">Datenschutzeinstellungen</router-link>
+          </li>
         </ul>
       </div>
 

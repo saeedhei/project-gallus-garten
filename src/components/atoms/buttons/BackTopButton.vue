@@ -1,104 +1,132 @@
 <template>
-<div class="progress-wrap" ref="progressWrap" @click="scrollToTop">
-  <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-    <path ref="progressPath" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
-  </svg>
-  <span class="arrow"><svg id="i-chevron-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-    <path d="M30 20 L16 8 2 20" />
-</svg></span>
-</div>
+  <div class="progress-wrap" ref="progressWrap" @click="scrollToTop">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path ref="progressPath" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
+    <span class="arrow"
+      ><svg
+        id="i-chevron-top"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 32 32"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentcolor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="3"
+      >
+        <path d="M30 20 L16 8 2 20" /></svg
+    ></span>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 
-const progressPath = ref<SVGPathElement | null>(null);
-const progressWrap = ref<HTMLDivElement | null>(null);
+const progressPath = ref<SVGPathElement | null>(null)
+const progressWrap = ref<HTMLDivElement | null>(null)
 
 const updateProgress = () => {
   if (progressPath.value) {
-    const pathLength = progressPath.value.getTotalLength();
-    const scroll = window.scrollY;
-    const height = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = pathLength - (scroll * pathLength / height);
-    progressPath.value.style.strokeDashoffset = `${progress}`;
+    const pathLength = progressPath.value.getTotalLength()
+    const scroll = window.scrollY
+    const height = document.documentElement.scrollHeight - window.innerHeight
+    const progress = pathLength - (scroll * pathLength) / height
+    progressPath.value.style.strokeDashoffset = `${progress}`
   }
-};
+}
 
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 
 onMounted(() => {
   if (progressPath.value) {
-    const pathLength = progressPath.value.getTotalLength();
-    progressPath.value.style.transition = progressPath.value.style.webkitTransition = 'none';
-    progressPath.value.style.strokeDasharray = `${pathLength} ${pathLength}`;
-    progressPath.value.style.strokeDashoffset = `${pathLength}`;
-    progressPath.value.getBoundingClientRect();
-    progressPath.value.style.transition = progressPath.value.style.webkitTransition = 'stroke-dashoffset 10ms linear';
+    const pathLength = progressPath.value.getTotalLength()
+    progressPath.value.style.transition = progressPath.value.style.webkitTransition = 'none'
+    progressPath.value.style.strokeDasharray = `${pathLength} ${pathLength}`
+    progressPath.value.style.strokeDashoffset = `${pathLength}`
+    progressPath.value.getBoundingClientRect()
+    progressPath.value.style.transition = progressPath.value.style.webkitTransition =
+      'stroke-dashoffset 10ms linear'
 
-    updateProgress();
-    window.addEventListener('scroll', updateProgress);
+    updateProgress()
+    window.addEventListener('scroll', updateProgress)
 
-    const offset = 300;
+    const offset = 300
 
     window.addEventListener('scroll', () => {
       if (progressWrap.value) {
         if (window.scrollY > offset) {
-          progressWrap.value.classList.add('active-progress');
+          progressWrap.value.classList.add('active-progress')
         } else {
-          progressWrap.value.classList.remove('active-progress');
+          progressWrap.value.classList.remove('active-progress')
         }
       }
-    });
+    })
   }
-});
+})
 </script>
 
 <style scoped>
-body{
-	background-color: white;
+body {
+  background-color: white;
 }
 
 .blok:nth-of-type(odd) {
-background-color:white;
-}
-    
-.blok:nth-of-type(even) {
-background-color:black;
+  background-color: white;
 }
 
-@keyframes border-transform{
-    0%,100% { border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%; } 
-	14% { border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%; } 
-	28% { border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%; } 
-	42% { border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%; } 
-	56% { border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%; } 
-	70% { border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%; } 
-	84% { border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%; } 
+.blok:nth-of-type(even) {
+  background-color: black;
+}
+
+@keyframes border-transform {
+  0%,
+  100% {
+    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+  }
+  14% {
+    border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%;
+  }
+  28% {
+    border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%;
+  }
+  42% {
+    border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%;
+  }
+  56% {
+    border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%;
+  }
+  70% {
+    border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%;
+  }
+  84% {
+    border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
+  }
 }
 
 /* #Progress
 ================================================== */
 
 .progress-wrap {
-	position: fixed;
-	right: 30px;
-	bottom: 30px;
-	height: 46px;
-	width: 46px;
-	cursor: pointer;
-	display: block;
-	border-radius: 50px;
-	box-shadow: inset  0 0 0 2px rgba(80, 158, 73,0.2);
-	z-index: 10000;
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(15px);
-	-webkit-transition: all 200ms linear;
-    transition: all 200ms linear;
-    background-color: white;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+  display: block;
+  border-radius: 50px;
+  box-shadow: inset 0 0 0 2px rgba(80, 158, 73, 0.2);
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+  background-color: white;
 }
 .progress-wrap .arrow {
   position: absolute;
@@ -110,9 +138,9 @@ background-color:black;
   pointer-events: none; /* Ensure the arrow does not interfere with click events */
 }
 .progress-wrap.active-progress {
-	opacity: 1;
-	visibility: visible;
-	transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 /* .progress-wrap::after {
 	position: absolute;
@@ -133,7 +161,7 @@ background-color:black;
     transition: all 200ms linear;
 } */
 .progress-wrap:hover::after {
-	opacity: 0;
+  opacity: 0;
 }
 /* .progress-wrap::before {
 	position: absolute;
@@ -158,17 +186,17 @@ background-color:black;
     transition: all 200ms linear;
 } */
 .progress-wrap:hover::before {
-	opacity: 1;
+  opacity: 1;
 }
-.progress-wrap svg path { 
-	fill: none; 
+.progress-wrap svg path {
+  fill: none;
 }
 .progress-wrap svg.progress-circle path {
-	stroke: rgba(80, 158, 73, 0.8); /* --- Lijn progres kleur --- */
-	stroke-width: 4;
-	box-sizing:border-box;
-	-webkit-transition: all 200ms linear;
-    transition: all 200ms linear;
+  stroke: rgba(80, 158, 73, 0.8); /* --- Lijn progres kleur --- */
+  stroke-width: 4;
+  box-sizing: border-box;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
 }
 </style>
 <!-- <template>

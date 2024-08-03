@@ -14,7 +14,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: {
-        title: 'Ein Garten für alle • GallusGarten',
+        title: 'Ein Garten für alle • GallusGarten'
       }
     },
     {
@@ -22,7 +22,7 @@ const router = createRouter({
       name: 'über-uns',
       component: () => import('../views/UeberUns.vue'),
       meta: {
-        title: 'Ein Garten für alle • GallusGarten',
+        title: 'Ein Garten für alle • GallusGarten'
       }
     },
     {
@@ -30,7 +30,7 @@ const router = createRouter({
       name: 'TeamView',
       component: () => import('../views/UeberUnsTeam.vue'),
       meta: {
-        title: 'Ein Garten für alle • GallusGarten',
+        title: 'Ein Garten für alle • GallusGarten'
       }
     },
     {
@@ -38,7 +38,7 @@ const router = createRouter({
       name: 'Team',
       component: () => import('../views/UeberUnsTeamSaeed.vue'),
       meta: {
-        title: 'Ein Garten für alle • GallusGarten',
+        title: 'Ein Garten für alle • GallusGarten'
       }
     },
     {
@@ -46,7 +46,7 @@ const router = createRouter({
       name: 'RalfHarth',
       component: () => import('../views/UeberUnsTeamRalf.vue'),
       meta: {
-        title: 'Ein Garten für alle • GallusGarten',
+        title: 'Ein Garten für alle • GallusGarten'
       }
     },
     {
@@ -62,6 +62,11 @@ const router = createRouter({
           path: 'datenschutz',
           name: 'Datenschutz',
           component: LegalViewDatenschutz
+        },
+        {
+          path: 'datenschutzeinstellungen',
+          name: 'Datenschutzeinstellungen',
+          component: () => import('../components/organisms/WelcomeCookie.vue')
         }
       ]
     },

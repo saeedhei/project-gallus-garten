@@ -69,40 +69,38 @@ onUnmounted(() => {
   >
     <a class="navbar-brand" href="/">
       <svg
-  class="w-24 h-auto sm:w-32 sm:h-auto lg:w-48 lg:h-auto"
-  version="1.1"
-  id="Layer_1"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  viewBox="0 0 2956 1724"
-  preserveAspectRatio="xMinYMin meet"
-  xml:space="preserve"
->
-  <rect width="773" height="1550" x="400" y="84" style="fill: #71c43e" />
-  <rect width="773" height="1550" x="1810" y="84" style="fill: #71c43e" />
-  <text
-    x="270"
-    y="790"
-    font-family="Tahoma"
-    font-size="680"
-    font-weight="bold"
-    fill="#253C17"
-  >
-    GALLUS
-  </text>
-  <text
-    x="240"
-    y="1400"
-    font-family="Tahoma"
-    font-size="680"
-    font-weight="bold"
-    fill="#253C17"
-  >
-    GARTEN
-  </text>
-</svg>
-
-
+        class="w-24 h-auto sm:w-32 sm:h-auto lg:w-48 lg:h-auto"
+        version="1.1"
+        id="Layer_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 2956 1724"
+        preserveAspectRatio="xMinYMin meet"
+        xml:space="preserve"
+      >
+        <rect width="773" height="1550" x="400" y="84" style="fill: #71c43e" />
+        <rect width="773" height="1550" x="1810" y="84" style="fill: #71c43e" />
+        <text
+          x="270"
+          y="790"
+          font-family="Tahoma"
+          font-size="680"
+          font-weight="bold"
+          fill="#253C17"
+        >
+          GALLUS
+        </text>
+        <text
+          x="240"
+          y="1400"
+          font-family="Tahoma"
+          font-size="680"
+          font-weight="bold"
+          fill="#253C17"
+        >
+          GARTEN
+        </text>
+      </svg>
     </a>
 
     <div class="wrapper">
@@ -157,7 +155,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
   }
 
   .wrapper {

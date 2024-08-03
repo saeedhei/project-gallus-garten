@@ -78,7 +78,10 @@
           <div class="post bg-white rounded-lg shadow-lg p-6">
             <h2 class="green text-2xl font-semibold mb-4">Mehr sehen</h2>
             <!-- Clickable Icon with router-link -->
-            <router-link to="/docs/changelog" class="flex items-center space-x-2 hover:text-green-800">
+            <router-link
+              to="/docs/changelog"
+              class="flex items-center space-x-2 hover:text-green-800"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
@@ -110,7 +113,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 
 const posts = ref([
-{ title: 'Changelog', content: 'Die Seite wurde erstellt' },
+  { title: 'Changelog', content: 'Die Seite wurde erstellt' },
   { title: 'Impressum', content: 'Die Seite wurde erstellt' },
   { title: 'Datenschutz', content: 'Die Seite wurde erstellt' },
   { title: 'Legal', content: 'Die Seite wurde erstellt' }

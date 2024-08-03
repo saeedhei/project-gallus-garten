@@ -26,7 +26,12 @@ import UpfooterView from '../../organisms/footer-teils/UpFooterView.vue'
             </div>
 
             <div class="developer-info">
-              <p>Developed by <a href="https://seointro.de/api/" title="Made with ❤️ by Saeed Heidarizarei">SEOintro</a></p>
+              <p>
+                Developed by
+                <a href="https://seointro.de/api/" title="Made with ❤️ by Saeed Heidarizarei"
+                  >SEOintro</a
+                >
+              </p>
             </div>
           </div>
         </div>
