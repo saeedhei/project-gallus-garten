@@ -69,6 +69,7 @@ onUnmounted(() => {
   >
     <a class="navbar-brand" href="/">
       <svg
+        v-animate:wobble="2"
         class="w-24 h-auto sm:w-32 sm:h-auto lg:w-48 lg:h-auto"
         version="1.1"
         id="Layer_1"
@@ -78,6 +79,7 @@ onUnmounted(() => {
         preserveAspectRatio="xMinYMin meet"
         xml:space="preserve"
       >
+      <rect width="2740" height="1750" x="140" y="0" style="fill: #fff" />
         <rect width="773" height="1550" x="400" y="84" style="fill: #71c43e" />
         <rect width="773" height="1550" x="1810" y="84" style="fill: #71c43e" />
         <text

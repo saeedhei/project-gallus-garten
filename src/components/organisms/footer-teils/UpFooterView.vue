@@ -23,7 +23,7 @@
         <ul class="mt-4">
           <li><a href="#">Service</a></li>
           <li class="mt-2"><a href="#">Newsletter</a></li>
-          <li class="mt-2"><a href="#">Garten-Shop</a></li>
+          <li class="mt-2"><a href="#">Flohmarkt</a></li>
         </ul>
       </div>
 
@@ -69,28 +69,29 @@
                   enable-background="new 0 0 2956 1724"
                   xml:space="preserve"
                 >
+                <rect width="2740" height="1750" x="140" y="0" style="fill: #fff" />
                   <rect width="773" height="1550" x="400" y="84" style="fill: #71c43e" />
                   <rect width="773" height="1550" x="1810" y="84" style="fill: #71c43e" />
                   <text
-                    x="140"
-                    y="790"
-                    font-family="Tahoma"
-                    font-size="680"
-                    font-weight="bold"
-                    fill="#253C17"
-                  >
-                    GALLUS
-                  </text>
-                  <text
-                    x="75"
-                    y="1400"
-                    font-family="Tahoma"
-                    font-size="680"
-                    font-weight="bold"
-                    fill="#253C17"
-                  >
-                    GARTEN
-                  </text>
+          x="270"
+          y="790"
+          font-family="Tahoma"
+          font-size="680"
+          font-weight="bold"
+          fill="#253C17"
+        >
+          GALLUS
+        </text>
+        <text
+          x="240"
+          y="1400"
+          font-family="Tahoma"
+          font-size="680"
+          font-weight="bold"
+          fill="#253C17"
+        >
+          GARTEN
+        </text>
                 </svg>
               </g>
             </g>
