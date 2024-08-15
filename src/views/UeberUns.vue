@@ -13,7 +13,6 @@
     <RowSimple class="bg-red-200">
       <ColumnSimple class="columns-1">
         <h1 class="text-3xl font-bold mb-4">GallusGarten:</h1>
-       
       </ColumnSimple>
     </RowSimple>
   </SectionSimple>
