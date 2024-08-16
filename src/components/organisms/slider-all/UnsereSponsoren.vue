@@ -51,6 +51,8 @@ import 'swiper/css/keyboard'
 import 'swiper/css/zoom'
 import 'swiper/css/free-mode'
 
+import seointro from '@/assets/images/seointro.png'
+
 // Define the type for the logo object
 interface Logo {
   src: string
@@ -63,7 +65,7 @@ const logos = ref<Logo[]>([
   { src: 'https://www.amka.de/profiles/amka_microsite/themes/custom/amka_theme/images/amka.png', alt: 'AMKA' },
   { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Hda_logo.svg/1200px-Hda_logo.svg.png', alt: 'Hochschule Darmstadt' },
   { src: 'https://frankfurt.de/-/media/frankfurtde/global/image/seitenrahmen/footerlogo.ashx?la=de-de6b171b43a6e644fb88df64df25328a18&mw=1280&hash=3C8D80D1E72F6317B5444810BE0CF329', alt: 'Stadt Frankfurt' },
-  { src: '/src/assets/images/seointro-knowledge_graph_logo.png', alt: 'SEOintro' }
+  { src: seointro, alt: 'SEOintro' }
 ])
 </script>
 
