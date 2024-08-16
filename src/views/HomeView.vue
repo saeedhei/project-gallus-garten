@@ -5,6 +5,7 @@ import ProjectSlider from '../components/organisms/slider-all/ProjectSlider.vue'
 import BSectionView from '../components/templates-layouts/sections/GallusBHome.vue'
 import CSectionView from '../components/templates-layouts/sections/GallusCHome.vue'
 import CrookedSectionView from '../components/templates-layouts/sections/CrookedSection.vue'
+import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.vue'
 // import MainView from '../components/1-home/MainView.vue'
 import FooterView from '../components/templates-layouts/footers/FooterView.vue'
 
@@ -15,11 +16,12 @@ import UnderConstructionPopup from '../components/molecules/UnderConstructionPop
   <HeaderView />
   <main>
     <UnderConstructionPopup />
-    <ProjectSlider id="sectiona" />
-    <ASectionView />
+    <!-- <ProjectSlider /> -->
+    <ASectionView id="sectiona" />
     <BSectionView />
     <CrookedSectionView class="bg-emerald-200" />
     <CSectionView />
+    <UnsereSponsoren />
   </main>
   <FooterView />
 </template>
