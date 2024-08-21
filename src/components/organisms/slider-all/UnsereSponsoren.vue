@@ -11,8 +11,8 @@
     <div class="relative">
       <Swiper
         :modules="[Autoplay, Keyboard, Zoom, FreeMode]"
-        :spaceBetween="30"
-        :slidesPerView="3"
+        :spaceBetween="20"
+        :slidesPerView="2"
         :speed="7000"
         :grabCursor="true"
         :direction="'horizontal'"
@@ -33,7 +33,7 @@
       >
         <SwiperSlide v-for="(logo, index) in logos" :key="index" class="swiper-slide">
           <div class="logo bg-white rounded-lg shadow-lg p-6 flex justify-center items-center">
-            <img :src="logo.src" :alt="logo.alt" class="max-h-20" />
+            <img :src="logo.src" :alt="logo.alt" class="rounded-lg" />
           </div>
         </SwiperSlide>
       </Swiper>
@@ -81,12 +81,22 @@ const logos = ref<Logo[]>([
   align-items: center;
 }
 
-.logo {
-  height: 90px; /* Adjust the height as needed */
+.logo  {
+  object-fit: contain;
+  height: 80px;
+  width: 300px;
+  padding: 10px;
+}
+
+@media (max-width: 640px) {
+  .logo {
+    padding: 5px;
+  }
 }
 
 .logo img {
-  object-fit: cover;
+  object-fit: contain;
+  height: 100%;
   width: 100%;
 }
 
