@@ -137,6 +137,7 @@ onUnmounted(() => {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.4);
         z-index: 9998;
+        pointer-events: auto; /* Ensures the overlay can capture click events */
       "
     ></div>
   </header>
