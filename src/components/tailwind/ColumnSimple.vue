@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 
 const props = defineProps<{
   size?: string
@@ -15,7 +14,7 @@ const props = defineProps<{
 
 <style scoped>
 .column[size] {
-  width: var(--size);
+  width: 50%;
 }
 
 .column[alignment] {

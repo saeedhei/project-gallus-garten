@@ -1,4 +1,5 @@
 <template>
+   <div class="container mx-auto px-4 py-8 md:px-6 md:py-10 lg:px-8 lg:py-12">
   <SectionSimple>
     <RowSimple class="bg-gray-200">
       <ColumnSimple class="columns-1">
@@ -80,6 +81,7 @@
       </ColumnSimple>
     </RowSimple>
   </SectionSimple>
+</div>
 </template>
 
 <script setup lang="ts"></script>

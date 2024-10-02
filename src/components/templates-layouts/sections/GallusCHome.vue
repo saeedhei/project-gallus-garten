@@ -40,7 +40,7 @@ onMounted(() => {
             <h3 class="leading-none font-black text-3xl">Beliebte Beiträge</h3>
             <div class="flex flex-col items-center lg:flex-row lg:items-stretch lg:justify-around">
               <a
-                href="https://owaiskhan.me"
+                href="#"
                 class="flex w-full max-w-sm mt-6 lg:mt-8 xl:mr-8"
                 v-for="(post, index) in posts"
                 :key="index"
@@ -68,7 +68,7 @@ onMounted(() => {
             <div
               class="flex flex-col items-center lg:flex-row lg:items-stretch lg:justify-around xl:flex-col"
             >
-              <a href="https://owaiskhan.me" class="flex w-full max-w-sm mt-6 lg:mt-8">
+              <a href="#" class="flex w-full max-w-sm mt-6 lg:mt-8">
                 <div
                   class="transition-all duration-300 cursor-pointer w-full shadow-lg hover:shadow-xl rounded-lg bg-gray-100 relative xl:flex xl:flex-row-reverse xl:items-center xl:px-6 xl:py-8"
                 >
@@ -89,7 +89,7 @@ onMounted(() => {
                 </div>
               </a>
 
-              <a href="https://owaiskhan.me" class="flex w-full max-w-sm mt-6 lg:mt-8">
+              <a href="#" class="flex w-full max-w-sm mt-6 lg:mt-8">
                 <div
                   class="transition-all duration-300 cursor-pointer w-full shadow-lg hover:shadow-xl rounded-lg bg-gray-100 relative xl:flex xl:flex-row-reverse xl:items-center xl:px-6 xl:py-8"
                 >

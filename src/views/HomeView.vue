@@ -2,6 +2,7 @@
 import HeaderView from '../components/templates-layouts/headers/HeaderView.vue'
 import ASectionView from '../components/templates-layouts/sections/GallusAHome.vue'
 // import ProjectSlider from '../components/organisms/slider-all/ProjectSlider.vue'
+import HomeZeitungSection from '../components/templates-layouts/sections/HomeZeitung.vue'
 import BSectionView from '../components/templates-layouts/sections/GallusBHome.vue'
 import CSectionView from '../components/templates-layouts/sections/GallusCHome.vue'
 import CrookedSectionView from '../components/templates-layouts/sections/CrookedSection.vue'
@@ -27,7 +28,8 @@ useSeo({
   <main>
     <UnderConstructionPopup />
     <!-- <ProjectSlider /> -->
-    <ASectionView id="sectiona" />
+    <HomeZeitungSection id="sectiona" />
+    <ASectionView />
     <BSectionView />
     <CrookedSectionView class="bg-emerald-200" />
     <CSectionView />
