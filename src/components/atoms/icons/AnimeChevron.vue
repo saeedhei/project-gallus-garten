@@ -31,5 +31,7 @@
 
 .light-icon {
   animation: lightMove 2s infinite;
+  position: absolute;
+  z-index: 1;
 }
 </style>

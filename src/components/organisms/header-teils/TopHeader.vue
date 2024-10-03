@@ -136,8 +136,8 @@ onUnmounted(() => {
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.4);
-        z-index: 9998;
-        pointer-events: auto; /* Ensures the overlay can capture click events */
+        z-index: 999;
+      /*  pointer-events: auto; /* Ensures the overlay can capture click events */
       "
     ></div>
   </header>
@@ -153,6 +153,7 @@ header {
   padding: 20px;
   color: lightskyblue;
   line-height: 1.5;
+  z-index: 1001;  /* Ensure this is higher than the chevron */
 
   .navbar-brand {
     display: flex;
@@ -190,7 +191,7 @@ header {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 9999;
+    z-index: 1000;
     top: 0;
     left: 0;
     background-color: #111111;
