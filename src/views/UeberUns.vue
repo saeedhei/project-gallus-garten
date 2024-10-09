@@ -41,7 +41,7 @@ async function fetchData() {
 onMounted(async () => {
   await fetchData() // Fetch the data
   await nextTick() // Wait for next DOM update cycle
-  smoothScrollTo(0.74, 4000) // Scroll after the content has been loaded
+  smoothScrollTo(0.69, 4000) // Scroll after the content has been loaded
 })
 </script>
 

@@ -1,4 +1,44 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+// Define state variables
+const frankfurtTime = ref<string>('');
+const labelClass = ref<string>('black');
+const labelText = ref<string>('Sorry, we\'re closed!');
+
+// Function to update Frankfurt time and label state
+const updateTime = () => {
+  // Get Frankfurt time (Europe/Berlin)
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: 'Europe/Berlin',
+    hour: '2-digit', // Correct type for hour, minute, and second
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  };
+  
+  const frankfurtTimeStr = new Intl.DateTimeFormat([], options).format(new Date());
+  frankfurtTime.value = frankfurtTimeStr;
+
+  // Get current hour in Frankfurt
+  const currentHour = new Date().toLocaleString("en-US", { timeZone: 'Europe/Berlin', hour: '2-digit', hour12: false });
+
+  // Update label class and text based on time
+  if (parseInt(currentHour) >= 14 && parseInt(currentHour) < 17) {
+    labelClass.value = 'green';
+    labelText.value = "Jetzt verfügbar!";
+  } else {
+    labelClass.value = 'black';
+    labelText.value = "Jetzt nicht verfügbar!";
+  }
+};
+
+// Update time every second on mounted
+onMounted(() => {
+  updateTime();
+  setInterval(updateTime, 1000);
+});
+</script>
 
 <template>
   <footer
@@ -15,6 +55,16 @@
           <a href="#" class="block text-md text-gray-900 mt-2"
             >Gallusgarten II <br />60327 Frankfurt am Main</a
           >
+          <!-- Frankfurt Time and Availability Button -->
+          <div class="mt-2">
+            <p class="text-gray-800">Lokale Uhrzeit in Frankfurt: {{ frankfurtTime }}</p>
+            <div
+              :class="labelClass"
+              class="shiny-label inline-block px-2 py-1 text-white rounded-lg"
+            >
+              {{ labelText }}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -69,29 +119,29 @@
                   enable-background="new 0 0 2956 1724"
                   xml:space="preserve"
                 >
-                <rect width="2740" height="1750" x="140" y="0" style="fill: #fff" />
+                  <rect width="2740" height="1750" x="140" y="0" style="fill: #fff" />
                   <rect width="773" height="1550" x="400" y="84" style="fill: #71c43e" />
                   <rect width="773" height="1550" x="1810" y="84" style="fill: #71c43e" />
                   <text
-          x="270"
-          y="790"
-          font-family="Tahoma"
-          font-size="680"
-          font-weight="bold"
-          fill="#253C17"
-        >
-          GALLUS
-        </text>
-        <text
-          x="240"
-          y="1400"
-          font-family="Tahoma"
-          font-size="680"
-          font-weight="bold"
-          fill="#253C17"
-        >
-          GARTEN
-        </text>
+                    x="270"
+                    y="790"
+                    font-family="Tahoma"
+                    font-size="680"
+                    font-weight="bold"
+                    fill="#253C17"
+                  >
+                    GALLUS
+                  </text>
+                  <text
+                    x="240"
+                    y="1400"
+                    font-family="Tahoma"
+                    font-size="680"
+                    font-weight="bold"
+                    fill="#253C17"
+                  >
+                    GARTEN
+                  </text>
                 </svg>
               </g>
             </g>
@@ -121,6 +171,32 @@
     </div> -->
   </footer>
 </template>
+
+<style scoped>
+.black {
+  background-color: black !important;
+}
+
+.green {
+  background-color: green !important;
+}
+
+/* Shiny label effect */
+.shiny-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, rgba(255,255,255,0.25) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.25) 75%, transparent 75%, transparent);
+  background-size: 50px 50px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  animation: shiny-effect 10s linear infinite;
+}
+
+@keyframes shiny-effect {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+</style>
 
 <!-- <div class="container">
   <div class="grid grid-cols-3 gap-4 md:grid-cols-1">
