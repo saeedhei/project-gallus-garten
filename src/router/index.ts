@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AdminView from '../views/AdminView.vue'
+// import AdminView from '../views/AdminView.vue'
 import HomeView from '../views/HomeView.vue'
 import LegalView from '../components/LegalComponent.vue'
 import LegalViewImpressum from '../components/Legal-Impressum.vue'
@@ -11,27 +11,27 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
     },
     {
       path: '/ueber-uns',
       name: 'über-uns',
-      component: () => import('../views/UeberUns.vue')
+      component: () => import('@/views/UeberUns.vue'),
     },
     {
       path: '/ueber-uns/team',
       name: 'TeamView',
-      component: () => import('../views/UeberUnsTeam.vue')
+      component: () => import('@/views/UeberUnsTeam.vue'),
     },
     {
       path: '/ueber-uns/team/saeed-heidarizarei',
       name: 'Team',
-      component: () => import('../views/UeberUnsTeamSaeed.vue')
+      component: () => import('@/views/UeberUnsTeamSaeed.vue'),
     },
     {
       path: '/ueber-uns/team/ralf-harth',
       name: 'RalfHarth',
-      component: () => import('../views/UeberUnsTeamRalf.vue')
+      component: () => import('@/views/UeberUnsTeamRalf.vue'),
     },
     {
       path: '/legal',
@@ -40,37 +40,37 @@ const router = createRouter({
         {
           path: 'impressum',
           name: 'Impressum',
-          component: LegalViewImpressum
+          component: LegalViewImpressum,
         },
         {
           path: 'datenschutz',
           name: 'Datenschutz',
-          component: LegalViewDatenschutz
+          component: LegalViewDatenschutz,
         },
         {
           path: 'datenschutzeinstellungen',
           name: 'Datenschutzeinstellungen',
-          component: () => import('../components/organisms/WelcomeCookie.vue')
-        }
-      ]
+          component: () => import('../components/organisms/WelcomeCookie.vue'),
+        },
+      ],
     },
     {
       path: '/docs',
-      component: () => import('../views/DocsView.vue'),
+      component: () => import('@/views/DocsView.vue'),
       children: [
         {
           path: 'changelog',
           name: 'Changelog',
-          component: () => import('../views/DocsChangelogView.vue')
-        }
-      ]
+          component: () => import('@/views/DocsChangelogView.vue'),
+        },
+      ],
     },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: AdminView
-    }
-  ]
-});
+    // {
+    //   path: '/admin',
+    //   name: 'admin',
+    //   component: AdminView,
+    // },
+  ],
+})
 
 export default router
