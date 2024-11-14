@@ -41,7 +41,7 @@ const hasVisited = ref(false)
 
 const setFirstVisitCookie = () => {
   if (!checkCookie('firstVisit')) {
-    setCookie('firstVisit', 'true', 7) // Cookie expires in 7 days
+    setCookie('firstVisit', 'true', 7, 'None') // Cookie expires in 7 days
   } else {
     hasVisited.value = true
   }

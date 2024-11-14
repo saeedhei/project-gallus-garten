@@ -1,9 +1,25 @@
 // Set a cookie
-export function setCookie(name: string, value: string, days: number): void {
+// export function setCookie(name: string, value: string, days: number): void {
+//   const date = new Date()
+//   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+//   const expires = 'expires=' + date.toUTCString()
+//   document.cookie = `${name}=${value};${expires};path=/`
+// }
+
+// Set a cookie with SameSite attribute
+// setCookie('firstVisit', 'true', 7, 'None'); // Or 'Lax' if cross-site usage is not needed
+export function setCookie(
+  name: string,
+  value: string,
+  days: number,
+  sameSite: string = 'Lax',
+): void {
   const date = new Date()
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
   const expires = 'expires=' + date.toUTCString()
-  document.cookie = `${name}=${value};${expires};path=/`
+  // Ensure SameSite is set to None and Secure for cross-site contexts
+  const secure = sameSite === 'None' ? 'Secure;' : ''
+  document.cookie = `${name}=${value};${expires};path=/;SameSite=${sameSite};${secure}`
 }
 
 // Get a cookie by name
@@ -24,5 +40,5 @@ export function checkCookie(name: string): boolean {
 
 // Delete a cookie by name
 export function deleteCookie(name: string): void {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`
 }
