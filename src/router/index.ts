@@ -14,6 +14,11 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/bildergalerie',
+      name: 'Bildergalerie',
+      component: () => import('@/views/BilderGalerie.vue'),
+    },
+    {
       path: '/ueber-uns',
       name: 'über-uns',
       component: () => import('@/views/UeberUns.vue'),

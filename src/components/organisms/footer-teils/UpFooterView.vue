@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
 
 // Define state variables
-const frankfurtTime = ref<string>('');
-const labelClass = ref<string>('black');
-const labelText = ref<string>('Sorry, we\'re closed!');
+const frankfurtTime = ref<string>('')
+const labelClass = ref<string>('black')
+const labelText = ref<string>("Sorry, we're closed!")
 
 // Function to update Frankfurt time and label state
 const updateTime = () => {
@@ -14,30 +14,34 @@ const updateTime = () => {
     hour: '2-digit', // Correct type for hour, minute, and second
     minute: '2-digit',
     second: '2-digit',
-    hour12: false
-  };
-  
-  const frankfurtTimeStr = new Intl.DateTimeFormat([], options).format(new Date());
-  frankfurtTime.value = frankfurtTimeStr;
+    hour12: false,
+  }
+
+  const frankfurtTimeStr = new Intl.DateTimeFormat([], options).format(new Date())
+  frankfurtTime.value = frankfurtTimeStr
 
   // Get current hour in Frankfurt
-  const currentHour = new Date().toLocaleString("en-US", { timeZone: 'Europe/Berlin', hour: '2-digit', hour12: false });
+  const currentHour = new Date().toLocaleString('en-US', {
+    timeZone: 'Europe/Berlin',
+    hour: '2-digit',
+    hour12: false,
+  })
 
   // Update label class and text based on time
   if (parseInt(currentHour) >= 14 && parseInt(currentHour) < 17) {
-    labelClass.value = 'green';
-    labelText.value = "Jetzt verfügbar!";
+    labelClass.value = 'green'
+    labelText.value = 'Jetzt verfügbar!'
   } else {
-    labelClass.value = 'black';
-    labelText.value = "Jetzt nicht verfügbar!";
+    labelClass.value = 'black'
+    labelText.value = 'Jetzt nicht verfügbar!'
   }
-};
+}
 
 // Update time every second on mounted
 onMounted(() => {
-  updateTime();
-  setInterval(updateTime, 1000);
-});
+  updateTime()
+  setInterval(updateTime, 1000)
+})
 </script>
 
 <template>
@@ -167,12 +171,16 @@ onMounted(() => {
     </div>
 
     <!-- <div class="mt-12">
- 
+
     </div> -->
   </footer>
 </template>
 
 <style scoped>
+a {
+  color: black;
+}
+
 .black {
   background-color: black !important;
 }
@@ -185,16 +193,30 @@ onMounted(() => {
 .shiny-label {
   font-weight: bold;
   text-transform: uppercase;
-  background: linear-gradient(45deg, rgba(255,255,255,0.25) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.25) 75%, transparent 75%, transparent);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.25) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.25) 75%,
+    transparent 75%,
+    transparent
+  );
   background-size: 50px 50px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   animation: shiny-effect 10s linear infinite;
+  color: white;
 }
 
 @keyframes shiny-effect {
-  0% { background-position: 0 0; }
-  100% { background-position: 100% 100%; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 </style>
 
