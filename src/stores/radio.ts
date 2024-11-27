@@ -9,7 +9,7 @@ export const useRadioStore = defineStore({
   id: 'radio',
   // Define the type for your state
   state: (): RadioState => ({
-    radiostring: 'option1'
+    radiostring: 'option1',
   }),
   // Define the actions for your store
   actions: {
@@ -17,6 +17,6 @@ export const useRadioStore = defineStore({
     updateString(newString: string) {
       // Use TypeScript assertion for safety
       this.radiostring = newString
-    }
-  }
+    },
+  },
 })

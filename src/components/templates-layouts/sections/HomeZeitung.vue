@@ -20,9 +20,7 @@
         </div>
 
         <div class="w-full md:w-1/2 flex justify-center">
-          <div
-            class="h-auto overflow-hidden rounded-md sm:rounded-xl flex justify-center"
-          >
+          <div class="h-auto overflow-hidden rounded-md sm:rounded-xl flex justify-center">
             <img src="/docs/zeitung.jpg" class="object-cover w-1/2" />
           </div>
         </div>

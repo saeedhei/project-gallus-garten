@@ -12,15 +12,15 @@ import FooterView from '../components/templates-layouts/footers/FooterView.vue'
 
 import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
 import { useSeo } from '@/composables/useSeo'
-const baseUrl = import.meta.env.VITE_APP_BASE_URL;
+const baseUrl = import.meta.env.VITE_APP_BASE_URL
 useSeo({
   title: 'Ein Garten für alle • GallusGarten',
   description: 'Learn more about our company, values, and mission.',
   ogTitle: 'Ein Garten für alle • GallusGarten',
   ogDescription: 'Discover what makes our company unique.',
   ogImage: `${baseUrl}src/assets/images/GallusGarten.svg`,
-  ogUrl: window.location.href
-});
+  ogUrl: window.location.href,
+})
 </script>
 
 <template>

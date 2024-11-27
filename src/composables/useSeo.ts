@@ -1,13 +1,13 @@
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 
 // Define an interface for the SEO options
 interface SeoOptions {
-  title: string;
-  description: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  ogUrl: string;
+  title: string
+  description: string
+  ogTitle: string
+  ogDescription: string
+  ogImage: string
+  ogUrl: string
 }
 
 export function useSeo({
@@ -16,46 +16,44 @@ export function useSeo({
   ogTitle = 'Default OG Title',
   ogDescription = 'Default OG Description',
   ogImage = '/src/assets/images/GallusGarten.svg',
-  ogUrl = window.location.href
+  ogUrl = window.location.href,
 }: Partial<SeoOptions> = {}) {
-  
   onMounted(() => {
     // Update document title
-    document.title = title;
+    document.title = title
 
     // Function to update or create meta tags
     const updateMetaTag = (property: string, content: string) => {
-      let metaTag = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+      let metaTag = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`)
       if (metaTag) {
-        metaTag.setAttribute('content', content);
+        metaTag.setAttribute('content', content)
       } else {
-        metaTag = document.createElement('meta');
-        metaTag.setAttribute('property', property);
-        metaTag.setAttribute('content', content);
-        document.head.appendChild(metaTag);
+        metaTag = document.createElement('meta')
+        metaTag.setAttribute('property', property)
+        metaTag.setAttribute('content', content)
+        document.head.appendChild(metaTag)
       }
-    };
+    }
 
     // Update or create standard meta description
-    let descriptionMetaTag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    let descriptionMetaTag = document.querySelector<HTMLMetaElement>('meta[name="description"]')
     if (descriptionMetaTag) {
-      descriptionMetaTag.setAttribute('content', description);
+      descriptionMetaTag.setAttribute('content', description)
     } else {
-      descriptionMetaTag = document.createElement('meta');
-      descriptionMetaTag.setAttribute('name', 'description');
-      descriptionMetaTag.setAttribute('content', description);
-      document.head.appendChild(descriptionMetaTag);
+      descriptionMetaTag = document.createElement('meta')
+      descriptionMetaTag.setAttribute('name', 'description')
+      descriptionMetaTag.setAttribute('content', description)
+      document.head.appendChild(descriptionMetaTag)
     }
 
     // Update or create Open Graph meta tags
-    updateMetaTag('og:title', ogTitle);
-    updateMetaTag('og:description', ogDescription);
-    updateMetaTag('og:image', ogImage);
-    updateMetaTag('og:url', ogUrl);
-    updateMetaTag('og:type', 'website'); // Typically 'website' or 'article'
-  });
+    updateMetaTag('og:title', ogTitle)
+    updateMetaTag('og:description', ogDescription)
+    updateMetaTag('og:image', ogImage)
+    updateMetaTag('og:url', ogUrl)
+    updateMetaTag('og:type', 'website') // Typically 'website' or 'article'
+  })
 }
-
 
 // import { onMounted } from 'vue';
 

@@ -1,7 +1,7 @@
 <template>
-  <SectionSimple>
-    <RowSimple class="bg-gray-200">
-      <ColumnSimple class="columns-1">
+  <div class="section mx-auto">
+    <div class="row flex flex-wrap bg-gray-200">
+      <div class="columns columns-1">
         <h1 class="text-3xl font-bold mb-4">GallusGarten Team:</h1>
         <nav class="mb-6">
           <router-link
@@ -13,9 +13,9 @@
             >Ralf</router-link
           >
         </nav>
-      </ColumnSimple>
-    </RowSimple>
-  </SectionSimple>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts"></script>

@@ -41,7 +41,7 @@ const animations: { [key: string]: (element: HTMLElement, duration: number) => v
   rubberBand: (el, duration) =>
     gsap.to(el, { scaleX: 1.25, scaleY: 0.75, repeat: 3, yoyo: true, duration: duration / 3 }),
   shakeX: (el, duration) => gsap.to(el, { x: 20, repeat: 5, yoyo: true, duration: duration / 5 }),
-  shakeY: (el, duration) => gsap.to(el, { y: 20, repeat: 5, yoyo: true, duration: duration / 5 })
+  shakeY: (el, duration) => gsap.to(el, { y: 20, repeat: 5, yoyo: true, duration: duration / 5 }),
 }
 
 const vAnimate = {
@@ -51,7 +51,7 @@ const vAnimate = {
     if (arg && animations[arg]) {
       animations[arg](el, duration)
     }
-  }
+  },
 }
 
 export default vAnimate

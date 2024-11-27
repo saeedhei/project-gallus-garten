@@ -21,7 +21,6 @@ const displayedText = ref<string>('')
 const typingSpeed = 120
 const erasingSpeed = 60
 
-
 function typeWriter(text: string) {
   let i = 0
   displayedText.value = ''
@@ -73,7 +72,7 @@ onMounted(() => {
 
 .cursor {
   position: absolute;
- /* right: 0;  Adjust if necessary */
+  /* right: 0;  Adjust if necessary */
   width: 2px;
   height: 1.2em; /* Adjust based on the font size */
   background-color: rgba(255, 255, 255, 0.75);

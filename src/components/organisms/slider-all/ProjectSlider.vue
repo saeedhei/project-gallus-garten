@@ -56,14 +56,14 @@
         :slidesPerView="1"
         :breakpoints="{
           640: {
-            slidesPerView: 1
+            slidesPerView: 1,
           },
           768: {
-            slidesPerView: 2
+            slidesPerView: 2,
           },
           1024: {
-            slidesPerView: 3
-          }
+            slidesPerView: 3,
+          },
         }"
         :loop="false"
         class="swiper-container"
@@ -116,7 +116,7 @@ const posts = ref([
   { title: 'Changelog', content: 'Die Seite wurde erstellt' },
   { title: 'Impressum', content: 'Die Seite wurde erstellt' },
   { title: 'Datenschutz', content: 'Die Seite wurde erstellt' },
-  { title: 'Legal', content: 'Die Seite wurde erstellt' }
+  { title: 'Legal', content: 'Die Seite wurde erstellt' },
 ])
 </script>
 

@@ -46,10 +46,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <HeaderShort/>
+  <HeaderShort />
   <main>
     <div class="page container mx-auto px-4">
- 
       <section class="py-8">
         <div class="timeline">
           <!-- Timeline item 2 -->

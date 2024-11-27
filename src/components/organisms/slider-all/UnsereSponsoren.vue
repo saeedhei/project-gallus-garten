@@ -23,11 +23,11 @@
         :freeMode="true"
         :breakpoints="{
           640: {
-            slidesPerView: 3
+            slidesPerView: 3,
           },
           1024: {
-            slidesPerView: 4
-          }
+            slidesPerView: 4,
+          },
         }"
         class="swiper-container"
       >
@@ -61,11 +61,23 @@ interface Logo {
 
 // Define a reactive array of logos
 const logos = ref<Logo[]>([
-  { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Deutsche_Bank-Logo.svg/1280px-Deutsche_Bank-Logo.svg.png', alt: 'Deutsche Bank AG' },
-  { src: 'https://www.amka.de/profiles/amka_microsite/themes/custom/amka_theme/images/amka.png', alt: 'AMKA' },
-  { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Hda_logo.svg/1200px-Hda_logo.svg.png', alt: 'Hochschule Darmstadt' },
-  { src: 'https://frankfurt.de/-/media/frankfurtde/global/image/seitenrahmen/footerlogo.ashx?la=de-de6b171b43a6e644fb88df64df25328a18&mw=1280&hash=3C8D80D1E72F6317B5444810BE0CF329', alt: 'Stadt Frankfurt' },
-  { src: seointro, alt: 'SEOintro' }
+  {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Deutsche_Bank-Logo.svg/1280px-Deutsche_Bank-Logo.svg.png',
+    alt: 'Deutsche Bank AG',
+  },
+  {
+    src: 'https://www.amka.de/profiles/amka_microsite/themes/custom/amka_theme/images/amka.png',
+    alt: 'AMKA',
+  },
+  {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Hda_logo.svg/1200px-Hda_logo.svg.png',
+    alt: 'Hochschule Darmstadt',
+  },
+  {
+    src: 'https://frankfurt.de/-/media/frankfurtde/global/image/seitenrahmen/footerlogo.ashx?la=de-de6b171b43a6e644fb88df64df25328a18&mw=1280&hash=3C8D80D1E72F6317B5444810BE0CF329',
+    alt: 'Stadt Frankfurt',
+  },
+  { src: seointro, alt: 'SEOintro' },
 ])
 </script>
 
@@ -81,7 +93,7 @@ const logos = ref<Logo[]>([
   align-items: center;
 }
 
-.logo  {
+.logo {
   object-fit: contain;
   height: 80px;
   width: 300px;
@@ -99,5 +111,4 @@ const logos = ref<Logo[]>([
   height: 100%;
   width: 100%;
 }
-
 </style>

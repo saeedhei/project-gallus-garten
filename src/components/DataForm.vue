@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+// import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 // import { appState } from '../stores/store'
 // import { useEventBusStore } from '@/stores/eventBus'
 
@@ -14,16 +14,16 @@ import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 // unwatch()
 // })
 
-const formData = ref({
-  from: '',
-  to: '',
-  subject: ''
-  // html: sharedData
-})
+// const formData = ref({
+//   from: '',
+//   to: '',
+//   subject: '',
+//   // html: sharedData
+// })
 
 const submitForm = () => {
   // Handle form submission logic here
-  console.log('Form submitted:', formData.value)
+  // console.log('Form submitted:', formData.value)
   // You can send data to the server or perform any other necessary actions
 }
 
@@ -52,17 +52,17 @@ const submitForm = () => {
 //   localStorage.setItem('localLivePreviewValue', sharedData.value)
 // }
 
-function loadFromLocalStorage() {
-  return localStorage.getItem('localLivePreviewValue') || ''
-}
+// function loadFromLocalStorage() {
+//   return localStorage.getItem('localLivePreviewValue') || ''
+// }
 </script>
 
 <template>
   <div>
     <form @submit.prevent="submitForm" action="/api/gg" method="post">
-      <input type="email" v-model="formData.from" name="from" placeholder="From" />
-      <input type="email" v-model="formData.to" name="to" placeholder="To" />
-      <input type="text" v-model="formData.subject" name="subject" placeholder="Subject" />
+      <!-- <input type="email" v-model="formData.from" name="from" placeholder="From" /> -->
+      <!-- <input type="email" v-model="formData.to" name="to" placeholder="To" /> -->
+      <!-- <input type="text" v-model="formData.subject" name="subject" placeholder="Subject" /> -->
       <!-- <textarea
         v-model="formData.html"
         name="html"

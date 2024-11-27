@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
+// import { storeToRefs } from 'pinia'
 import { useRadioStore } from '@/stores/radio'
 const radioStore = useRadioStore()
 const { updateString } = radioStore
-const { radiostring } = storeToRefs(radioStore) // to keep reactivity
+// const { radiostring } = storeToRefs(radioStore) // to keep reactivity
 
 const options = [
   { value: 'option1', label: 'Vorlage 1' },
   { value: 'option2', label: 'Vorlage 2' },
   { value: 'option3', label: 'Vorlage 3' },
   { value: 'option4', label: 'Vorlage 4' },
-  { value: 'option5', label: 'Vorlage 5' }
+  { value: 'option5', label: 'Vorlage 5' },
 ]
 </script>
 
@@ -60,7 +60,7 @@ const options = [
 }
 </style>
 
-<!-- 
+<!--
 
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'

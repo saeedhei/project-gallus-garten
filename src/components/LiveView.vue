@@ -33,7 +33,7 @@ const templateUrls = [
   '/gallus-garten/template2.html',
   '/gallus-garten/template3.html',
   '/gallus-garten/template4.html',
-  '/gallus-garten/template5.html'
+  '/gallus-garten/template5.html',
 ]
 
 let template1 = ``
@@ -75,7 +75,7 @@ watch(
     // nextTick(() => {
     //   console.log(`After Watch: ${MyradioString.value}`)
     // })
-  }
+  },
 )
 
 onMounted(() => {

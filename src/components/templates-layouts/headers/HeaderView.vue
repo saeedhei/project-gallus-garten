@@ -35,7 +35,7 @@ const scrollToSection = (sectionId: string) => {
 const sentences: string[] = [
   'Ein Garten für Alle.',
   'Urban Gardening im Gallus.',
-  'Ein Bürgergarten.'
+  'Ein Bürgergarten.',
 ]
 </script>
 
@@ -47,7 +47,7 @@ const sentences: string[] = [
     >
       <div class="absolute inset-0 bg-green-700 opacity-50"></div>
       <div class="absolute inset-0 flex items-center justify-center">
-        <div class="text-center h-32"> 
+        <div class="text-center h-32">
           <h1 class="text-4xl font-bold text-white mb-4">GallusGarten</h1>
           <TypingEffect class="text-2xl text-white" :sentences="sentences"></TypingEffect>
           <TopHeaderView />

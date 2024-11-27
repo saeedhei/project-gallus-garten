@@ -64,7 +64,7 @@ onUnmounted(() => {
       'left-0': true,
       'w-full': true,
       'bg-transparent': true,
-      hidden: isHidden
+      hidden: isHidden,
     }"
   >
     <a class="navbar-brand" href="/">
@@ -79,7 +79,7 @@ onUnmounted(() => {
         preserveAspectRatio="xMinYMin meet"
         xml:space="preserve"
       >
-      <rect width="2740" height="1750" x="140" y="0" style="fill: #fff" />
+        <rect width="2740" height="1750" x="140" y="0" style="fill: #fff" />
         <rect width="773" height="1550" x="400" y="84" style="fill: #71c43e" />
         <rect width="773" height="1550" x="1810" y="84" style="fill: #71c43e" />
         <text
@@ -137,7 +137,7 @@ onUnmounted(() => {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.4);
         z-index: 999;
-      /*  pointer-events: auto; /* Ensures the overlay can capture click events */
+        /*  pointer-events: auto; /* Ensures the overlay can capture click events */
       "
     ></div>
   </header>
@@ -153,7 +153,7 @@ header {
   padding: 20px;
   color: lightskyblue;
   line-height: 1.5;
-  z-index: 1001;  /* Ensure this is higher than the chevron */
+  z-index: 1001; /* Ensure this is higher than the chevron */
 
   .navbar-brand {
     display: flex;
