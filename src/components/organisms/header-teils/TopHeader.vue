@@ -116,7 +116,6 @@ onUnmounted(() => {
             <RouterLink to="/" class="nav-link"
               >Onlinetraining<span class="blink-nav-item"> Neu</span>
             </RouterLink>
-            <RouterLink to="/BilderGalerie" class="nav-link">Galerie</RouterLink>
           </div>
 
           <span id="mySidenavToggle" class="sidenav-toggle text-white" @click="toggleNav"
@@ -151,7 +150,7 @@ header {
   display: flex;
   // justify-content: space-between;
   align-items: top;
-  padding: 10px;
+  padding: 20px;
   color: lightskyblue;
   line-height: 1.5;
   z-index: 1001; /* Ensure this is higher than the chevron */
