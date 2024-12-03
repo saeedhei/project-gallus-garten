@@ -13,6 +13,13 @@ import FooterView from '../components/templates-layouts/footers/FooterView.vue'
 import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
 import { useSeo } from '@/composables/useSeo'
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
+
+if (!baseUrl) {
+  throw new Error(
+    "The required environment variable 'VITE_APP_BASE_URL' is missing. Please check your .env file.",
+  )
+}
+
 useSeo({
   title: 'Ein Garten für alle • GallusGarten',
   description: 'Learn more about our company, values, and mission.',
