@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineProps } from 'vue'
+import { ref, computed } from 'vue'
 import api from '../../services/api' // Centralized API instance
 
 // Destructure props directly from defineProps
