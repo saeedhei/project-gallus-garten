@@ -8,6 +8,7 @@ interface SeoOptions {
   ogDescription: string
   ogImage: string
   ogUrl: string
+  robots?: string
 }
 
 export function useSeo({
@@ -17,6 +18,7 @@ export function useSeo({
   ogDescription = 'Default OG Description',
   ogImage = '/src/assets/images/GallusGarten.svg',
   ogUrl = window.location.href,
+  robots = 'index, follow',
 }: Partial<SeoOptions> = {}) {
   onMounted(() => {
     // Update document title
@@ -52,6 +54,16 @@ export function useSeo({
     updateMetaTag('og:image', ogImage)
     updateMetaTag('og:url', ogUrl)
     updateMetaTag('og:type', 'website') // Typically 'website' or 'article'
+
+    let robotsMetaTag = document.querySelector<HTMLMetaElement>('meta[name="robots"]')
+    if (robotsMetaTag) {
+      robotsMetaTag.setAttribute('content', robots)
+    } else {
+      robotsMetaTag = document.createElement('meta')
+      robotsMetaTag.setAttribute('name', 'robots')
+      robotsMetaTag.setAttribute('content', robots)
+      document.head.appendChild(robotsMetaTag)
+    }
   })
 }
 

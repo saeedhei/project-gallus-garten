@@ -70,6 +70,16 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/werkzeuge',
+      name: 'Werkzeuge',
+      component: () => import('@/views/WerkzeugeView.vue'),
+    },
+    {
+      path: '/werkzeuge/quittung',
+      name: 'Quittung',
+      component: () => import('@/views/WerkzeugeQuittung.vue'),
+    },
     // {
     //   path: '/admin',
     //   name: 'admin',
