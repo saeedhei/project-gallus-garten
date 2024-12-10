@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[80vw] flex flex-row justify-end m-2 relative">
+  <div class="w-[80vw] mt-8 flex flex-row justify-start m-2 relative">
     <div class="w-full md:w-3/12 relative dropdown-container">
       <label class="block mb-2 text-sm md:text-base text-gray-700 font-medium">
         Filter by Category:
@@ -8,7 +8,7 @@
         @click="toggleCategoryDropdown"
         class="p-2 border w-full text-sm md:text-base bg-white shadow cursor-pointer flex justify-between items-center"
       >
-        <span>{{ selectedCategory || 'All Categories' }}</span>
+        <span class="text-gray-600">{{ selectedCategory || 'All Categories' }}</span>
       </div>
       <ul
         v-if="isCategoryDropdownActive"
@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import api from '../../services/api'
+import api from "../../services/api"
 
 // Reactive states
 const categories = ref<string[]>([]) // List of categories

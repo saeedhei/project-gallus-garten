@@ -1,10 +1,10 @@
 <template>
-  <div class="h-screen flex flex-col items-center">
+  <div class="h-screen flex flex-col items-center bg-green-200">
     <!-- Filter Dropdown -->
     <GalleryFilter @filterChanged="updateFilter" />
 
     <!-- Main Gallery -->
-    <main class="w-full max-w-6xl h-[80vh] overflow-y-auto p-4" ref="galleryContainer">
+    <main class="w-full max-w-6xl bg-gray-200 h-[80vh] overflow-y-auto p-4" ref="galleryContainer">
       <!-- Skeleton Loader -->
       <SkeletonLoader v-if="loading" :count="9" />
 
@@ -50,37 +50,45 @@
         No more images to load
       </div>
     </main>
+    <div>
+  <p class="text-black mt-4">
+    Developed by:
+    <a href="https://arthurvarteressians.com/" target="_blank" rel="noopener noreferrer">
+      <img src="../../../public/images/logo.png" alt="Developer Logo" class="inline-block w-[80px] h-8 ml-2" />
+    </a>
+  </p>
+</div>
 
-    <!-- Image Modal -->
+    <!-- Render Image Modals -->
     <ImageModal
-      v-if="selectedImage !== null"
+      v-if="!isMobile && selectedImage !== null"
       :isOpen="selectedImage !== null"
       :image="images[selectedImage]"
       :hasPrevious="selectedImage > 0"
-      :hasNext="selectedImage < images.length - 1"
+      :hasNext="selectedImage < images.length - 1 || !allDataLoaded"
       @close="closeImage"
       @next="goToNext"
       @previous="goToPrevious"
+    />
+
+    <MobileImageModal
+      v-if="isMobile && selectedImage !== null"
+      :isOpen="selectedImage !== null"
+      :images="images"
+      @close="closeImage"
+      @loadMore="loadMoreImages"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import GalleryFilter from '../gallery/GalleryFilters.vue'
-import SkeletonLoader from '../gallery/SkeletonLoader.vue'
-import LikeIcon from '../gallery/LikeIcon.vue'
-import ImageModal from '../gallery/ImageModal.vue' // Import the new modal component
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import GalleryFilter from './GalleryFilters.vue'
+import SkeletonLoader from './SkeletonLoader.vue'
+import LikeIcon from './LikeIcon.vue'
+import ImageModal from './ImageModal.vue'
+import MobileImageModal from './MobileImageModal.vue'
 import api from '../../services/api'
-
-// Define the Image interface
-interface Image {
-  publicId: string
-  url: string
-  description: string
-  likes: number
-  views: number // Ensure this is included
-}
 
 // Reactive variables
 const images = ref<Image[]>([])
@@ -91,15 +99,24 @@ const galleryContainer = ref<HTMLElement | null>(null)
 const error = ref(false)
 const selectedTag = ref<string | null>(null)
 
+interface Image {
+  publicId: string
+  url: string
+  description: string
+  likes: number
+  views: number
+}
+
 // Modal logic
 const selectedImage = ref<number | null>(null)
+const isMobile = ref(window.innerWidth <= 640)
 
 const openImage = (index: number) => {
-  selectedImage.value = index // Open the modal with the clicked image
+  selectedImage.value = index
 }
 
 const closeImage = () => {
-  selectedImage.value = null // Close the modal
+  selectedImage.value = null
 }
 
 const loadImages = async (tag: string | null = null, reset = false) => {
@@ -117,7 +134,7 @@ const loadImages = async (tag: string | null = null, reset = false) => {
       page.value = 1
     }
 
-    const response = await api.get('/images', {
+    const response = await api.get('images', {
       params: { page: page.value, tag },
     })
 
@@ -157,9 +174,14 @@ const handleScroll = () => {
   }
 }
 
-const goToNext = () => {
+const goToNext = async () => {
   if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
     selectedImage.value++
+  } else if (!allDataLoaded.value) {
+    await loadImages(selectedTag.value)
+    if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
+      selectedImage.value++
+    }
   }
 }
 
@@ -169,17 +191,32 @@ const goToPrevious = () => {
   }
 }
 
+// Detect screen size changes
+const updateIsMobile = () => {
+  isMobile.value = window.innerWidth <= 640
+}
+
 onMounted(() => {
   loadImages()
   galleryContainer.value?.addEventListener('scroll', handleScroll)
+  window.addEventListener('resize', updateIsMobile)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateIsMobile)
+})
+
+const loadMoreImages = async () => {
+  if (!allDataLoaded.value && !loading.value) {
+    await loadImages(selectedTag.value)
+  }
+}
 </script>
 
 <style scoped>
-/* Disable hover for mobile using media queries */
 @media (max-width: 640px) {
   .hidden-hover {
-    display: none !important; /* Disable hover effects for smaller screens */
+    display: none !important;
   }
 
   .hover-active {
