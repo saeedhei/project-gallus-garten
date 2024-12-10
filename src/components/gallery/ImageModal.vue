@@ -34,7 +34,7 @@
           <p class="font-semibold">Details</p>
           <div class="flex items-center space-x-2 mt-2">
             <!-- Leaf Icon -->
-            <img src="/images/leaf.svg" alt="Leaf Icon" class="w-5 h-5" />
+            <img src="../../../public/images/leaf.svg" alt="Leaf Icon" class="w-5 h-5" />
             <span>{{ image.likes }} Likes</span>
           </div>
           <p class="mt-2">Public ID: {{ image.publicId }}</p>
@@ -48,7 +48,7 @@
       class="absolute left-4 top-1/2 bg-green-600 hover:bg-green-700 rounded-full p-2 shadow-lg"
       @click="goToPrevious"
     >
-      <img src="/images/prev-icon.svg" alt="Previous" class="w-6 h-6" />
+      <img src="../../../public/images/prev-icon.svg" alt="Previous" class="w-6 h-6" />
     </button>
 
     <!-- Next Button -->
@@ -57,7 +57,7 @@
       class="absolute right-4 top-1/2 bg-green-600 hover:bg-green-700 rounded-full p-2 shadow-lg"
       @click="goToNext"
     >
-      <img src="/images/next-icon.svg" alt="Next" class="w-6 h-6" />
+      <img src="../../../public/images/next-icon.svg" alt="Next" class="w-6 h-6" />
     </button>
   </div>
 </template>
