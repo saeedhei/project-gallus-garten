@@ -51,13 +51,13 @@
       </div>
     </main>
     <div>
-  <p class="text-black mt-4">
-    Developed by:
-    <a href="https://arthurvarteressians.com/" target="_blank" rel="noopener noreferrer">
-      <img src="../../../public/images/logo.png" alt="Developer Logo" class="inline-block w-[80px] h-8 ml-2" />
-    </a>
-  </p>
-</div>
+      <p class="text-black mt-4">
+        Developed by:
+        <a href="https://arthurvarteressians.com/" target="_blank" rel="noopener noreferrer">
+          <img src="/images/logo.png" alt="Developer Logo" class="inline-block w-[80px] h-8 ml-2" />
+        </a>
+      </p>
+    </div>
 
     <!-- Render Image Modals -->
     <ImageModal

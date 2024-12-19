@@ -16,8 +16,17 @@ git push origin main
 
 git rm -r --cached .
 git add .
-git commit -m "all removed"
+git commit -m "warnings fixed"
 git push origin main
+
+
+
+
+git fetch origin
+git checkout main
+git merge origin/main
+or
+git pull origin main
 
 
 
