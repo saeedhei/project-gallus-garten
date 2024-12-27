@@ -46,13 +46,9 @@
 
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref } from 'vue'
+import type { Image } from '@/models/ImageModel';
 
-interface Image {
-  publicId: string
-  url: string
-  description: string
-  likes: number
-}
+
 defineProps({
   isOpen: {
     type: Boolean,

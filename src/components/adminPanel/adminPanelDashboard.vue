@@ -83,9 +83,10 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '../../services/api';
+import type { Image } from '@/models/ImageModel';
 
 // State variables
-const images = ref([]);
+const images = ref<Image[]>([])
 const searchQuery = ref('');
 const editingIndex = ref<number | null>(null);
 const editedDescription = ref<string>('');
