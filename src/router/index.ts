@@ -4,6 +4,8 @@ import HomeView from '../views/HomeView.vue'
 import LegalView from '../components/LegalComponent.vue'
 import LegalViewImpressum from '../components/Legal-Impressum.vue'
 import LegalViewDatenschutz from '../components/Legal-Datenschutz.vue'
+import AdminMainLogin from '@/components/adminPanel/adminLoginPage.vue'
+import AdminPanelPage from '@/components/adminPanel/adminPanelDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +15,18 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
+
+    {
+      path: '/admin-panel-login',
+      name: 'Login',
+      component: AdminMainLogin,
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: AdminPanelPage,
+    },
+
     {
       path: '/bildergalerie',
       name: 'Bildergalerie',
