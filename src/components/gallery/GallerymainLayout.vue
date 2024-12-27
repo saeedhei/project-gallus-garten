@@ -98,7 +98,7 @@ import LikeIcon from './LikeIcon.vue'
 import ImageModal from './ImageModal.vue'
 import MobileImageModal from './MobileImageModal.vue'
 import api from '../../services/api'
-import type { Image } from '@/models/ImageModel'
+import type Image from '../../types/ImageModel'
 
 // Reactive variables
 const images = ref<Image[]>([])

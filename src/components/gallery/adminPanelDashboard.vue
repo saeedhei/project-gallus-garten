@@ -83,7 +83,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '../../services/api';
-import type { Image } from '@/models/ImageModel';
+import type Image from '../../types/ImageModel'
 
 // State variables
 const images = ref<Image[]>([])
@@ -165,9 +165,6 @@ const saveDescription = async (publicId: string, index: number) => {
 
 // Logout function
 const logout = () => {
-  // Clear any stored authentication tokens if applicable
-  localStorage.removeItem('token');
-  // Redirect to the login page
   router.push('/admin-panel-login');
 };
 
