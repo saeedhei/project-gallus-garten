@@ -6,7 +6,12 @@
     <!-- Main Gallery -->
     <main class="w-full max-w-6xl bg-gray-200 h-[80vh] overflow-y-auto p-4" ref="galleryContainer">
       <!-- Skeleton Loader -->
-      <SkeletonLoader v-if="loading" :count="9" />
+      <div
+        v-if="loading"
+        class="grid grid-cols-2 max-sm:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-1"
+      >
+        <SkeletonImage v-for="n in 9" :key="n" />
+      </div>
 
       <!-- Image Grid -->
       <div v-else class="grid grid-cols-2 max-sm:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-1">
@@ -16,12 +21,17 @@
           class="relative group w-full h-[25vh] max-sm:h-[15vh] sm:h-[22vh] md:h-[26vh] overflow-hidden bg-gray-300"
           @click="openImage(index)"
         >
-          <!-- Image -->
+          <!-- SkeletonImage for failed images -->
+          <SkeletonImage v-if="image.error" />
+
+          <!-- Actual image -->
           <img
+            v-else
             :src="image.url"
             :alt="image.description"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 hover-active"
-            loading="lazy"
+            @load="handleImageLoad(index)"
+            @error="handleImageError(index)"
           />
 
           <!-- Overlay -->
@@ -41,9 +51,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Loading Indicator -->
-      <div v-if="loading && !error" class="text-center py-4">Loading...</div>
 
       <!-- No More Images -->
       <div v-if="allDataLoaded && !error" class="text-center py-4 text-gray-500">
@@ -93,7 +100,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import GalleryFilter from './GalleryFilters.vue'
-import SkeletonLoader from './SkeletonLoader.vue'
+import SkeletonImage from './SkeletonImage.vue'
 import LikeIcon from './LikeIcon.vue'
 import ImageModal from './ImageModal.vue'
 import MobileImageModal from './MobileImageModal.vue'
@@ -121,14 +128,20 @@ const closeImage = () => {
   selectedImage.value = null
 }
 
+// Handle image load and error events
+const handleImageLoad = (index: number) => {
+  images.value[index].error = false // Successfully loaded
+}
+
+const handleImageError = (index: number) => {
+  images.value[index].error = true // Mark as error
+}
+
+// Load images from API
 const loadImages = async (tag: string | null = null, reset = false) => {
   if (loading.value || allDataLoaded.value) return
 
   loading.value = true
-  error.value = false
-
-  const container = galleryContainer.value
-  const currentScroll = container?.scrollTop || 0
 
   try {
     if (reset) {
@@ -141,7 +154,10 @@ const loadImages = async (tag: string | null = null, reset = false) => {
     })
 
     if (response.data.images && response.data.images.length > 0) {
-      images.value.push(...response.data.images)
+      response.data.images.forEach((image: Image) => {
+        images.value.push({ ...image, error: false })
+      })
+
       page.value++
       allDataLoaded.value = !response.data.hasMore
     } else {
@@ -149,18 +165,12 @@ const loadImages = async (tag: string | null = null, reset = false) => {
     }
   } catch (err) {
     console.error('Error loading images:', err)
-    error.value = true
   } finally {
     loading.value = false
-
-    if (container) {
-      requestAnimationFrame(() => {
-        container.scrollTop = currentScroll
-      })
-    }
   }
 }
 
+// Filter images by tag
 const updateFilter = (tag: string | null) => {
   if (selectedTag.value === tag) return
 
@@ -169,6 +179,7 @@ const updateFilter = (tag: string | null) => {
   loadImages(tag, true)
 }
 
+// Handle scrolling for infinite loading
 const handleScroll = () => {
   const container = galleryContainer.value
   if (container && container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {
@@ -216,13 +227,10 @@ const loadMoreImages = async () => {
 </script>
 
 <style scoped>
-@media (max-width: 640px) {
-  .hidden-hover {
-    display: none !important;
-  }
-
-  .hover-active {
-    transform: none !important;
-  }
+.hidden-hover {
+  display: none !important;
+}
+.hover-active {
+  transform: none !important;
 }
 </style>
