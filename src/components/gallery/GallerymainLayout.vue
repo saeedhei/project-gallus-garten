@@ -137,27 +137,22 @@ const handleImageError = (index: number) => {
   images.value[index].error = true // Mark as error
 }
 
-// Load images from API
 const loadImages = async (tag: string | null = null, reset = false) => {
   if (loading.value || allDataLoaded.value) return
-
   loading.value = true
-
+  error.value = false
+  const container = galleryContainer.value
+  const currentScroll = container?.scrollTop || 0
   try {
     if (reset) {
       images.value = []
       page.value = 1
     }
-
     const response = await api.get('images', {
       params: { page: page.value, tag },
     })
-
     if (response.data.images && response.data.images.length > 0) {
-      response.data.images.forEach((image: Image) => {
-        images.value.push({ ...image, error: false })
-      })
-
+      images.value.push(...response.data.images)
       page.value++
       allDataLoaded.value = !response.data.hasMore
     } else {
@@ -165,8 +160,14 @@ const loadImages = async (tag: string | null = null, reset = false) => {
     }
   } catch (err) {
     console.error('Error loading images:', err)
+    error.value = true
   } finally {
     loading.value = false
+    if (container) {
+      requestAnimationFrame(() => {
+        container.scrollTop = currentScroll
+      })
+    }
   }
 }
 
@@ -179,7 +180,6 @@ const updateFilter = (tag: string | null) => {
   loadImages(tag, true)
 }
 
-// Handle scrolling for infinite loading
 const handleScroll = () => {
   const container = galleryContainer.value
   if (container && container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {

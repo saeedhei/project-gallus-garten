@@ -80,20 +80,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import api from '../../services/api';
-import type Image from '../../types/ImageModel'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import api from "../../services/api";
+import type Image from "../../types/ImageModel";
 
 // State variables
-const images = ref<Image[]>([])
-const searchQuery = ref('');
+const images = ref<Image[]>([]);
+const searchQuery = ref("");
 const editingIndex = ref<number | null>(null);
-const editedDescription = ref<string>('');
+const editedDescription = ref<string>("");
 
 // Notification state
 const notificationMessage = ref<string | null>(null);
-const notificationType = ref<'success' | 'error'>('success');
+const notificationType = ref<"success" | "error">("success");
 
 // Router instance for navigation
 const router = useRouter();
@@ -101,34 +101,40 @@ const router = useRouter();
 // Fetch all images
 const fetchImages = async () => {
   try {
-    const response = await api.get('/adminPanelDash');
+    const response = await api.get("/adminPanelDash");
     images.value = response.data.images;
   } catch (error) {
-    console.error('Error fetching images:', error);
+    console.error("Error fetching images:", error);
+    notificationMessage.value = "Error fetching images!";
+    notificationType.value = "error";
+    setTimeout(() => (notificationMessage.value = null), 3000);
   }
 };
 
 // Search by publicId
 const handleSearch = async () => {
   try {
-    const response = await api.get('/adminPanelDash', {
+    const response = await api.get("/adminPanelDash", {
       params: { search: searchQuery.value },
     });
     images.value = response.data.images;
 
     if (!images.value.length) {
-      notificationMessage.value = 'No results found!';
-      notificationType.value = 'error';
+      notificationMessage.value = "No results found!";
+      notificationType.value = "error";
       setTimeout(() => (notificationMessage.value = null), 3000);
     }
   } catch (error) {
-    console.error('Error searching image:', error);
+    console.error("Error searching image:", error);
+    notificationMessage.value = "Image not found!";
+    notificationType.value = "error";
+    setTimeout(() => (notificationMessage.value = null), 3000);
   }
 };
 
 // Reset search and fetch all images
 const resetSearch = async () => {
-  searchQuery.value = '';
+  searchQuery.value = "";
   await fetchImages();
 };
 
@@ -143,29 +149,29 @@ const saveDescription = async (publicId: string, index: number) => {
     await api.put(
       `/adminPanelDash/update-description/${publicId}`,
       { description: editedDescription.value },
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { "Content-Type": "application/json" } }
     );
 
     images.value[index].description = editedDescription.value;
     editingIndex.value = null;
 
     // Show success notification
-    notificationMessage.value = 'Description updated successfully!';
-    notificationType.value = 'success';
+    notificationMessage.value = "Description updated successfully!";
+    notificationType.value = "success";
     setTimeout(() => (notificationMessage.value = null), 3000);
   } catch (error) {
-    console.error('Error updating description:', error);
+    console.error("Error updating description:", error);
 
     // Show error notification
-    notificationMessage.value = 'Failed to update description!';
-    notificationType.value = 'error';
+    notificationMessage.value = "Failed to update description!";
+    notificationType.value = "error";
     setTimeout(() => (notificationMessage.value = null), 3000);
   }
 };
 
 // Logout function
 const logout = () => {
-  router.push('/admin-panel-login');
+  router.push("/admin-panel-login");
 };
 
 onMounted(() => {
