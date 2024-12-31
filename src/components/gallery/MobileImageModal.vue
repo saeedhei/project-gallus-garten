@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref } from 'vue'
-import type { Image } from '@/models/ImageModel';
+import type Image from '../../types/ImageModel'
 
 
 defineProps({
