@@ -1,56 +1,54 @@
 <template>
-  <div class="w-[80vw] mt-8 flex flex-row justify-start m-2 relative">
-    <div class="w-full md:w-3/12 relative dropdown-container">
-      <label class="block mb-2 text-sm md:text-base text-gray-700 font-medium">
-        Filter by Category:
-      </label>
-      <div
-        @click="toggleCategoryDropdown"
-        class="p-2 border w-full text-sm md:text-base bg-white shadow cursor-pointer flex justify-between items-center"
+  <div class="w-[80vw] mt-8 flex flex-col gap-2 m-2">
+    <label class="block mb-2 text-sm md:text-base text-gray-700 font-medium">
+      Filter by Category:
+    </label>
+    <div
+      ref="scrollContainer"
+      class="scrollable-container flex items-center gap-2 overflow-x-auto bg-white shadow rounded-lg p-2"
+    >
+      <!-- "All Categories" Option -->
+      <button
+        @click="selectCategory(null)"
+        :class="[
+          'px-4 py-2 text-sm md:text-base rounded-lg focus:outline-none',
+          selectedCategory === null
+            ? 'bg-green-500 text-white font-bold'
+            : 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+        ]"
       >
-        <span class="text-gray-600">{{ selectedCategory || 'All Categories' }}</span>
-      </div>
-      <ul
-        v-if="isCategoryDropdownActive"
-        class="absolute bg-green-400 border bg-opacity-95 border-green-600 w-full max-h-[30vh] p-2 overflow-y-auto mt-2 z-50 shadow-lg transition-all duration-300 ease-in-out transform origin-top"
-        :class="dropdownAnimationClass"
-      >
-        <!-- Add "All Categories" option -->
-        <li
-          @click="selectCategory(null)"
-          class="p-2 cursor-pointer hover:bg-green-200 text-gray-700"
-        >
-          All Categories
-        </li>
+        All
+      </button>
 
-        <!-- List all other categories -->
-        <li
-          v-for="category in categories"
-          :key="category"
-          @click="selectCategory(category)"
-          class="p-2 cursor-pointer hover:bg-green-100 text-gray-700"
-        >
-          {{ category }}
-        </li>
-      </ul>
+      <!-- List of Categories -->
+      <button
+        v-for="category in categories"
+        :key="category"
+        @click="selectCategory(category)"
+        :class="[
+          'px-4 py-2 text-sm md:text-base rounded-lg focus:outline-none',
+          selectedCategory === category
+            ? 'bg-green-500 text-white font-bold'
+            : 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+        ]"
+      >
+        {{ category }}
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import api from "../../services/api"
+import { ref, onMounted } from 'vue'
+import api from '../../services/api'
 
 // Reactive states
-const categories = ref<string[]>([]) // List of categories
-const selectedCategory = ref<string | null>(null) // Currently selected category
-const isCategoryDropdownActive = ref(false) // Dropdown visibility control
-const dropdownAnimationClass = ref('scale-y-100 opacity-100') // Animation state
+const categories = ref<string[]>([])
+const selectedCategory = ref<string | null>(null)
+const scrollContainer = ref<HTMLElement | null>(null)
 
-// Emit selected category to the parent
 const emit = defineEmits(['filterChanged'])
 
-// Fetch categories from backend
 const fetchCategories = async () => {
   try {
     const response = await api.get('images/filter')
@@ -60,40 +58,63 @@ const fetchCategories = async () => {
   }
 }
 
-// Toggle dropdown visibility
-const toggleCategoryDropdown = () => {
-  isCategoryDropdownActive.value = !isCategoryDropdownActive.value
-  dropdownAnimationClass.value = isCategoryDropdownActive.value
-    ? 'scale-y-100 opacity-100'
-    : 'scale-y-0 opacity-0'
+const selectCategory = (category: string | null) => {
+  selectedCategory.value = category
+  emit('filterChanged', category)
 }
 
-// Close dropdown when clicking outside
-const handleClickOutside = (event: MouseEvent) => {
-  const target = event.target as HTMLElement
-  const dropdownContainer = document.querySelector('.dropdown-container')
-  if (dropdownContainer && !dropdownContainer.contains(target)) {
-    isCategoryDropdownActive.value = false
-    dropdownAnimationClass.value = 'scale-y-0 opacity-0'
+let isDragging = false
+let startX: number
+let scrollLeft: number
+
+const handleMouseDown = (event: MouseEvent) => {
+  isDragging = true
+  startX = event.pageX - (scrollContainer.value?.offsetLeft || 0)
+  scrollLeft = scrollContainer.value?.scrollLeft || 0
+  scrollContainer.value?.classList.add('dragging')
+}
+
+const handleMouseMove = (event: MouseEvent) => {
+  if (!isDragging) return
+  event.preventDefault()
+  const x = event.pageX - (scrollContainer.value?.offsetLeft || 0)
+  const walk = x - startX // Calculate the distance moved
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollLeft = scrollLeft - walk
   }
 }
 
-// Add event listener for clicks outside dropdown
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-  fetchCategories()
-})
-
-// Remove event listener to avoid memory leaks
-onBeforeUnmount(() => {
-  document.removeEventListener('click', handleClickOutside)
-})
-
-// Handle category selection
-const selectCategory = (category: string | null) => {
-  selectedCategory.value = category
-  emit('filterChanged', category) // Emit selected category to the parent
-  isCategoryDropdownActive.value = false // Close dropdown
-  dropdownAnimationClass.value = 'scale-y-0 opacity-0'
+const handleMouseUp = () => {
+  isDragging = false
+  scrollContainer.value?.classList.remove('dragging')
 }
+
+onMounted(() => {
+  fetchCategories()
+  if (scrollContainer.value) {
+    scrollContainer.value.addEventListener('mousedown', handleMouseDown)
+    scrollContainer.value.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+  }
+})
 </script>
+
+<style scoped>
+.scrollable-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  cursor: grab;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable-container.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+</style>
