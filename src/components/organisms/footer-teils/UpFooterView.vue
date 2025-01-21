@@ -28,7 +28,7 @@ const updateTime = () => {
   })
 
   // Update label class and text based on time
-  if (parseInt(currentHour) >= 14 && parseInt(currentHour) < 17) {
+  if (parseInt(currentHour) >= 8 && parseInt(currentHour) < 17) {
     labelClass.value = 'green'
     labelText.value = 'Jetzt verfügbar!'
   } else {
