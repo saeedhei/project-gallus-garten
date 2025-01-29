@@ -65,16 +65,23 @@
         </div>
         <div v-else>
           <p class="mb-4 text-gray-700">{{ image.description }}</p>
-          <button
-            @click="startEditing(index, image.description)"
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Edit Description
-          </button>
+          <div class="flex w-full justify-between">
+            <button
+              @click="startEditing(index, image.description)"
+              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            >
+              Edit Description
+            </button>
+            <!-- <button
+              @click="removeImage(image.publicId)"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Remove
+            </button> -->
+          </div>
         </div>
       </div>
     </div>
-
     <p v-else class="text-center text-gray-700">No images found.</p>
   </div>
 </template>
@@ -168,6 +175,19 @@ const saveDescription = async (publicId: string, index: number) => {
     setTimeout(() => (notificationMessage.value = null), 3000)
   }
 }
+
+// const removeImage = async (publicId: string) => {
+//   try {
+//     await api.delete(`/adminPanelDash/remove/${publicId}`)
+//     images.value = images.value.filter((image) => image.publicId !== publicId)
+//     notificationMessage.value = 'Image removed successfully!'
+//     setTimeout(() => (notificationMessage.value = null), 3000)
+//   } catch (error) {
+//     console.error('Error removing image:', error)
+//     notificationMessage.value = 'Failed to remove image.'
+//     notificationType.value = 'error'
+//   }
+// }
 
 // Logout function
 const logout = () => {

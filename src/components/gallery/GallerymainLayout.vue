@@ -288,7 +288,8 @@ const loadMoreImages = async () => {
 </script>
 
 <style scoped>
-.hidden-hover {
+.hidden-
+ {
   display: none !important;
 }
 .hover-active {
