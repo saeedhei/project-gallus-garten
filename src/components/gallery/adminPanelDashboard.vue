@@ -8,57 +8,44 @@
     </div>
 
     <!-- Notification Popup -->
-    <div
-      v-if="notificationMessage"
-      class="fixed top-4 right-4 px-4 py-2 rounded shadow text-white"
-      :class="notificationType === 'success' ? 'bg-green-500' : 'bg-red-500'"
-    >
+    <div v-if="notificationMessage" class="fixed top-4 right-4 px-4 py-2 rounded shadow text-white"
+      :class="notificationType === 'success' ? 'bg-green-500' : 'bg-red-500'">
       {{ notificationMessage }}
     </div>
 
     <!-- Search Section -->
     <div class="mb-6 flex justify-center items-center gap-4">
-      <input
-        v-model="searchQuery"
-        type="text"
-        placeholder="Search by Public ID..."
-        class="p-2 border text-gray-700 rounded w-1/2"
-      />
-      <button
-        @click="handleSearch"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
+      <input v-model="searchQuery" type="text" placeholder="Search by Public ID..."
+        class="p-2 border text-gray-700 rounded w-1/2" />
+      <button @click="handleSearch" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
         Search
       </button>
-      <button
-        @click="resetSearch"
-        class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-      >
+      <button @click="resetSearch" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
         Reset
       </button>
     </div>
 
     <!-- Image List -->
     <div v-if="images.length" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div
-        v-for="(image, index) in images"
-        :key="image.publicId"
-        class="p-4 border rounded-lg shadow-lg bg-white"
-      >
-        <img :src="image.url" :alt="image.publicId" class="w-full h-40 object-cover rounded mb-4" />
+      <div v-for="(image, index) in images" :key="image.publicId"
+        class="p-4 border rounded-lg shadow-lg bg-white relative">
+        <div class="relative">
+          <img :src="image.url" :alt="image.publicId" class="w-full h-40 object-cover rounded mb-4"
+            :class="{ 'opacity-40 grayscale-50': !image.isPublic }" />
+          <button class="absolute top-2 right-2 bg-green-300 rounded-full p-2 shadow"
+            @click="toggleVisibility(image, index)">
+            <img :src="image.isPublic ? eyeVisiblen : eyeHidden" class="w-6 h-6" />
+          </button>
+        </div>
+
         <p class="font-semibold text-gray-700 mb-2">Public ID: {{ image.publicId }}</p>
 
         <div v-if="editingIndex === index">
-          <textarea
-            v-model="editedDescription"
-            class="w-full p-2 border text-gray-700 rounded mb-2"
-            rows="3"
-          ></textarea>
+          <textarea v-model="editedDescription" class="w-full p-2 border text-gray-700 rounded mb-2"
+            rows="3"></textarea>
           <div class="flex text-gray-700 gap-2">
-            <button
-              @click="saveDescription(image.publicId, index)"
-              class="bg-green-500 px-4 py-2 text-white rounded hover:bg-green-600"
-            >
+            <button @click="saveDescription(image.publicId, index)"
+              class="bg-green-500 px-4 py-2 text-white rounded hover:bg-green-600">
               Save
             </button>
           </div>
@@ -66,18 +53,10 @@
         <div v-else>
           <p class="mb-4 text-gray-700">{{ image.description }}</p>
           <div class="flex w-full justify-between">
-            <button
-              @click="startEditing(index, image.description)"
-              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
-            >
+            <button @click="startEditing(index, image.description)"
+              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">
               Edit Description
             </button>
-            <!-- <button
-              @click="removeImage(image.publicId)"
-              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            >
-              Remove
-            </button> -->
           </div>
         </div>
       </div>
@@ -91,6 +70,9 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '../../services/api'
 import type Image from '../../types/ImageModel'
+
+const eyeHidden = '../../../images/eyeHidden.svg';
+const eyeVisiblen = '../../../images/eyeVisible.svg';
 
 // State variables
 const images = ref<Image[]>([])
@@ -176,18 +158,18 @@ const saveDescription = async (publicId: string, index: number) => {
   }
 }
 
-// const removeImage = async (publicId: string) => {
-//   try {
-//     await api.delete(`/adminPanelDash/remove/${publicId}`)
-//     images.value = images.value.filter((image) => image.publicId !== publicId)
-//     notificationMessage.value = 'Image removed successfully!'
-//     setTimeout(() => (notificationMessage.value = null), 3000)
-//   } catch (error) {
-//     console.error('Error removing image:', error)
-//     notificationMessage.value = 'Failed to remove image.'
-//     notificationType.value = 'error'
-//   }
-// }
+const toggleVisibility = async (image: Image, index: number) => {
+  try {
+    const newStatus = !image.isPublic
+    await api.put(`/adminPanelDash/imageStatus/${image.publicId}`, { isVisible: newStatus })
+    images.value[index].isPublic = newStatus
+  } catch (error) {
+    console.error('Error updating visibility:', error)
+    notificationMessage.value = 'Failed to update visibility!'
+    notificationType.value = 'error'
+    setTimeout(() => (notificationMessage.value = null), 3000)
+  }
+}
 
 // Logout function
 const logout = () => {

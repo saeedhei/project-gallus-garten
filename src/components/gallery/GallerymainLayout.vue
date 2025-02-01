@@ -184,7 +184,7 @@ const loadImages = async (tag: string | null = null, reset = false) => {
       page.value = 1
     }
 
-    const response = await api.get('images', {
+    const response = await api.get('/images', {
       params: { page: page.value, tag },
     })
 

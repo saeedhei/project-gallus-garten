@@ -5,4 +5,5 @@ export default interface Image {
   likes: number;
   views: number;
   error: boolean;
+  isPublic: boolean;
 }

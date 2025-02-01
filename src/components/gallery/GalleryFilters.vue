@@ -51,7 +51,7 @@ const emit = defineEmits(['filterChanged'])
 
 const fetchCategories = async () => {
   try {
-    const response = await api.get('images/filter')
+    const response = await api.get('/images/filter')
     categories.value = response.data.tags
   } catch (error) {
     console.error('Error fetching categories:', error)

@@ -101,7 +101,6 @@ const goToPrevious = () => {
 </script>
 
 <style scoped>
-
 button {
   display: flex;
   align-items: center;
