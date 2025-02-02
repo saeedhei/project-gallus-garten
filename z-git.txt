@@ -4,8 +4,8 @@ git remote add origin https://github.com/saeedhei/project-gallus-garten.git
 git remote -v
 
 git add .
-git commit -m "updated"
-git push origin main
+git commit -m "arthur updated"
+git push origin main 
 
 error: src refspec main does not match any
 error: failed to push some refs to 'https://github.com/saeedhei/project-gallus-garten.git'
