@@ -33,22 +33,34 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import api from '../../services/api'
 
-const username = ref('')
-const password = ref('')
+const username = ref<string>('')
+const password = ref<string>('')
+const errorMessage = ref<string>('')
 const router = useRouter()
 
-const correctUsername = import.meta.env.VITE_GALLUS_ADMIN_USER
-const correctPassword = import.meta.env.VITE_GALLUS_ADMIN_PASSWORD
-const errorMessage = ref('')
+const handleLogin = async () => {
+  try {
+    const response = await api.post('/login', {
+      username: username.value,
+      password: password.value,
+    })
 
-const handleLogin = () => {
-  if (username.value === correctUsername && password.value === correctPassword) {
-    router.push('/dashboard')
-  } else {
-    errorMessage.value = 'Invalid username or password'
+    if (response.status === 200) {
+      router.push('/dashboard')
+    }
+  } catch (error) {
+    const axiosError = error as { response?: { status: number } }
+
+    // Handle errors from the API
+    if (axiosError.response?.status === 401) {
+      errorMessage.value = 'Invalid username or password'
+    } else if (axiosError.response) {
+      errorMessage.value = 'An error occurred. Please try again later.'
+    } else {
+      errorMessage.value = 'An unexpected error occurred.'
+    }
   }
 }
 </script>
-
-

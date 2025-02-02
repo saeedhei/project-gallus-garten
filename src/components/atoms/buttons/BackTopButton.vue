@@ -16,8 +16,9 @@
         stroke-linejoin="round"
         stroke-width="3"
       >
-        <path d="M30 20 L16 8 2 20" /></svg
-    ></span>
+        <path d="M30 20 L16 8 2 20" />
+      </svg>
+    </span>
   </div>
 </template>
 
@@ -149,7 +150,7 @@ body {
 	text-align: center;
 	line-height: 46px;
 	font-size: 24px;
-	color: rgba(0, 0, 0, 0.3); 
+	color: rgba(0, 0, 0, 0.3);
 	left: 0;
 	top: 0;
 	height: 46px;
@@ -171,7 +172,7 @@ body {
 	line-height: 46px;
 	font-size: 24px;
 	opacity: 0;
-	background: black; 
+	background: black;
   background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -211,7 +212,7 @@ body {
       <path d="M12 4l-8 8h6v8h4v-8h6z"/>
     </svg>
     <span>Top</span>
-    
+
   </button>
 </template>
 

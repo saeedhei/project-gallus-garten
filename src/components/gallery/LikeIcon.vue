@@ -1,8 +1,10 @@
 <template>
   <div
     class="absolute top-2 right-2 flex items-center space-x-1 cursor-pointer bg-white rounded-full px-2 py-1 shadow-md"
-    @click="incrementLikes"
   >
+    <!-- USE FOR LIKE COUNT LOGIC -->
+    <!-- @click="incrementLikes"  -->
+
     <!-- Leaf Icon -->
     <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
       <g fill="none" fill-rule="evenodd">
@@ -40,7 +42,7 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import api from '../../services/api' // Centralized API instance
+// import api from '../../services/api'
 
 // Destructure props directly from defineProps
 const props = defineProps({
@@ -65,15 +67,12 @@ const leafColor = computed(() => {
 })
 
 // Handle the click to increment likes
-const incrementLikes = async () => {
-  try {
-    // Use the centralized API instance with baseURL
-    const response = await api.post(`/likes/${props.imageId}/like`)
-    currentLikes.value = response.data.likes // Update likes count dynamically
-  } catch (error) {
-    console.error('Error incrementing likes:', error)
-  }
-}
+// const incrementLikes = async () => {
+//   try {
+//     const response = await api.post(`/likes/${props.imageId}/like`)
+//     currentLikes.value = response.data.likes // Update likes count dynamically
+//   } catch (error) {
+//     console.error('Error incrementing likes:', error)
+//   }
+// }
 </script>
-
-<style scoped></style>
