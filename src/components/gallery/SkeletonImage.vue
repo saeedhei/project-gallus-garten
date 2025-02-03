@@ -1,5 +1,7 @@
 <template>
-  <div class="relative w-full h-full bg-gray-100 overflow-hidden rounded-lg flex items-center justify-center">
+  <div
+    class="relative w-full h-full bg-gray-100 overflow-hidden rounded-lg flex items-center justify-center"
+  >
     <!-- Shimmer Background -->
     <div
       class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"

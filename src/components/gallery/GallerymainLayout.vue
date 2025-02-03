@@ -94,11 +94,7 @@
           rel="noopener noreferrer"
           class="cursor-pointer enabled:hover:border-gray-400"
         >
-          <img
-            src="../../../public/images/logo.png"
-            alt="Developer Logo"
-            class="inline-block w-[80px] h-8 ml-2"
-          />
+          <img src="/images/logo.png" alt="Developer Logo" class="inline-block w-[80px] h-8 ml-2" />
         </a>
       </p>
     </div>
@@ -288,8 +284,7 @@ const loadMoreImages = async () => {
 </script>
 
 <style scoped>
-.hidden-
- {
+.hidden- {
   display: none !important;
 }
 .hover-active {
