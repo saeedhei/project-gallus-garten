@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col items-center bg-green-200">
+  <div class="h-screen flex flex-col items-center bg-gray-100">
     <!-- Notification Bar -->
     <div
       v-if="isOffline"
