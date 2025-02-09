@@ -46,7 +46,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <HeaderShort />
+  <HeaderShort title="Über uns" />
   <main>
     <div class="page container mx-auto px-4">
       <section class="py-8">

@@ -4,7 +4,7 @@
     class="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center"
   >
     <!-- Main Modal Container -->
-    <div class="relative w-[90vw] max-w-[1100px] h-[80vh] bg-gray-900 rounded-lg shadow-lg flex">
+    <div class="relative w-[90vw] max-w-[1100px] h-[80vh] mt-[5vh] bg-gray-900 rounded-lg shadow-lg flex">
       <!-- Image Section -->
       <div class="w-[70%] flex items-center justify-center bg-black">
         <img
@@ -15,9 +15,9 @@
       </div>
 
       <!-- Details Section -->
-      <div class="w-[30%] p-4 text-white">
+      <div class="w-[30%] p-8 text-white">
         <button
-          class="absolute top-4 right-4 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-full shadow-md"
+          class="absolute top-8 right-4 bg-gray-700 hover:bg-gray-600 text-white p-3 rounded shadow-md"
           @click="closeModal"
         >
           ✕
