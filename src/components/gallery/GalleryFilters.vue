@@ -1,8 +1,5 @@
 <template>
   <div class="w-[80vw] mt-8 flex flex-col gap-2 m-2">
-    <label class="block mb-2 text-sm md:text-base text-gray-700 font-medium">
-      Filter by Category:
-    </label>
     <div
       ref="scrollContainer"
       class="scrollable-container flex items-center gap-2 overflow-x-auto bg-white shadow rounded-lg p-2"

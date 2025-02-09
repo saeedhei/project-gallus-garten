@@ -5,7 +5,7 @@
   >
     <!-- Modal Container -->
     <div
-      class="w-full max-w-md h-[80vh] bg-gray-900 rounded-lg shadow-lg overflow-y-auto"
+      class="w-full max-w-md h-[80vh] mt-10 bg-gray-900 rounded-lg shadow-lg overflow-y-auto"
       ref="modalContainer"
       @scroll="handleScroll"
     >
@@ -36,7 +36,7 @@
 
     <!-- Close Button -->
     <button
-      class="absolute top-4 right-4 mt-[50px] bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-full shadow-md"
+      class="absolute top-4 right-4 mt-[80px] bg-gray-700 hover:bg-gray-600 text-white p-2 rounded shadow-md"
       @click="closeModal"
     >
       ✕
@@ -45,8 +45,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { defineProps, defineEmits, ref } from 'vue'
 import type Image from '../../types/ImageModel'
+
 
 defineProps({
   isOpen: {

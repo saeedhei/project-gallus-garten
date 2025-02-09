@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col items-center bg-gray-100">
+  <div class="flex flex-col items-center bg-green-100">
     <!-- Notification Bar -->
     <div
       v-if="isOffline"
@@ -38,7 +38,16 @@
         v-if="loading"
         class="grid grid-cols-2 max-sm:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-1"
       >
-        <SkeletonImage v-for="n in 9" :key="n" />
+        <div
+          v-for="n in 9"
+          :key="n"
+          class="relative group w-full h-[25vh] max-sm:h-[15vh] sm:h-[22vh] md:h-[26vh] overflow-hidden bg-gray-300 animate-pulse"
+        >
+          <!-- Skeleton Placeholder -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"
+          ></div>
+        </div>
       </div>
 
       <!-- Image Grid -->
@@ -49,12 +58,8 @@
           class="relative group w-full h-[25vh] max-sm:h-[15vh] sm:h-[22vh] md:h-[26vh] overflow-hidden bg-gray-300"
           @click="openImage(index)"
         >
-          <!-- SkeletonImage for failed images -->
-          <SkeletonImage v-if="image.error" />
-
           <!-- Actual image -->
           <img
-            v-else
             :src="image.url"
             :alt="image.description"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 hover-active"
@@ -86,17 +91,18 @@
       </div>
     </main>
     <div>
-      <p class="text-black mt-4">
-        Developed by:
-        <a
-          href="https://arthurvarteressians.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="cursor-pointer enabled:hover:border-gray-400"
-        >
-          <img src="/images/logo.png" alt="Developer Logo" class="inline-block w-[80px] h-8 ml-2" />
-        </a>
-      </p>
+      <a
+        href="https://arthurvarteressians.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cursor-pointer enabled:hover:border-gray-400"
+      >
+        <img
+          src="../../../public/images/logo.png"
+          alt="Developer Logo"
+          class="inline-block w-[100px] h-10 m-3"
+        />
+      </a>
     </div>
 
     <!-- Render Image Modals -->
@@ -124,7 +130,6 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import GalleryFilter from './GalleryFilters.vue'
-import SkeletonImage from './SkeletonImage.vue'
 import LikeIcon from './LikeIcon.vue'
 import ImageModal from './ImageModal.vue'
 import MobileImageModal from './MobileImageModal.vue'
@@ -158,11 +163,11 @@ const closeImage = () => {
 
 // Handle image load and error events
 const handleImageLoad = (index: number) => {
-  images.value[index].error = false // Successfully loaded
+  console.log(`Image ${index} loaded successfully`)
 }
 
 const handleImageError = (index: number) => {
-  images.value[index].error = true // Mark as error
+  console.log(`Image ${index} failed to load`)
 }
 
 // Load images from the API with retry logic
@@ -284,36 +289,34 @@ const loadMoreImages = async () => {
 </script>
 
 <style scoped>
-.hidden- {
-  display: none !important;
-}
-.hover-active {
-  transform: none !important;
-}
-
-@keyframes slideRight {
+/* Shimmer Animation */
+@keyframes shimmer {
   0% {
-    transform: translateX(100%);
-    opacity: 0;
+    transform: translateX(-100%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
     opacity: 1;
   }
-}
-
-@media (max-width: 640px) {
-  span {
-    font-size: 10px; /* Tailwind's text-sm equivalent */
+  100% {
+    opacity: 0.5;
   }
-}
-@media (min-width: 641px) {
-  span {
-    font-size: 14px; /* Tailwind's text-base equivalent */
-  }
-}
-
-.animate-slide-down {
-  animation: slideDown 0.5s ease-in-out forwards;
 }
 </style>
