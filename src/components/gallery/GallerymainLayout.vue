@@ -143,7 +143,7 @@ const page = ref(1)
 const allDataLoaded = ref(false)
 const galleryContainer = ref<HTMLElement | null>(null)
 const error = ref(false)
-const selectedTag = ref<string | null>(null)
+const selectedCategories = ref<string | null>(null)
 
 // Modal logic
 const selectedImage = ref<number | null>(null)
@@ -171,7 +171,7 @@ const handleImageError = (index: number) => {
 }
 
 // Load images from the API with retry logic
-const loadImages = async (tag: string | null = null, reset = false) => {
+const loadImages = async (categories: string | null = null, reset = false) => {
   if (loading.value || allDataLoaded.value || retryCount.value >= MAX_RETRIES) return
   loading.value = true
   error.value = false
@@ -186,7 +186,7 @@ const loadImages = async (tag: string | null = null, reset = false) => {
     }
 
     const response = await api.get('/images', {
-      params: { page: page.value, tag },
+      params: { page: page.value, categories },
     })
 
     if (response.data.images && response.data.images.length > 0) {
@@ -217,18 +217,18 @@ const loadImages = async (tag: string | null = null, reset = false) => {
 }
 
 // Filter images by tag
-const updateFilter = (tag: string | null) => {
-  if (selectedTag.value === tag) return
+const updateFilter = (categories: string | null) => {
+  if (selectedCategories.value === categories) return
 
-  selectedTag.value = tag
+  selectedCategories.value = categories
   allDataLoaded.value = false
-  loadImages(tag, true)
+  loadImages(categories, true)
 }
 
 const handleScroll = () => {
   const container = galleryContainer.value
   if (container && container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {
-    loadImages(selectedTag.value)
+    loadImages(selectedCategories.value)
   }
 }
 
@@ -241,7 +241,7 @@ const updateConnectionStatus = () => {
   } else {
     console.log('Back online. Retrying...')
     retryCount.value = 0 // Reset retry count when back online
-    loadImages(selectedTag.value)
+    loadImages(selectedCategories.value)
   }
 }
 
@@ -249,7 +249,7 @@ const goToNext = async () => {
   if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
     selectedImage.value++
   } else if (!allDataLoaded.value) {
-    await loadImages(selectedTag.value)
+    await loadImages(selectedCategories.value)
     if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
       selectedImage.value++
     }
@@ -283,7 +283,7 @@ onUnmounted(() => {
 
 const loadMoreImages = async () => {
   if (!allDataLoaded.value && !loading.value) {
-    await loadImages(selectedTag.value)
+    await loadImages(selectedCategories.value)
   }
 }
 </script>
