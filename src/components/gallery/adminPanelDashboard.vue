@@ -8,57 +8,178 @@
     </div>
 
     <!-- Notification Popup -->
-    <div v-if="notificationMessage" class="fixed top-4 right-4 px-4 py-2 rounded shadow text-white"
-      :class="notificationType === 'success' ? 'bg-green-500' : 'bg-red-500'">
+    <div
+      v-if="notificationMessage"
+      class="fixed top-4 right-4 px-4 py-2 rounded shadow text-white"
+      :class="notificationType === 'success' ? 'bg-green-500' : 'bg-red-500'"
+    >
       {{ notificationMessage }}
     </div>
 
     <!-- Search Section -->
     <div class="mb-6 flex justify-center items-center gap-4">
-      <input v-model="searchQuery" type="text" placeholder="Search by Public ID..."
-        class="p-2 border text-gray-700 rounded w-1/2" />
-      <button @click="handleSearch" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Search by Public ID..."
+        class="p-2 border text-gray-700 rounded w-1/2"
+      />
+      <button
+        @click="handleSearch"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
         Search
       </button>
-      <button @click="resetSearch" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+      <button
+        @click="resetSearch"
+        class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+      >
         Reset
       </button>
     </div>
 
     <!-- Image List -->
     <div v-if="images.length" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div v-for="(image, index) in images" :key="image.publicId"
-        class="p-4 border rounded-lg shadow-lg bg-white relative">
+      <div
+        v-for="(image, index) in images"
+        :key="image.publicId"
+        class="p-4 border rounded-lg shadow-lg bg-white relative"
+      >
         <div class="relative">
-          <img :src="image.url" :alt="image.publicId" class="w-full h-40 object-cover rounded mb-4"
-            :class="{ 'opacity-40 grayscale-50': !image.isPublic }" />
-          <button class="absolute top-2 right-2 bg-green-300 rounded-full p-2 shadow"
-            @click="toggleVisibility(image, index)">
+          <img
+            :src="image.url"
+            :alt="image.publicId"
+            class="w-full h-40 object-cover rounded mb-4"
+            :class="{ 'opacity-40 grayscale-50': !image.isPublic }"
+          />
+          <button
+            class="absolute top-2 right-2 bg-green-300 rounded-full p-2 shadow"
+            @click="toggleVisibility(image, index)"
+          >
             <img :src="image.isPublic ? eyeVisiblen : eyeHidden" class="w-6 h-6" />
           </button>
         </div>
 
         <p class="font-semibold text-gray-700 mb-2">Public ID: {{ image.publicId }}</p>
-
+        <div class="mt-4">
+          <p class="text-gray-700">
+            <strong>Categories:</strong>
+            {{ Array.isArray(image.categories) ? image.categories.join(', ') : image.categories }}
+          </p>
+          <p class="text-gray-700"><strong>Year:</strong> {{ image.year }}</p>
+        </div>
+        <!-- Edit Description -->
         <div v-if="editingIndex === index">
-          <textarea v-model="editedDescription" class="w-full p-2 border text-gray-700 rounded mb-2"
-            rows="3"></textarea>
+          <textarea
+            v-model="editedDescription"
+            class="w-full p-2 border text-gray-700 rounded mb-2"
+            rows="3"
+          >
+          </textarea>
           <div class="flex text-gray-700 gap-2">
-            <button @click="saveDescription(image.publicId, index)"
-              class="bg-green-500 px-4 py-2 text-white rounded hover:bg-green-600">
+            <button
+              @click="saveDescription(image.publicId, index)"
+              class="bg-green-500 px-4 py-2 text-white rounded hover:bg-green-600"
+            >
               Save
+            </button>
+            <button
+              @click="cancelEditingDescription"
+              class="bg-red-500 px-4 py-2 text-white rounded hover:bg-red-600"
+            >
+              Cancel
             </button>
           </div>
         </div>
         <div v-else>
-          <p class="mb-4 text-gray-700">{{ image.description }}</p>
+          <p class="mb-4 text-gray-700"><strong> Description:</strong> {{ image.description }}</p>
           <div class="flex w-full justify-between">
-            <button @click="startEditing(index, image.description)"
-              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">
+            <button
+              @click="startEditingDescription(index, image.description)"
+              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            >
               Edit Description
+            </button>
+            <button
+              @click="startEditingCategories(index)"
+              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            >
+              Edit Categories
+            </button>
+            <button
+              @click="startEditingYear(index)"
+              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            >
+              Edit Year
             </button>
           </div>
         </div>
+
+        <!-- Edit Categories -->
+        <div v-if="editingCategoriesIndex === index" class="mt-4">
+          <input
+            v-model="categorySearchQuery"
+            type="text"
+            placeholder="Search categories..."
+            class="p-2 border text-gray-700 rounded w-full mb-2"
+          />
+          <div class="max-h-40 overflow-y-auto">
+            <div
+              v-for="category in filteredCategories"
+              :key="category"
+              class="flex items-center mb-2"
+            >
+              <input
+                type="checkbox"
+                :id="`category-${category}`"
+                :value="category"
+                v-model="selectedCategories"
+                class="mr-2"
+              />
+              <label :for="`category-${category}`" class="text-gray-700">{{ category }}</label>
+            </div>
+          </div>
+          <div class="flex gap-2 mt-2">
+            <button
+              @click="saveCategories(image.publicId, index)"
+              class="bg-green-500 px-4 py-2 text-white rounded hover:bg-green-600"
+            >
+              Save
+            </button>
+            <button
+              @click="cancelEditingCategories"
+              class="bg-red-500 px-4 py-2 text-white rounded hover:bg-red-600"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <!-- Edit Year -->
+        <div v-if="editingYearIndex === index" class="mt-4">
+          <select v-model="selectedYear" class="w-full p-2 border text-gray-700 rounded">
+            <option v-for="year in years" :key="year" :value="year">
+              {{ year }}
+            </option>
+          </select>
+          <div class="flex gap-2 mt-2">
+            <button
+              @click="saveYear(image.publicId, index)"
+              class="bg-green-500 px-4 py-2 text-white rounded hover:bg-green-600"
+            >
+              Save
+            </button>
+
+            <button
+              @click="cancelEditingYears"
+              class="bg-red-500 px-4 text-white rounded hover:bg-red-600"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <!-- Display Categories and Year -->
       </div>
     </div>
     <p v-else class="text-center text-gray-700">No images found.</p>
@@ -66,19 +187,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '../../services/api'
 import type Image from '../../types/ImageModel'
 
-const eyeHidden = '../../../images/eyeHidden.svg';
-const eyeVisiblen = '../../../images/eyeVisible.svg';
+const eyeHidden = '../../../images/eyeHidden.svg'
+const eyeVisiblen = '../../../images/eyeVisible.svg'
 
 // State variables
-const images = ref<Image[]>([])
 const searchQuery = ref('')
 const editingIndex = ref<number | null>(null)
+const editingCategoriesIndex = ref<number | null>(null)
+const editingYearIndex = ref<number | null>(null)
 const editedDescription = ref<string>('')
+const selectedYear = ref<number | null>(null)
+const categorySearchQuery = ref('')
+const categories = ref<string[]>([])
+const years = ref<number[]>([])
+const selectedCategories = ref<string[]>([])
+const images = ref<Image[]>([])
 
 // Notification state
 const notificationMessage = ref<string | null>(null)
@@ -97,6 +225,27 @@ const fetchImages = async () => {
     notificationMessage.value = 'Error fetching images!'
     notificationType.value = 'error'
     setTimeout(() => (notificationMessage.value = null), 3000)
+  }
+}
+
+// Fetch all categories
+const fetchCategories = async () => {
+  try {
+    const response = await api.get('/categories')
+    categories.value = response.data.categories
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+    notificationMessage.value = 'Error fetching categories!'
+    notificationType.value = 'error'
+    setTimeout(() => (notificationMessage.value = null), 3000)
+  }
+}
+
+// Generate years from 2019 to current year
+const generateYears = () => {
+  const currentYear = new Date().getFullYear()
+  for (let year = 2019; year <= currentYear; year++) {
+    years.value.push(year)
   }
 }
 
@@ -123,16 +272,36 @@ const handleSearch = async () => {
 
 // Reset search and fetch all images
 const resetSearch = async () => {
-  searchQuery.value = ''
-  await fetchImages()
+  try {
+    searchQuery.value = ''
+    await fetchImages()
+  } catch (error) {
+    console.error('Error resetting images:', error)
+    notificationMessage.value = 'Failed to reset search!'
+    notificationType.value = 'error'
+    setTimeout(() => (notificationMessage.value = null), 3000)
+  }
 }
 
 // Edit description
-const startEditing = (index: number, currentDescription: string) => {
+const startEditingDescription = (index: number, currentDescription: string) => {
   editingIndex.value = index
   editedDescription.value = currentDescription
 }
 
+// Edit categories
+const startEditingCategories = (index: number) => {
+  editingCategoriesIndex.value = index
+  selectedCategories.value = [...images.value[index].categories] // Copy categories to avoid direct mutation
+}
+
+// Edit year
+const startEditingYear = (index: number) => {
+  editingYearIndex.value = index
+  selectedYear.value = images.value[index].year
+}
+
+// Save description
 const saveDescription = async (publicId: string, index: number) => {
   try {
     await api.put(
@@ -158,6 +327,66 @@ const saveDescription = async (publicId: string, index: number) => {
   }
 }
 
+// Save categories
+const saveCategories = async (publicId: string, index: number) => {
+  try {
+    await api.put(
+      `/update-categories/${publicId}`,
+      { categories: selectedCategories.value },
+      { headers: { 'Content-Type': 'application/json' } },
+    )
+
+    images.value[index].categories = selectedCategories.value
+    editingCategoriesIndex.value = null
+
+    // Show success notification
+    notificationMessage.value = 'Categories updated successfully!'
+    notificationType.value = 'success'
+    setTimeout(() => (notificationMessage.value = null), 3000)
+  } catch (error) {
+    console.error('Error updating categories:', error)
+
+    // Show error notification
+    notificationMessage.value = 'Failed to update categories!'
+    notificationType.value = 'error'
+    setTimeout(() => (notificationMessage.value = null), 3000)
+  }
+}
+
+// Save year
+const saveYear = async (publicId: string, index: number) => {
+  try {
+    await api.put(
+      `/update-year/${publicId}`,
+      { year: selectedYear.value },
+      { headers: { 'Content-Type': 'application/json' } },
+    )
+
+    // Ensure selectedYear.value is a number
+    if (selectedYear.value !== null) {
+      images.value[index].year = selectedYear.value
+    } else {
+      console.error('Selected year is null')
+      return
+    }
+
+    editingYearIndex.value = null
+
+    // Show success notification
+    notificationMessage.value = 'Year updated successfully!'
+    notificationType.value = 'success'
+    setTimeout(() => (notificationMessage.value = null), 3000)
+  } catch (error) {
+    console.error('Error updating year:', error)
+
+    // Show error notification
+    notificationMessage.value = 'Failed to update year!'
+    notificationType.value = 'error'
+    setTimeout(() => (notificationMessage.value = null), 3000)
+  }
+}
+
+// Toggle visibility
 const toggleVisibility = async (image: Image, index: number) => {
   try {
     const newStatus = !image.isPublic
@@ -176,7 +405,33 @@ const logout = () => {
   router.push('/admin-panel-login')
 }
 
+// Cancel editing description
+const cancelEditingDescription = () => {
+  editingIndex.value = null
+  editedDescription.value = ''
+}
+
+// Cancel editing categories
+const cancelEditingCategories = () => {
+  editingCategoriesIndex.value = null
+  selectedCategories.value = []
+}
+
+const cancelEditingYears = () => {
+  editingYearIndex.value = null
+  selectedYear.value = null
+}
+
+// Filtered categories based on search query
+const filteredCategories = computed(() => {
+  return categories.value.filter((category) =>
+    category.toLowerCase().includes(categorySearchQuery.value.toLowerCase()),
+  )
+})
+
 onMounted(() => {
   fetchImages()
+  fetchCategories()
+  generateYears()
 })
 </script>
