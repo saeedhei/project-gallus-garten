@@ -4,22 +4,9 @@
       ref="scrollContainer"
       class="scrollable-container flex items-center gap-2 overflow-x-auto bg-white shadow rounded-lg p-2"
     >
-      <!-- "All Categories" Option -->
-      <button
-        @click="selectCategory(null)"
-        :class="[
-          'px-4 py-2 text-sm md:text-base rounded-lg focus:outline-none',
-          selectedCategory === null
-            ? 'bg-green-500 text-white font-bold'
-            : 'bg-gray-200 text-gray-700 hover:bg-gray-300',
-        ]"
-      >
-        All
-      </button>
-
       <!-- List of Categories -->
       <button
-        v-for="category in categories"
+        v-for="category in Category"
         :key="category"
         @click="selectCategory(category)"
         :class="[
@@ -39,27 +26,43 @@
 import { ref, onMounted } from 'vue'
 import api from '../../services/api'
 
-// Reactive states
-const categories = ref<string[]>([])
+// **Reactive Variables**
+const Category = ref<string[]>([])
 const selectedCategory = ref<string | null>(null)
 const scrollContainer = ref<HTMLElement | null>(null)
 
+// **Emit Event for Category Selection**
 const emit = defineEmits(['filterChanged'])
 
-const fetchCategories = async () => {
+// **Fetch Categories from CouchDB API**
+const fetchCategory = async () => {
   try {
-    const response = await api.get('/images/filter')
-    categories.value = response.data.categories
+    const response = await api.get<{ categories: string[] }>('/categories');
+
+    if (response.data && Array.isArray(response.data.categories)) {
+      Category.value = [...new Set(response.data.categories)];
+    } else {
+      Category.value = [];
+    }
+
+    if (Category.value.length > 0) {
+      selectedCategory.value = Category.value[0]; // Select the first category by default
+    }
+    emit('filterChanged', selectedCategory.value);
   } catch (error) {
-    console.error('Error fetching categories:', error)
+    console.error('Error fetching categories:', error);
+    Category.value = [];
   }
-}
+};
 
+// **Handle Category Selection**
 const selectCategory = (category: string | null) => {
-  selectedCategory.value = category
-  emit('filterChanged', category)
-}
+  if (selectedCategory.value === category) return;
+  selectedCategory.value = category;
+  emit('filterChanged', category);
+};
 
+// **Drag-to-Scroll Logic**
 let isDragging = false
 let startX: number
 let scrollLeft: number
@@ -75,7 +78,7 @@ const handleMouseMove = (event: MouseEvent) => {
   if (!isDragging) return
   event.preventDefault()
   const x = event.pageX - (scrollContainer.value?.offsetLeft || 0)
-  const walk = x - startX // Calculate the distance moved
+  const walk = x - startX
   if (scrollContainer.value) {
     scrollContainer.value.scrollLeft = scrollLeft - walk
   }
@@ -86,8 +89,9 @@ const handleMouseUp = () => {
   scrollContainer.value?.classList.remove('dragging')
 }
 
+// **Lifecycle Hook**
 onMounted(() => {
-  fetchCategories()
+  fetchCategory()
   if (scrollContainer.value) {
     scrollContainer.value.addEventListener('mousedown', handleMouseDown)
     scrollContainer.value.addEventListener('mousemove', handleMouseMove)

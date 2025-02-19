@@ -6,6 +6,6 @@ export default interface Image {
   views: number
   error: boolean
   isPublic: boolean
-  categories: string[]
+  category: string[]
   year: number
 }

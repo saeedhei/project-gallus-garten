@@ -63,7 +63,6 @@
             :src="image.url"
             :alt="image.description"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 hover-active"
-            @load="handleImageLoad(index)"
             @error="handleImageError(index)"
           />
 
@@ -84,6 +83,18 @@
           </div>
         </div>
       </div>
+      <div v-if="loading" class="container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <!-- Sentinel Element -->
+      <div ref="sentinel" class="h-1"></div>
 
       <!-- No More Images -->
       <div v-if="allDataLoaded && !error" class="text-center py-4 text-gray-500">
@@ -128,7 +139,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import GalleryFilter from './GalleryFilters.vue'
 import LikeIcon from './LikeIcon.vue'
 import ImageModal from './ImageModal.vue'
@@ -136,46 +147,33 @@ import MobileImageModal from './MobileImageModal.vue'
 import api from '../../services/api'
 import type Image from '../../types/ImageModel'
 
-// Reactive variables
+// **Reactive Variables**
 const images = ref<Image[]>([])
 const loading = ref(false)
 const page = ref(1)
 const allDataLoaded = ref(false)
 const galleryContainer = ref<HTMLElement | null>(null)
 const error = ref(false)
-const selectedCategories = ref<string | null>(null)
+const selectedCategory = ref<string | null>(null)
 
 // Modal logic
 const selectedImage = ref<number | null>(null)
 const isMobile = ref(window.innerWidth <= 640)
 
-const isOffline = ref(false) // Track internet connection status
-const retryCount = ref(0) // Track retry attempts
-const MAX_RETRIES = 2 // Maximum retries allowed
+const isOffline = ref(false)
+const retryCount = ref(0)
+const MAX_RETRIES = 1
 
-const openImage = (index: number) => {
-  selectedImage.value = index
-}
+const sentinel = ref<HTMLElement | null>(null)
+const observer = ref<IntersectionObserver | null>(null)
 
-const closeImage = () => {
-  selectedImage.value = null
-}
-
-// Handle image load and error events
-const handleImageLoad = (index: number) => {
-  console.log(`Image ${index} loaded successfully`)
-}
-
-const handleImageError = (index: number) => {
-  console.log(`Image ${index} failed to load`)
-}
-
-// Load images from the API with retry logic
-const loadImages = async (categories: string | null = null, reset = false) => {
+// **Fetch Images Based on Category and Pagination**
+const fetchImages = async (reset = false) => {
   if (loading.value || allDataLoaded.value || retryCount.value >= MAX_RETRIES) return
   loading.value = true
   error.value = false
 
+  // Save the current scroll position
   const container = galleryContainer.value
   const currentScroll = container?.scrollTop || 0
 
@@ -186,7 +184,7 @@ const loadImages = async (categories: string | null = null, reset = false) => {
     }
 
     const response = await api.get('/images', {
-      params: { page: page.value, categories },
+      params: { page: page.value, category: selectedCategory.value }, // Ensure `category` is passed
     })
 
     if (response.data.images && response.data.images.length > 0) {
@@ -208,6 +206,8 @@ const loadImages = async (categories: string | null = null, reset = false) => {
     }
   } finally {
     loading.value = false
+
+    // Restore the scroll position after images are loaded
     if (container) {
       requestAnimationFrame(() => {
         container.scrollTop = currentScroll
@@ -216,23 +216,62 @@ const loadImages = async (categories: string | null = null, reset = false) => {
   }
 }
 
-// Filter images by tag
-const updateFilter = (categories: string | null) => {
-  if (selectedCategories.value === categories) return
+// **Initialize Intersection Observer for Infinite Scroll**
+const setupObserver = async () => {
+  await nextTick() // Ensure DOM is updated before selecting the sentinel
 
-  selectedCategories.value = categories
-  allDataLoaded.value = false
-  loadImages(categories, true)
-}
+  if (observer.value) {
+    observer.value.disconnect() // Remove previous observer if exists
+  }
 
-const handleScroll = () => {
-  const container = galleryContainer.value
-  if (container && container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {
-    loadImages(selectedCategories.value)
+  observer.value = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !loading.value && !allDataLoaded.value) {
+        console.log('Sentinel is visible. Fetching more images...')
+        fetchImages()
+      }
+    },
+    { threshold: 0.1, rootMargin: '100px 0px' }, // Trigger when 10% of the sentinel is visible
+  )
+
+  if (sentinel.value) {
+    console.log('Observing sentinel element:', sentinel.value)
+    observer.value.observe(sentinel.value)
+  } else {
+    console.error('Sentinel element not found!')
   }
 }
 
-// Monitor online/offline status
+// **Handle Category Change**
+const updateFilter = (category: string | null) => {
+  if (selectedCategory.value === category) return
+
+  selectedCategory.value = category
+  allDataLoaded.value = false
+  fetchImages(true) // Reset images when switching category
+  setupObserver() // Reinitialize observer
+}
+
+// **On Component Mount**
+onMounted(async () => {
+  await fetchImages()
+  setupObserver()
+  window.addEventListener('resize', updateIsMobile)
+  window.addEventListener('online', updateConnectionStatus)
+  window.addEventListener('offline', updateConnectionStatus)
+})
+
+// **On Component Unmount**
+onUnmounted(() => {
+  if (observer.value) {
+    observer.value.disconnect()
+  }
+  window.removeEventListener('resize', updateIsMobile)
+  window.removeEventListener('online', updateConnectionStatus)
+  window.removeEventListener('offline', updateConnectionStatus)
+})
+
+// **Monitor Online/Offline Status**
 const updateConnectionStatus = () => {
   isOffline.value = !navigator.onLine
 
@@ -241,49 +280,52 @@ const updateConnectionStatus = () => {
   } else {
     console.log('Back online. Retrying...')
     retryCount.value = 0 // Reset retry count when back online
-    loadImages(selectedCategories.value)
+    fetchImages()
   }
 }
 
-const goToNext = async () => {
-  if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
-    selectedImage.value++
-  } else if (!allDataLoaded.value) {
-    await loadImages(selectedCategories.value)
-    if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
-      selectedImage.value++
-    }
-  }
-}
-
-const goToPrevious = () => {
-  if (selectedImage.value !== null && selectedImage.value > 0) {
-    selectedImage.value--
-  }
-}
-
-// Detect screen size changes
+// **Detect Screen Size Changes**
 const updateIsMobile = () => {
   isMobile.value = window.innerWidth <= 640
 }
 
-onMounted(() => {
-  loadImages()
-  galleryContainer.value?.addEventListener('scroll', handleScroll)
-  window.addEventListener('resize', updateIsMobile)
-  window.addEventListener('online', updateConnectionStatus)
-  window.addEventListener('offline', updateConnectionStatus)
-})
+// **Open Image Modal**
+const openImage = (index: number) => {
+  selectedImage.value = index
+}
 
-onUnmounted(() => {
-  window.removeEventListener('resize', updateIsMobile)
-  window.removeEventListener('online', updateConnectionStatus)
-  window.removeEventListener('offline', updateConnectionStatus)
-})
+// **Close Image Modal**
+const closeImage = () => {
+  selectedImage.value = null
+}
 
+const handleImageError = (index: number) => {
+  console.log(`Image ${index} failed to load`)
+}
+
+// **Load More Images (Manual Trigger)**
 const loadMoreImages = async () => {
   if (!allDataLoaded.value && !loading.value) {
-    await loadImages(selectedCategories.value)
+    await fetchImages()
+  }
+}
+
+// **Next Image**
+const goToNext = async () => {
+  if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
+    selectedImage.value++ // Move to the next image
+  } else if (!allDataLoaded.value) {
+    await fetchImages() // Fetch more images if at the end
+    if (selectedImage.value !== null && selectedImage.value < images.value.length - 1) {
+      selectedImage.value++ // Move to the next image after fetching
+    }
+  }
+}
+
+// **Previous Image**
+const goToPrevious = () => {
+  if (selectedImage.value !== null && selectedImage.value > 0) {
+    selectedImage.value-- // Move to the previous image
   }
 }
 </script>
@@ -317,6 +359,130 @@ const loadMoreImages = async () => {
   }
   100% {
     opacity: 0.5;
+  }
+}
+
+.container {
+  --uib-size: 40px;
+  --uib-color: black;
+  --uib-speed: 0.9s;
+  --uib-center: calc(var(--uib-size) / 2 - var(--uib-size) / 5 / 2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: var(--uib-size);
+  width: var(--uib-size);
+  animation: rotate calc(var(--uib-speed) * 3) linear infinite;
+  margin: 20px auto;
+}
+
+.dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+}
+
+.dot::before {
+  content: '';
+  height: 20%;
+  width: 20%;
+  border-radius: 50%;
+  background-color: var(--uib-color);
+  animation: oscillate var(--uib-speed) ease-in-out infinite alternate;
+  transition: background-color 0.3s ease;
+}
+
+.dot:nth-child(1)::before {
+  transform: translateX(var(--uib-center));
+}
+
+.dot:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.dot:nth-child(2)::before {
+  transform: translateX(var(--uib-center));
+  animation-delay: calc(var(--uib-speed) * -0.125);
+}
+
+.dot:nth-child(3) {
+  transform: rotate(90deg);
+}
+
+.dot:nth-child(3)::before {
+  transform: translateX(var(--uib-center));
+  animation-delay: calc(var(--uib-speed) * -0.25);
+}
+
+.dot:nth-child(4) {
+  transform: rotate(135deg);
+}
+
+.dot:nth-child(4)::before {
+  transform: translateX(var(--uib-center));
+  animation-delay: calc(var(--uib-speed) * -0.375);
+}
+
+.dot:nth-child(5) {
+  transform: rotate(180deg);
+}
+
+.dot:nth-child(5)::before {
+  transform: translateX(var(--uib-center));
+  animation-delay: calc(var(--uib-speed) * -0.5);
+}
+
+.dot:nth-child(6) {
+  transform: rotate(225deg);
+}
+
+.dot:nth-child(6)::before {
+  transform: translateX(var(--uib-center));
+  animation-delay: calc(var(--uib-speed) * -0.625);
+}
+
+.dot:nth-child(7) {
+  transform: rotate(270deg);
+}
+
+.dot:nth-child(7)::before {
+  transform: translateX(var(--uib-center));
+  animation-delay: calc(var(--uib-speed) * -0.75);
+}
+
+.dot:nth-child(8) {
+  transform: rotate(315deg);
+}
+
+.dot:nth-child(8)::before {
+  transform: translateX(var(--uib-center));
+  animation-delay: calc(var(--uib-speed) * -0.875);
+}
+
+@keyframes oscillate {
+  0% {
+    transform: translateX(var(--uib-center)) scale(0);
+    opacity: 0.25;
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
