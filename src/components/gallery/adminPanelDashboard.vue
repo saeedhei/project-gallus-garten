@@ -64,7 +64,7 @@
         <div class="mt-4">
           <p class="text-gray-700">
             <strong>Categories:</strong>
-            {{ Array.isArray(image.categories) ? image.categories.join(', ') : image.categories }}
+            {{ Array.isArray(image.category) ? image.category.join(', ') : image.category }}
           </p>
           <p class="text-gray-700"><strong>Year:</strong> {{ image.year }}</p>
         </div>
@@ -292,7 +292,7 @@ const startEditingDescription = (index: number, currentDescription: string) => {
 // Edit categories
 const startEditingCategories = (index: number) => {
   editingCategoriesIndex.value = index
-  selectedCategories.value = [...images.value[index].categories] // Copy categories to avoid direct mutation
+  selectedCategories.value = [...images.value[index].category] // Copy categories to avoid direct mutation
 }
 
 // Edit year
@@ -336,7 +336,7 @@ const saveCategories = async (publicId: string, index: number) => {
       { headers: { 'Content-Type': 'application/json' } },
     )
 
-    images.value[index].categories = selectedCategories.value
+    images.value[index].category = selectedCategories.value
     editingCategoriesIndex.value = null
 
     // Show success notification
