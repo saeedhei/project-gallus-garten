@@ -27,6 +27,7 @@ useSeo({
   ogDescription: 'Discover what makes our company unique.',
   ogImage: `${baseUrl}src/assets/images/GallusGarten.svg`,
   ogUrl: window.location.href,
+  robots: 'index, follow',
 })
 </script>
 

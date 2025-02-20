@@ -192,6 +192,25 @@ import { useRouter } from 'vue-router'
 import api from '../../services/api'
 import type Image from '../../types/ImageModel'
 
+import { useSeo } from '@/composables/useSeo'
+const baseUrl = import.meta.env.VITE_APP_BASE_URL
+
+if (!baseUrl) {
+  throw new Error(
+    "The required environment variable 'VITE_APP_BASE_URL' is missing. Please check your .env file.",
+  )
+}
+
+useSeo({
+  title: 'Ein Garten für alle • GallusGarten',
+  description: 'Learn more about our company, values, and mission.',
+  ogTitle: 'Ein Garten für alle • GallusGarten',
+  ogDescription: 'Discover what makes our company unique.',
+  ogImage: `${baseUrl}src/assets/images/GallusGarten.svg`,
+  ogUrl: window.location.href,
+  robots: 'noindex, nofollow',
+})
+
 const eyeHidden = '../../../images/eyeHidden.svg'
 const eyeVisiblen = '../../../images/eyeVisible.svg'
 

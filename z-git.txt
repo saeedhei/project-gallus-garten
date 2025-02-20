@@ -4,7 +4,7 @@ git remote add origin https://github.com/saeedhei/project-gallus-garten.git
 git remote -v
 
 git add .
-git commit -m "fixed categories"
+git commit -m "temporary seo"
 git push origin main 
 
 error: src refspec main does not match any
@@ -27,6 +27,12 @@ git checkout main
 git merge origin/main
 or
 git pull origin main
+
+
+git rm --cached .env
+git commit -m "Stop tracking .env"
+git push origin main
+
 
 
 
