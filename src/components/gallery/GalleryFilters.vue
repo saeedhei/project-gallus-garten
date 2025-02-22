@@ -10,7 +10,7 @@
         :key="category"
         @click="selectCategory(category)"
         :class="[
-          'px-4 py-2 text-sm md:text-base rounded-lg focus:outline-none',
+          'px-4 py-2 text-sm md:text-base rounded-lg focus:outline-none whitespace-nowrap',
           selectedCategory === category
             ? 'bg-green-500 text-white font-bold'
             : 'bg-gray-200 text-gray-700 hover:bg-gray-300',

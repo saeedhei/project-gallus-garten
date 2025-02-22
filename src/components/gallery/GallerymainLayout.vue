@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div class="flex flex-col items-center bg-green-100">
     <!-- Notification Bar -->
@@ -33,36 +34,29 @@
 
     <!-- Main Gallery -->
     <main class="w-full max-w-6xl bg-gray-200 h-[80vh] overflow-y-auto p-4" ref="galleryContainer">
-      <!-- Skeleton Loader -->
-      <div
-        v-if="loading"
-        class="grid grid-cols-2 max-sm:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-1"
-      >
-        <div
-          v-for="n in 9"
-          :key="n"
-          class="relative group w-full h-[25vh] max-sm:h-[15vh] sm:h-[22vh] md:h-[26vh] overflow-hidden bg-gray-300 animate-pulse"
-        >
-          <!-- Skeleton Placeholder -->
-          <div
-            class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"
-          ></div>
-        </div>
-      </div>
-
       <!-- Image Grid -->
-      <div v-else class="grid grid-cols-2 max-sm:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-1">
+      <div class="grid grid-cols-2 max-sm:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-1">
+        <!-- Existing Images -->
         <div
           v-for="(image, index) in images"
           :key="image.publicId"
           class="relative group w-full h-[25vh] max-sm:h-[15vh] sm:h-[22vh] md:h-[26vh] overflow-hidden bg-gray-300"
           @click="openImage(index)"
         >
-          <!-- Actual image -->
+          <!-- Skeleton Loader (shown until image is fully loaded) -->
+          <div v-if="!image.isLoaded" class="absolute inset-0 bg-gray-300 animate-pulse">
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"
+            ></div>
+          </div>
+
+          <!-- Actual Image (shown once loaded) -->
           <img
+            v-show="image.isLoaded"
             :src="image.url"
             :alt="image.description"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 hover-active"
+            @load="handleImageLoad(index)"
             @error="handleImageError(index)"
           />
 
@@ -82,17 +76,21 @@
             <LikeIcon :initialLikes="image.likes" :imageId="image.publicId" />
           </div>
         </div>
+
+        <!-- Skeleton Loader for New Images -->
+        <div
+          v-if="loadingNewImages"
+          v-for="n in skeletonCount"
+          :key="`skeleton-${n}`"
+          class="relative group w-full h-[25vh] max-sm:h-[15vh] sm:h-[22vh] md:h-[26vh] overflow-hidden bg-gray-300 animate-pulse"
+        >
+          <!-- Skeleton Placeholder -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"
+          ></div>
+        </div>
       </div>
-      <div v-if="loading" class="container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
+
       <!-- Sentinel Element -->
       <div ref="sentinel" class="h-1"></div>
 
@@ -101,6 +99,8 @@
         No more images to load
       </div>
     </main>
+
+    <!-- Developer Logo -->
     <div>
       <a
         href="https://arthurvarteressians.com/"
@@ -132,6 +132,7 @@
       v-if="isMobile && selectedImage !== null"
       :isOpen="selectedImage !== null"
       :images="images"
+      :selectedIndex="selectedImage"
       @close="closeImage"
       @loadMore="loadMoreImages"
     />
@@ -147,9 +148,15 @@ import MobileImageModal from './MobileImageModal.vue'
 import api from '../../services/api'
 import type Image from '../../types/ImageModel'
 
-// **Reactive Variables**
-const images = ref<Image[]>([])
-const loading = ref(false)
+const images = ref<
+  Array<
+    Image & {
+      isLoaded: boolean // Track whether the image has fully loaded
+    }
+  >
+>([])
+const loadingNewImages = ref(false) // New state for loading new images
+const skeletonCount = ref(9) // Number of skeleton loaders to show
 const page = ref(1)
 const allDataLoaded = ref(false)
 const galleryContainer = ref<HTMLElement | null>(null)
@@ -167,15 +174,13 @@ const MAX_RETRIES = 1
 const sentinel = ref<HTMLElement | null>(null)
 const observer = ref<IntersectionObserver | null>(null)
 
+
+
 // **Fetch Images Based on Category and Pagination**
 const fetchImages = async (reset = false) => {
-  if (loading.value || allDataLoaded.value || retryCount.value >= MAX_RETRIES) return
-  loading.value = true
+  if (loadingNewImages.value || allDataLoaded.value || retryCount.value >= MAX_RETRIES) return
+  loadingNewImages.value = true
   error.value = false
-
-  // Save the current scroll position
-  const container = galleryContainer.value
-  const currentScroll = container?.scrollTop || 0
 
   try {
     if (reset) {
@@ -184,11 +189,16 @@ const fetchImages = async (reset = false) => {
     }
 
     const response = await api.get('/images', {
-      params: { page: page.value, category: selectedCategory.value }, // Ensure `category` is passed
+      params: { page: page.value, category: selectedCategory.value },
     })
 
     if (response.data.images && response.data.images.length > 0) {
-      images.value.push(...response.data.images)
+      // Add new images with `isLoaded: false` by default
+      const newImages = response.data.images.map((image: Image) => ({
+        ...image,
+        isLoaded: false, // Track image loading state
+      }))
+      images.value.push(...newImages)
       page.value++
       allDataLoaded.value = !response.data.hasMore
       retryCount.value = 0 // Reset retry count on success
@@ -205,40 +215,48 @@ const fetchImages = async (reset = false) => {
       console.error('Max retries reached. Stopping further requests.')
     }
   } finally {
-    loading.value = false
-
-    // Restore the scroll position after images are loaded
-    if (container) {
-      requestAnimationFrame(() => {
-        container.scrollTop = currentScroll
-      })
-    }
+    loadingNewImages.value = false
   }
+}
+
+// **Handle Image Load**
+const handleImageLoad = (index: number) => {
+  // Check if index is within bounds
+  if (index >= 0 && index < images.value.length) {
+    images.value[index].isLoaded = true // Mark the image as loaded
+  } else {
+    console.error(
+      `Index ${index} is out of bounds for images array of length ${images.value.length}`,
+    )
+  }
+}
+
+// **Handle Image Error**
+const handleImageError = (index: number) => {
+  console.log(`Image ${index} failed to load`)
+  images.value[index].isLoaded = true // Mark as loaded to hide skeleton (even if error)
 }
 
 // **Initialize Intersection Observer for Infinite Scroll**
 const setupObserver = async () => {
-  await nextTick() // Ensure DOM is updated before selecting the sentinel
+  await nextTick()
 
   if (observer.value) {
-    observer.value.disconnect() // Remove previous observer if exists
+    observer.value.disconnect()
   }
 
   observer.value = new IntersectionObserver(
     (entries) => {
-      if (entries[0].isIntersecting && !loading.value && !allDataLoaded.value) {
+      if (entries[0].isIntersecting && !loadingNewImages.value && !allDataLoaded.value) {
         console.log('Sentinel is visible. Fetching more images...')
         fetchImages()
       }
     },
-    { threshold: 0.1, rootMargin: '100px 0px' }, // Trigger when 10% of the sentinel is visible
+    { threshold: 0.1, rootMargin: '100px 0px' },
   )
 
   if (sentinel.value) {
-    console.log('Observing sentinel element:', sentinel.value)
     observer.value.observe(sentinel.value)
-  } else {
-    console.error('Sentinel element not found!')
   }
 }
 
@@ -299,13 +317,9 @@ const closeImage = () => {
   selectedImage.value = null
 }
 
-const handleImageError = (index: number) => {
-  console.log(`Image ${index} failed to load`)
-}
-
 // **Load More Images (Manual Trigger)**
 const loadMoreImages = async () => {
-  if (!allDataLoaded.value && !loading.value) {
+  if (!allDataLoaded.value && !loadingNewImages.value) {
     await fetchImages()
   }
 }
