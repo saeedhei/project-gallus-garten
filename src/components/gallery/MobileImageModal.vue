@@ -7,29 +7,26 @@
     <div
       class="w-full max-w-md h-[80vh] mt-10 bg-gray-900 rounded-lg shadow-lg overflow-y-auto"
       ref="modalContainer"
-      @scroll="handleScroll"
     >
-      <!-- Display Images -->
-      <div v-for="image in images" :key="image.publicId" class="mb-6 p-4">
-        <!-- Image -->
+      <!-- Image List (Selected Image Appears First) -->
+      <div
+        v-for="(image, index) in sortedImages"
+        :key="image.publicId"
+        class="mb-6 p-4"
+        :ref="(el) => setImageRef(el as HTMLElement, index)"
+      >
+        <!-- Image Content -->
         <img
           :src="image.url"
           :alt="image.description"
           class="w-full h-auto rounded-lg object-contain"
         />
-
-        <!-- Image Details -->
         <div class="mt-2 text-white text-center">
           <p class="text-lg font-semibold">{{ image.description }}</p>
           <div class="flex justify-center items-center mt-1 space-x-2">
-            <img src="../../../public/images/leaf.svg" alt="Leaf Icon" class="w-5 h-5" />
-
+            <img src="/images/leaf.svg" alt="Leaf Icon" class="w-5 h-5" />
             <p>{{ image.likes }} Likes</p>
           </div>
-          <div>
-            <p>Public ID: {{ image.publicId }}</p>
-          </div>
-          <hr class="border-0.5 border-gray-500 my-6 mx-auto w-3/4" />
         </div>
       </div>
     </div>
@@ -45,45 +42,62 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits, ref } from 'vue'
+import { defineProps, defineEmits, ref, watch, nextTick, computed } from 'vue'
 import type Image from '../../types/ImageModel'
 
-
-defineProps({
+const props = defineProps({
   isOpen: {
     type: Boolean,
-    required: true,
+    required: true
   },
   images: {
     type: Array as () => Image[],
-    required: true,
+    required: true
   },
+  selectedImage: {
+    type: Number,
+    required: true
+  }
 })
 
-// Emits
 const emit = defineEmits(['close', 'loadMore'])
 
-// Refs
 const modalContainer = ref<HTMLElement | null>(null)
+const imageRefs = ref<HTMLElement[]>([])
 
-// Close Modal
+const sortedImages = computed(() => {
+  if (!props.images.length || props.selectedImage === null) return props.images
+  const selectedImg = props.images[props.selectedImage]
+  const otherImages = props.images.filter((_, i) => i !== props.selectedImage)
+  return [selectedImg, ...otherImages] // Move selected image to the top
+})
+
+const setImageRef = (el: HTMLElement, index: number) => {
+  if (el) {
+    imageRefs.value[index] = el
+  }
+}
+
+const scrollToImage = () => {
+  if (!imageRefs.value.length) return
+  const target = imageRefs.value[0] // Always first item (selected image)
+  if (target) {
+    target.scrollIntoView({ behavior: 'instant', block: 'start' })
+  }
+}
+
+watch(
+  () => props.isOpen,
+  (isOpen) => {
+    if (isOpen) {
+      imageRefs.value = []
+      nextTick(scrollToImage) // Ensure the selected image appears first
+    }
+  },
+  { immediate: true }
+)
+
 const closeModal = () => {
   emit('close')
 }
-
-// Handle Scroll for Lazy Loading
-const handleScroll = () => {
-  const container = modalContainer.value
-  if (container && container.scrollTop + container.clientHeight >= container.scrollHeight - 50) {
-    emit('loadMore') // Emit event to load more images
-  }
-}
 </script>
-
-<style scoped>
-/* Ensure scrolling works smoothly */
-.modal-container {
-  overflow-y: auto;
-  max-height: 60vh;
-}
-</style>
