@@ -130,9 +130,10 @@
 
     <MobileImageModal
       v-if="isMobile && selectedImage !== null"
+      :key="selectedImage"
       :isOpen="selectedImage !== null"
       :images="images"
-      :selectedIndex="selectedImage"
+      :selectedImage="selectedImage"
       @close="closeImage"
       @loadMore="loadMoreImages"
     />
@@ -173,8 +174,6 @@ const MAX_RETRIES = 1
 
 const sentinel = ref<HTMLElement | null>(null)
 const observer = ref<IntersectionObserver | null>(null)
-
-
 
 // **Fetch Images Based on Category and Pagination**
 const fetchImages = async (reset = false) => {
