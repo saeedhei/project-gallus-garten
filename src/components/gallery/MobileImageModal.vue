@@ -7,10 +7,11 @@
     <div
       class="w-full max-w-md h-[80vh] mt-10 bg-gray-900 rounded-lg shadow-lg overflow-y-auto"
       ref="modalContainer"
+      @scroll="handleScroll"
     >
-      <!-- Image List (Selected Image Appears First) -->
+      <!-- Image List -->
       <div
-        v-for="(image, index) in sortedImages"
+        v-for="(image, index) in images"
         :key="image.publicId"
         class="mb-6 p-4"
         :ref="(el) => setImageRef(el as HTMLElement, index)"
@@ -27,7 +28,15 @@
             <img src="/images/leaf.svg" alt="Leaf Icon" class="w-5 h-5" />
             <p>{{ image.likes }} Likes</p>
           </div>
+          <div>
+            <p>Public ID: {{ image.publicId }}</p>
+          </div>
         </div>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div v-if="isLoading" class="text-white text-center py-4">
+        Loading more images...
       </div>
     </div>
 
@@ -42,35 +51,32 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits, ref, watch, nextTick, computed } from 'vue'
+import { defineProps, defineEmits, ref, watch, nextTick } from 'vue'
 import type Image from '../../types/ImageModel'
 
 const props = defineProps({
   isOpen: {
     type: Boolean,
-    required: true
+    required: true,
   },
   images: {
     type: Array as () => Image[],
-    required: true
+    required: true,
   },
   selectedImage: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['close', 'loadMore'])
 
 const modalContainer = ref<HTMLElement | null>(null)
 const imageRefs = ref<HTMLElement[]>([])
-
-const sortedImages = computed(() => {
-  if (!props.images.length || props.selectedImage === null) return props.images
-  const selectedImg = props.images[props.selectedImage]
-  const otherImages = props.images.filter((_, i) => i !== props.selectedImage)
-  return [selectedImg, ...otherImages] // Move selected image to the top
-})
 
 const setImageRef = (el: HTMLElement, index: number) => {
   if (el) {
@@ -79,10 +85,25 @@ const setImageRef = (el: HTMLElement, index: number) => {
 }
 
 const scrollToImage = () => {
-  if (!imageRefs.value.length) return
-  const target = imageRefs.value[0] // Always first item (selected image)
+  if (!imageRefs.value.length || props.selectedImage === null) return
+
+  const target = imageRefs.value[props.selectedImage]
   if (target) {
-    target.scrollIntoView({ behavior: 'instant', block: 'start' })
+    target.scrollIntoView({
+      behavior: 'auto',
+      block: 'center',
+    })
+  }
+}
+
+const handleScroll = () => {
+  if (!modalContainer.value || props.isLoading) return
+
+  const { scrollTop, scrollHeight, clientHeight } = modalContainer.value
+  const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100
+
+  if (isNearBottom) {
+    emit('loadMore') // Emit event to fetch more images
   }
 }
 
@@ -90,13 +111,16 @@ watch(
   () => props.isOpen,
   (isOpen) => {
     if (isOpen) {
-      imageRefs.value = []
-      nextTick(scrollToImage) // Ensure the selected image appears first
+      imageRefs.value = [] // Reset refs
+      nextTick(() => {
+        scrollToImage() // Scroll to the selected image after DOM update
+      })
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
+// Close modal
 const closeModal = () => {
   emit('close')
 }
