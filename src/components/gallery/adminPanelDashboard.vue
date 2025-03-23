@@ -422,6 +422,7 @@ const toggleVisibility = async (image: Image, index: number) => {
 // Logout function
 const logout = () => {
   router.push('/admin-panel-login')
+  localStorage.removeItem('authToken');
 }
 
 // Cancel editing description

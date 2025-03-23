@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import AdminView from '../views/AdminView.vue'
 import HomeView from '../views/HomeView.vue'
 import LegalView from '../components/LegalComponent.vue'
 import LegalViewImpressum from '../components/Legal-Impressum.vue'
 import LegalViewDatenschutz from '../components/Legal-Datenschutz.vue'
 import AdminMainLogin from '@/components/gallery/adminLoginPage.vue'
 import AdminPanelPage from '@/components/gallery/adminPanelDashboard.vue'
+import jwtDecode from 'jwt-decode'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +15,6 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
-
     {
       path: '/admin-panel-login',
       name: 'Login',
@@ -25,8 +24,8 @@ const router = createRouter({
       path: '/dashboard',
       name: 'Dashboard',
       component: AdminPanelPage,
+      meta: { requiresAuth: true }, // Protected Route
     },
-
     {
       path: '/bildergalerie',
       name: 'Bildergalerie',
@@ -99,12 +98,36 @@ const router = createRouter({
       name: 'Quittung',
       component: () => import('@/views/WerkzeugeQuittung.vue'),
     },
-    // {
-    //   path: '/admin',
-    //   name: 'admin',
-    //   component: AdminView,
-    // },
   ],
+})
+
+// 🚀 Protect Routes by Checking JWT Token Expiry
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('authToken')
+
+  if (to.meta.requiresAuth) {
+    if (!token) {
+      console.log('❌ No token found. Redirecting to login.')
+      return next('/admin-panel-login') // Redirect to login
+    }
+
+    try {
+      const decoded = jwtDecode<{ exp: number }>(token)
+      const currentTime = Date.now() / 1000
+      if (decoded.exp < currentTime) {
+        console.log('⏳ Token expired. Redirecting to login.')
+        localStorage.removeItem('authToken') // Remove expired token
+        return next('/admin-panel-login') // Redirect to login
+      }
+      next()
+    } catch (error) {
+      console.error('❌ Token decoding error:', error)
+      localStorage.removeItem('authToken') // Remove invalid token
+      return next('/admin-panel-login') // Redirect to login
+    }
+  } else {
+    next() // Allow access to routes that don't require authentication
+  }
 })
 
 export default router
