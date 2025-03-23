@@ -31,47 +31,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import api from '../../services/api';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import api from '../../services/api'
 
-const username = ref<string>('');
-const password = ref<string>('');
-const errorMessage = ref<string>('');
-const router = useRouter();
+const username = ref<string>('')
+const password = ref<string>('')
+const errorMessage = ref<string>('')
+const router = useRouter()
 
 const handleLogin = async () => {
   try {
     const response = await api.post('/login', {
       username: username.value,
       password: password.value,
-    });
+    })
 
-    console.log('Full response:', response); // Debugging
+    // console.log('Full response:', response); // Debugging
 
     if (response.data.success && response.data.token) {
-      const token = response.data.token;
-      console.log('Token received:', token); // Debugging
+      const token = response.data.token
+      // console.log('Token received:', token); // Debugging
 
       // Save the token to localStorage
-      localStorage.setItem('authToken', token);
+      localStorage.setItem('authToken', token)
 
       // Redirect to the dashboard
-      router.push('/dashboard');
+      router.push('/dashboard')
     } else {
-      throw new Error('Token not found in response');
+      throw new Error('Token not found in response')
     }
   } catch (error) {
-    console.error('Login error:', error); // Debugging
-    const axiosError = error as { response?: { status: number; data: { message: string } } };
+    console.error('Login error:', error) // Debugging
+    const axiosError = error as { response?: { status: number; data: { message: string } } }
 
     if (axiosError.response?.status === 401) {
-      errorMessage.value = 'Invalid username or password';
+      errorMessage.value = 'Invalid username or password'
     } else if (axiosError.response) {
-      errorMessage.value = axiosError.response.data.message || 'An error occurred. Please try again later.';
+      errorMessage.value =
+        axiosError.response.data.message || 'An error occurred. Please try again later.'
     } else {
-      errorMessage.value = 'An unexpected error occurred.';
+      errorMessage.value = 'An unexpected error occurred.'
     }
   }
-};
+}
 </script>
