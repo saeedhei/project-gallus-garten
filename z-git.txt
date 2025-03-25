@@ -4,7 +4,7 @@ git remote add origin https://github.com/saeedhei/project-gallus-garten.git
 git remote -v
 
 git add .
-git commit -m "temporary seo"
+git commit -m "tsconfig.app.json updated"
 git push origin main 
 
 error: src refspec main does not match any

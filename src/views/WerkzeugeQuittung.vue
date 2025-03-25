@@ -4,10 +4,10 @@
     <div class="container">
       <!-- Form Section (left side on large screens, top on small screens) -->
       <div class="form-section">
-        <h2>Arbeitszeit und Vergütungsdetails</h2>
+        <h2 class="text-xl pb-2">Aufwand und Vergütungsdetails</h2>
         <div class="form">
           <div>
-            <label for="name">Arbeitnehmer:</label>
+            <label for="name">Arbeitnehmer/ID:</label>
             <input id="name" type="text" v-model="employeeName" placeholder="Name eingeben" />
           </div>
           <div>
@@ -65,9 +65,17 @@
       <!-- Receipt Section (right side on large screens, bottom on small screens) -->
       <div class="receipt-section">
         <div ref="receipt" class="receipt">
-          <h1 class="title">Arbeitszeit- und Vergütungsquittung</h1>
+          <div class="flex items-center space-x-4">
+            <img src="/gallus-garten/gg-logo.png" alt="Logo" class="w-28 h-22" />
+            <h1 class="title text-2xl font-bold">Aufwand- und Entschädigungsquittung</h1>
+          </div>
           <div class="header">
-            <p>Gallusgarten e.V. | Musterstraße 123 | Frankfurt am Main | Tel: 069-1234567</p>
+            <p>GallusGarten II - Gemeinschaftsgarten an der Galluswarte gem. e.V.</p>
+            <p>
+              Postadresse: Ralf Harth, Pariser Straße 42 - 60486 Frankfurt am Main | Tel: 0160 763
+              99 09
+            </p>
+            <p>Spendenkonto: IBAN: DE30 5019 0000 6002 1732 53 bei der Frankfurter Volksbank eG</p>
           </div>
           <div class="details">
             <div>
@@ -128,12 +136,12 @@ import jsPDF from 'jspdf'
 // Reactive fields
 const employeeName = ref<string>('Max Mustermann')
 const employeeAddress = ref<string>('Musterweg 45, 60326 Frankfurt am Main')
-const date = ref<string>('2024-12-08')
+const date = ref<string>('2025-03-08')
 const workTime = ref<string>('09:00–12:00')
 const task = ref<string>('Gartenpflege')
 const hours = ref<number>(3)
 const hourlyRate = ref<number>(10)
-const payoutDate = ref<string>('2024-12-08')
+const payoutDate = ref<string>('2025-03-08')
 
 // Computed field for total amount
 const totalAmount = computed(() => hours.value * hourlyRate.value)
