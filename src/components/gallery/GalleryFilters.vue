@@ -2,7 +2,7 @@
   <div class="w-[80vw] mt-8 flex flex-col gap-2 m-2">
     <div
       ref="scrollContainer"
-      class="scrollable-container flex items-center gap-2 overflow-x-auto bg-white shadow rounded-lg p-2"
+      class="scrollable-container flex items-center gap-2 overflow-x-auto min-h-14 bg-white shadow rounded-lg p-2"
     >
       <!-- List of Categories -->
       <button

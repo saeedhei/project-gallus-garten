@@ -22,7 +22,7 @@
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" class="w-full text-black bg-blue-500 p-2 hover:bg-blue-600">
+        <button type="submit" class="w-full text-white bg-blue-500 p-2 hover:bg-blue-600">
           Login
         </button>
       </form>
@@ -47,17 +47,29 @@ const handleLogin = async () => {
       password: password.value,
     })
 
-    if (response.status === 200) {
+    // console.log('Full response:', response); // Debugging
+
+    if (response.data.success && response.data.token) {
+      const token = response.data.token
+      // console.log('Token received:', token); // Debugging
+
+      // Save the token to localStorage
+      localStorage.setItem('authToken', token)
+
+      // Redirect to the dashboard
       router.push('/dashboard')
+    } else {
+      throw new Error('Token not found in response')
     }
   } catch (error) {
-    const axiosError = error as { response?: { status: number } }
+    console.error('Login error:', error) // Debugging
+    const axiosError = error as { response?: { status: number; data: { message: string } } }
 
-    // Handle errors from the API
     if (axiosError.response?.status === 401) {
       errorMessage.value = 'Invalid username or password'
     } else if (axiosError.response) {
-      errorMessage.value = 'An error occurred. Please try again later.'
+      errorMessage.value =
+        axiosError.response.data.message || 'An error occurred. Please try again later.'
     } else {
       errorMessage.value = 'An unexpected error occurred.'
     }
