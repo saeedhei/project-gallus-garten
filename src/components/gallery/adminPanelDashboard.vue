@@ -283,7 +283,7 @@ const checkTokenExpiration = () => {
   }
 }
 
-let expirationCheckInterval: number
+let expirationCheckInterval: ReturnType<typeof setInterval>
 
 onMounted(() => {
   fetchImages()
