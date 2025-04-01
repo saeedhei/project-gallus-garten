@@ -28,7 +28,7 @@
             <input id="workTime" type="text" v-model="workTime" placeholder="z.B. 09:00–12:00" />
           </div>
           <div>
-            <label for="task">Tätigkeit:</label>
+            <label for="task">Tätigkeit / Einzelmaßnahmen:</label>
             <input id="task" type="text" v-model="task" placeholder="Tätigkeit eingeben" />
           </div>
           <div>
@@ -52,6 +52,54 @@
           <div>
             <label for="payoutDate">Auszahlungsdatum:</label>
             <input id="payoutDate" type="date" v-model="payoutDate" />
+          </div>
+
+          <p class="text-xl pt-2">Unterschrift Auftragnehmer:</p>
+          <VueSignaturePad
+            ref="auftragnehmerSignature"
+            height="400px"
+            width="950px"
+            :max-width="options.maxWidth"
+            :min-width="options.minWidth"
+            :options="options"
+          />
+          <div class="inline-flex">
+            <button
+              @click="saveAuftragnehmerSignature"
+              class="bg-green-300 hover:bg-green-400 text-green-800 font-bold py-2 px-4 rounded-l"
+            >
+              Speichern
+            </button>
+            <button
+              @click="clearAuftragnehmerSignature"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+            >
+              Löschen
+            </button>
+          </div>
+
+          <p class="text-xl pt-2">Unterschrift Auftraggeber:</p>
+          <VueSignaturePad
+            ref="auftraggeberSignature"
+            height="400px"
+            width="950px"
+            :max-width="options.maxWidth"
+            :min-width="options.minWidth"
+            :options="options"
+          />
+          <div class="inline-flex">
+            <button
+              @click="saveAuftraggeberSignature"
+              class="bg-green-300 hover:bg-green-400 text-green-800 font-bold py-2 px-4 rounded-l"
+            >
+              Speichern
+            </button>
+            <button
+              @click="clearAuftraggeberSignature"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+            >
+              Löschen
+            </button>
           </div>
 
           <!-- Buttons -->
@@ -92,7 +140,7 @@
               <tr>
                 <th>Datum</th>
                 <th>Arbeitszeit</th>
-                <th>Tätigkeit</th>
+                <th>Tätigkeit /<br />Einzelmaßnahmen</th>
                 <th>Stundenanzahl</th>
                 <th>Stundensatz (€)</th>
                 <th>Gesamtbetrag (€)</th>
@@ -115,11 +163,21 @@
           </div>
           <div class="signatures">
             <div>
-              <p>Unterschrift Arbeitnehmer</p>
+              <img
+                v-if="auftragnehmerSignatureImage"
+                :src="auftragnehmerSignatureImage"
+                alt="Unterschrift Auftragnehmer"
+              />
+              <p>Unterschrift Auftragnehmer</p>
               <hr />
             </div>
             <div>
-              <p>Unterschrift Arbeitgeber</p>
+              <img
+                v-if="auftraggeberSignatureImage"
+                :src="auftraggeberSignatureImage"
+                alt="Unterschrift Auftragnehmer"
+              />
+              <p>Unterschrift Auftraggeber</p>
               <hr />
             </div>
           </div>
@@ -132,6 +190,43 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import jsPDF from 'jspdf'
+import { VueSignaturePad } from '@selemondev/vue3-signature-pad'
+
+// Signatur-Pads
+const auftragnehmerSignature = ref<InstanceType<typeof VueSignaturePad> | null>(null)
+const auftraggeberSignature = ref<InstanceType<typeof VueSignaturePad> | null>(null)
+
+// Gespeicherte Unterschriften als Base64-Bild
+const auftragnehmerSignatureImage = ref<string | null>(null)
+const auftraggeberSignatureImage = ref<string | null>(null)
+
+// Speichern der Unterschrift
+const saveAuftragnehmerSignature = () => {
+  if (auftragnehmerSignature.value) {
+    auftragnehmerSignatureImage.value = auftragnehmerSignature.value.saveSignature()
+  }
+}
+
+const saveAuftraggeberSignature = () => {
+  if (auftraggeberSignature.value) {
+    auftraggeberSignatureImage.value = auftraggeberSignature.value.saveSignature()
+  }
+}
+
+const clearAuftragnehmerSignature = () => {
+  auftragnehmerSignature.value?.clearCanvas()
+}
+
+const clearAuftraggeberSignature = () => {
+  auftraggeberSignature.value?.clearCanvas()
+}
+
+const options = ref({
+  penColor: 'rgb(43,44,124)',
+  backgroundColor: 'rgb(255, 255, 255)',
+  maxWidth: 1,
+  minWidth: 1,
+})
 
 // Reactive fields
 const employeeName = ref<string>('Max Mustermann')
