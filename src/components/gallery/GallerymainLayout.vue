@@ -33,7 +33,10 @@
     <GalleryFilter @filterChanged="updateFilter" />
 
     <!-- Main Gallery -->
-    <main class="w-full max-w-6xl bg-gray-200 h-[80vh] overflow-y-auto p-4" ref="galleryContainer">
+    <main
+      class="w-full max-w-6xl my-6 bg-gray-200 h-[80vh] overflow-y-auto p-4"
+      ref="galleryContainer"
+    >
       <!-- Image Grid -->
       <div class="grid grid-cols-2 max-sm:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-1">
         <!-- Existing Images -->
@@ -99,22 +102,6 @@
         No more images to load
       </div>
     </main>
-
-    <!-- Developer Logo -->
-    <div>
-      <a
-        href="https://arthurvarteressians.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="cursor-pointer enabled:hover:border-gray-400"
-      >
-        <img
-          src="../../../public/images/logo.png"
-          alt="Developer Logo"
-          class="inline-block w-[100px] h-10 m-3"
-        />
-      </a>
-    </div>
 
     <!-- Render Image Modals -->
     <ImageModal

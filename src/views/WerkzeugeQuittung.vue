@@ -127,7 +127,7 @@
           </div>
           <div class="details">
             <div>
-              <label>Arbeitnehmer:</label>
+              <label>Auftragnehmer:</label>
               <span>{{ employeeName }}</span>
             </div>
             <div>
