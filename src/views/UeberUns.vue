@@ -226,7 +226,7 @@ onMounted(async () => {
           </div>
           <!-- Column 1 -->
           <div class="w-full md:w-1/2 lg:w-1/3 px-4 py-2">
-            <router-link to="/ueber-uns/team" class="text-blue-500 hover:underline mr-4">
+            <router-link to="/ueber-uns/team" class="mr-4">
               <div class="bg-white p-6 shadow-lg">
                 <h2 class="text-xl font-bold mb-4">Das Führungsteam</h2>
                 <p class="text-gray-600">Description of feature 1.</p>
@@ -267,7 +267,7 @@ onMounted(async () => {
               href="https://www.linkedin.com/in/olha-lazyniuk"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-blue-600 hover:underline font-medium"
+              class="link hover:underline font-medium"
               >Olha Lazyniuk</a
             >
             und
@@ -275,7 +275,7 @@ onMounted(async () => {
               href="https://arthurvarteressians.com/"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-blue-600 hover:underline font-medium"
+              class="link hover:underline font-medium"
               >Arthur Varteressians</a
             >. Gemeinsam haben wir ein digitales Erlebnis geschaffen, auf das wir stolz sind.
           </p>
@@ -288,15 +288,10 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-$timeline-color: #ff6347;
+$timeline-color: #16a34a;
 
 .page {
   font-family: 'Poppins', sans-serif;
-
-  a {
-    color: $timeline-color;
-    text-decoration: none;
-  }
 
   .timeline {
     pointer-events: none;
