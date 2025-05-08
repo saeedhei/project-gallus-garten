@@ -7,6 +7,9 @@ import AdminMainLogin from '@/components/gallery/adminLoginPage.vue'
 import AdminPanelPage from '@/components/gallery/adminPanelDashboard.vue'
 import jwtDecode from 'jwt-decode'
 
+import UserLogin from '@/components/gallery/UserLogin.vue'
+import UserPanelPage from '@/components/gallery/userDaschboard.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,6 +22,17 @@ const router = createRouter({
       path: '/admin-panel-login',
       name: 'Login',
       component: AdminMainLogin,
+    },
+    {
+      path: '/user-login',
+      name: 'ULogin',
+      component: UserLogin,
+    },
+    {
+      path: '/user-dashboard',
+      name: 'UDashboard',
+      component: UserPanelPage,
+      
     },
     {
       path: '/dashboard',
@@ -104,7 +118,7 @@ const router = createRouter({
 // 🚀 Protect Routes by Checking JWT Token Expiry
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('authToken')
-
+ const userToken = localStorage.getItem('userToken')
   if (to.meta.requiresAuth) {
     if (!token) {
       console.log('❌ No token found. Redirecting to login.')
@@ -124,6 +138,23 @@ router.beforeEach((to, from, next) => {
       console.error('❌ Token decoding error:', error)
       localStorage.removeItem('authToken') // Remove invalid token
       return next('/admin-panel-login') // Redirect to login
+    }
+  } else if (to.meta.requiresUserAuth) {
+    if (!userToken) {
+      console.log('❌ No user token found. Redirecting to user login.')
+      return next('/user-login') // Redirect to user login
+    }
+    try {
+      const decoded = jwtDecode<{ exp: number }>(userToken)
+      if (decoded.exp < Date.now() / 1000) {
+        console.log('⏳ User token expired. Redirecting to user login.')
+        localStorage.removeItem('token')
+        return next('/user-login') // Redirect to user login
+      }
+      next()
+    } catch {
+      localStorage.removeItem('token')
+      return next('/user-login') // Redirect to user login
     }
   } else {
     next() // Allow access to routes that don't require authentication
