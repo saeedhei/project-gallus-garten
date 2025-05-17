@@ -7,8 +7,8 @@ import AdminMainLogin from '@/components/gallery/adminLoginPage.vue'
 import AdminPanelPage from '@/components/gallery/adminPanelDashboard.vue'
 import jwtDecode from 'jwt-decode'
 
-import UserLogin from '@/components/gallery/UserLogin.vue'
-import UserPanelPage from '@/components/gallery/userDaschboard.vue'
+import UserLogin from '@/components/gallery/userLogin.vue'
+import UserPanelPage from '@/components/gallery/userDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,7 +32,6 @@ const router = createRouter({
       path: '/user-dashboard',
       name: 'UDashboard',
       component: UserPanelPage,
-      
     },
     {
       path: '/dashboard',
@@ -118,7 +117,7 @@ const router = createRouter({
 // 🚀 Protect Routes by Checking JWT Token Expiry
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('authToken')
- const userToken = localStorage.getItem('userToken')
+  const userToken = localStorage.getItem('userToken')
   if (to.meta.requiresAuth) {
     if (!token) {
       console.log('❌ No token found. Redirecting to login.')
