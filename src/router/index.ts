@@ -19,6 +19,11 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/lageplan',
+      name: 'Lageplan',
+      component: () => import('@/views/LagePlan.vue'),
+    },
+    {
       path: '/admin-panel-login',
       name: 'Login',
       component: AdminMainLogin,
@@ -43,6 +48,11 @@ const router = createRouter({
       path: '/bildergalerie',
       name: 'Bildergalerie',
       component: () => import('@/views/BilderGalerie.vue'),
+    },
+    {
+      path: '/projekte',
+      name: 'Projekte',
+      component: () => import('@/views/ProjekteView.vue'),
     },
     {
       path: '/a',

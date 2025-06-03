@@ -33,9 +33,9 @@ const scrollToSection = (sectionId: string) => {
 }
 
 const sentences: string[] = [
-  'Ein Garten für Alle.',
-  'Urban Gardening im Gallus.',
-  'Ein Bürgergarten.',
+  'Wo Generationen sich treffen',
+  // '',
+  // '',
 ]
 </script>
 

@@ -11,7 +11,8 @@ import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.
 import FooterView from '../components/templates-layouts/footers/FooterView.vue'
 
 import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
-import { useSeo } from '@/composables/useSeo'
+import { useHead } from '@unhead/vue'
+// import { useSeo } from '@/composables/useSeo'
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
 
 if (!baseUrl) {
@@ -20,14 +21,31 @@ if (!baseUrl) {
   )
 }
 
-useSeo({
-  title: 'Ein Garten für alle • GallusGarten',
-  description: 'Learn more about our company, values, and mission.',
-  ogTitle: 'Ein Garten für alle • GallusGarten',
-  ogDescription: 'Discover what makes our company unique.',
-  ogImage: `${baseUrl}src/assets/images/GallusGarten.svg`,
-  ogUrl: window.location.href,
-  robots: 'index, follow',
+useHead({
+  title: 'Wo Generationen sich treffen - Galluswarte • GallusGarten',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Ein Garten für alle an der Galluswarte, Frankfurt: interkulturell, familienfreundlich & bildungsorientiert. Gemeinsam pflanzen, lernen & wachsen.',
+    },
+
+    // OpenGraph (Facebook/LinkedIn)
+    { property: 'og:title', content: 'Ein Garten für alle • GallusGarten' },
+    { property: 'og:description', content: 'Discover what makes our company unique.' },
+    { property: 'og:image', content: `${baseUrl}src/assets/images/GallusGarten.svg` },
+    { property: 'og:url', content: window.location.href },
+    { property: 'og:type', content: 'website' },
+
+    // Twitter Card
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: 'Ein Garten für alle • GallusGarten' },
+    { name: 'twitter:description', content: 'Discover what makes our company unique.' },
+    { name: 'twitter:image', content: `${baseUrl}src/assets/images/GallusGarten.svg` },
+
+    // Robots
+    { name: 'robots', content: 'index, follow' },
+  ],
 })
 </script>
 
