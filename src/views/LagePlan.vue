@@ -304,7 +304,7 @@ const wildBeeBeds = ref([
   {
     id: 1,
     x: 100,
-    y: 55,
+    y: 555,
     width: 200,
     height: 60,
     flowers: [
@@ -316,7 +316,7 @@ const wildBeeBeds = ref([
   {
     id: 2,
     x: 600,
-    y: 55,
+    y: 555,
     width: 200,
     height: 60,
     flowers: [
@@ -328,8 +328,8 @@ const wildBeeBeds = ref([
 ])
 
 const benches = ref([
-  { id: 1, x: 500, y: 245, width: 140, height: 42, rotation: 180 },
-  { id: 2, x: 1000, y: 245, width: 140, height: 42, rotation: 180 },
+  { id: 1, x: 500, y: 270, width: 140, height: 42, rotation: 180 },
+  { id: 2, x: 1000, y: 270, width: 140, height: 42, rotation: 180 },
 ])
 
 const trees = ref([
