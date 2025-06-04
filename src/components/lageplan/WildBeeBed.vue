@@ -12,15 +12,55 @@
       }"
     />
 
-    <!-- گل‌ها -->
-    <v-circle
-      v-for="(flower, index) in flowers"
-      :key="index"
+    <v-text
       :config="{
-        x: flower.x,
-        y: flower.y,
-        radius: 4,
-        fill: flower.color,
+        x: 50,
+        y: 10,
+        text: '🌷',
+        fontSize: 20,
+      }"
+    />
+
+    <v-text
+      :config="{
+        x: 10,
+        y: 30,
+        text: '🌷',
+        fontSize: 20,
+      }"
+    />
+
+    <v-text
+      :config="{
+        x: 120,
+        y: 12,
+        text: '🌷',
+        fontSize: 20,
+      }"
+    />
+
+    <v-text
+      :config="{
+        x: 10,
+        y: 10,
+        text: '🐝',
+        fontSize: 20,
+      }"
+    />
+    <v-text
+      :config="{
+        x: 20,
+        y: 20,
+        text: '🐝',
+        fontSize: 20,
+      }"
+    />
+    <v-text
+      :config="{
+        x: 90,
+        y: 30,
+        text: '🐝',
+        fontSize: 20,
       }"
     />
   </v-group>

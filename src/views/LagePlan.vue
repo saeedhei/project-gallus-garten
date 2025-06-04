@@ -5,41 +5,7 @@
       <v-layer>
         <v-group :config="{ x: 0, y: 0, draggable: true }">
           <!-- مسیر پیاده‌رو -->
-          <!-- جدول بالا -->
-          <v-rect
-            :config="{
-              x: 4,
-              y: 0,
-              width: 1200,
-              height: 8,
-              fill: '#696969', // رنگ سنگی یا خاکستری تیره
-            }"
-          />
-
-          <!-- مسیر پیاده‌رو -->
-          <v-rect
-            :config="{
-              x: 4,
-              y: 9,
-              width: 1200,
-              height: 200,
-              fill: '#d3d3d3',
-              stroke: '#a9a9a9',
-              strokeWidth: 2,
-            }"
-          />
-
-          <!-- جدول پایین -->
-          <v-rect
-            :config="{
-              x: 4,
-              y: 210,
-              width: 1200,
-              height: 8,
-              fill: '#696969',
-            }"
-          />
-
+          <Walkway :x="4" :y="0" />
           <!-- زمین باغ -->
           <v-rect
             :config="{
@@ -67,18 +33,14 @@
 
           <!-- باغچه‌ها -->
           <template v-if="showBeds">
-            <v-rect
+            <GardenBed
               v-for="bed in beds"
               :key="bed.id"
-              :config="{
-                x: bed.x,
-                y: bed.y,
-                width: bed.width,
-                height: bed.height,
-                fill: 'green',
-                stroke: 'black',
-                strokeWidth: 3,
-              }"
+              :x="bed.x"
+              :y="bed.y"
+              :width="bed.width"
+              :height="bed.height"
+              :rotation="bed.rotation"
             />
           </template>
 
@@ -157,6 +119,8 @@ import { ref, onMounted } from 'vue'
 import Tree from '@/components/lageplan/TreeComponent.vue'
 import Bench from '@/components/lageplan/BenchComponent.vue'
 import WildBeeBed from '@/components/lageplan/WildBeeBed.vue'
+import GardenBed from '@/components/lageplan//GardenBed.vue'
+import Walkway from '@/components/lageplan/WalkwayComponent.vue'
 
 Konva.hitOnDragEnabled = true
 
@@ -295,16 +259,16 @@ onMounted(() => {
 })
 
 const beds = ref([
-  { id: 1, x: 315, y: 300, width: 180, height: 60 },
-  { id: 2, x: 500, y: 300, width: 180, height: 60 },
-  { id: 3, x: 685, y: 220, width: 60, height: 180 },
+  { id: 1, x: 315, y: 500, width: 160, height: 80, rotation: 0 },
+  { id: 2, x: 480, y: 500, width: 160, height: 80, rotation: 0 },
+  { id: 3, x: 725, y: 450, width: 160, height: 80, rotation: 90 },
 ])
 
 const wildBeeBeds = ref([
   {
     id: 1,
     x: 100,
-    y: 555,
+    y: 5,
     width: 200,
     height: 60,
     flowers: [
@@ -316,7 +280,7 @@ const wildBeeBeds = ref([
   {
     id: 2,
     x: 600,
-    y: 555,
+    y: 5,
     width: 200,
     height: 60,
     flowers: [
@@ -333,10 +297,12 @@ const benches = ref([
 ])
 
 const trees = ref([
-  { id: 1, x: 200, y: 400, scale: 1, rotation: 0 },
-  { id: 2, x: 350, y: 400, scale: 1.2, rotation: 0 },
-  { id: 3, x: 450, y: 400, scale: 1.4, rotation: 0 },
-  { id: 4, x: 500, y: 400, scale: 1, rotation: 0 },
+  { id: 1, x: 100, y: 650, scale: 1, rotation: 0 },
+  { id: 2, x: 300, y: 650, scale: 1.2, rotation: 0 },
+  { id: 3, x: 500, y: 620, scale: 1.4, rotation: 0 },
+  { id: 4, x: 700, y: 650, scale: 1, rotation: 0 },
+  { id: 5, x: 900, y: 650, scale: 1.2, rotation: 0 },
+  { id: 6, x: 1100, y: 650, scale: 1.2, rotation: 0 },
 ])
 </script>
 
