@@ -3,74 +3,111 @@
     <!-- نقشه و عناصر آن -->
     <v-stage ref="stageRef" :config="stageConfig" @wheel="handleWheel" :draggable="true">
       <v-layer>
-        <!-- زمین باغ -->
-        <v-rect
-          :config="{
-            x: 200,
-            y: 200,
-            width: 1200,
-            height: 500,
-            fill: '#98fb98',
-            stroke: '#2e8b57',
-            strokeWidth: 4,
-          }"
-        />
-
-        <!-- درخت‌ها -->
-        <template v-if="showTrees">
-          <Tree
-            v-for="tree in trees"
-            :key="tree.id"
-            :x="tree.x"
-            :y="tree.y"
-            :scale="tree.scale"
-            :rotation="tree.rotation"
-          />
-        </template>
-
-        <!-- باغچه‌ها -->
-        <template v-if="showBeds">
+        <v-group :config="{ x: 0, y: 0, draggable: true }">
+          <!-- مسیر پیاده‌رو -->
+          <!-- جدول بالا -->
           <v-rect
-            v-for="bed in beds"
-            :key="bed.id"
             :config="{
-              x: bed.x,
-              y: bed.y,
-              width: bed.width,
-              height: bed.height,
-              fill: 'green',
-              stroke: 'black',
-              strokeWidth: 3,
-              draggable: true,
+              x: 4,
+              y: 0,
+              width: 1200,
+              height: 8,
+              fill: '#696969', // رنگ سنگی یا خاکستری تیره
             }"
           />
-        </template>
 
-        <!-- باغچه‌های زنبور وحشی -->
-        <template v-if="showWildBeeBeds">
-          <WildBeeBed
-            v-for="bed in wildBeeBeds"
-            :key="bed.id"
-            :x="bed.x"
-            :y="bed.y"
-            :width="bed.width"
-            :height="bed.height"
-            :flowers="bed.flowers"
+          <!-- مسیر پیاده‌رو -->
+          <v-rect
+            :config="{
+              x: 4,
+              y: 9,
+              width: 1200,
+              height: 200,
+              fill: '#d3d3d3',
+              stroke: '#a9a9a9',
+              strokeWidth: 2,
+            }"
           />
-        </template>
 
-        <!-- صندلی‌ها -->
-        <template v-if="showBenches">
-          <Bench
-            v-for="bench in benches"
-            :key="bench.id"
-            :x="bench.x"
-            :y="bench.y"
-            :width="bench.width"
-            :height="bench.height"
-            :rotation="bench.rotation"
+          <!-- جدول پایین -->
+          <v-rect
+            :config="{
+              x: 4,
+              y: 210,
+              width: 1200,
+              height: 8,
+              fill: '#696969',
+            }"
           />
-        </template>
+
+          <!-- زمین باغ -->
+          <v-rect
+            :config="{
+              x: 4,
+              y: 219,
+              width: 1200,
+              height: 500,
+              fill: '#98fb98',
+              stroke: '#2e8b57',
+              strokeWidth: 4,
+            }"
+          />
+
+          <!-- درخت‌ها -->
+          <template v-if="showTrees">
+            <Tree
+              v-for="tree in trees"
+              :key="tree.id"
+              :x="tree.x"
+              :y="tree.y"
+              :scale="tree.scale"
+              :rotation="tree.rotation"
+            />
+          </template>
+
+          <!-- باغچه‌ها -->
+          <template v-if="showBeds">
+            <v-rect
+              v-for="bed in beds"
+              :key="bed.id"
+              :config="{
+                x: bed.x,
+                y: bed.y,
+                width: bed.width,
+                height: bed.height,
+                fill: 'green',
+                stroke: 'black',
+                strokeWidth: 3,
+              }"
+            />
+          </template>
+
+          <!-- باغچه‌های زنبور وحشی -->
+          <template v-if="showWildBeeBeds">
+            <WildBeeBed
+              v-for="bed in wildBeeBeds"
+              :key="bed.id"
+              :x="bed.x"
+              :y="bed.y"
+              :width="bed.width"
+              :height="bed.height"
+              :flowers="bed.flowers"
+            />
+          </template>
+
+          <!-- صندلی‌ها -->
+          <template v-if="showBenches">
+            <Bench
+              v-for="bench in benches"
+              :key="bench.id"
+              :x="bench.x"
+              :y="bench.y"
+              :width="bench.width"
+              :height="bench.height"
+              :rotation="bench.rotation"
+            />
+          </template>
+        </v-group>
       </v-layer>
     </v-stage>
 
