@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeLayout from '@/layouts/HomeLayout.vue'
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+
 import HomeView from '../views/HomeView.vue'
 import LegalView from '../components/LegalComponent.vue'
 import LegalViewImpressum from '../components/Legal-Impressum.vue'
@@ -13,113 +16,112 @@ import UserPanelPage from '@/components/gallery/userDashboard.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // Home Page with HomeLayout
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      component: HomeLayout,
+      children: [{ path: '', name: 'Home', component: HomeView }],
     },
+    // DefaultLayout
     {
-      path: '/lageplan',
-      name: 'Lageplan',
-      component: () => import('@/views/LagePlan.vue'),
-    },
-    {
-      path: '/admin-panel-login',
-      name: 'Login',
-      component: AdminMainLogin,
-    },
-    {
-      path: '/user-login',
-      name: 'ULogin',
-      component: UserLogin,
-    },
-    {
-      path: '/user-dashboard',
-      name: 'UDashboard',
-      component: UserPanelPage,
-    },
-    {
-      path: '/dashboard',
-      name: 'Dashboard',
-      component: AdminPanelPage,
-      meta: { requiresAuth: true }, // Protected Route
-    },
-    {
-      path: '/bildergalerie',
-      name: 'Bildergalerie',
-      component: () => import('@/views/BilderGalerie.vue'),
-    },
-    {
-      path: '/projekte',
-      name: 'Projekte',
-      component: () => import('@/views/ProjekteView.vue'),
-    },
-    {
-      path: '/a',
-      name: 'a',
-      component: () => import('@/views/AboutView.vue'),
-    },
-    {
-      path: '/ueber-uns',
-      name: 'über-uns',
-      component: () => import('@/views/UeberUns.vue'),
-    },
-    {
-      path: '/ueber-uns/team',
-      name: 'TeamView',
-      component: () => import('@/views/UeberUnsTeam.vue'),
-    },
-    {
-      path: '/ueber-uns/team/saeed-heidarizarei',
-      name: 'Team',
-      component: () => import('@/views/UeberUnsTeamSaeed.vue'),
-    },
-    {
-      path: '/ueber-uns/team/ralf-harth',
-      name: 'RalfHarth',
-      component: () => import('@/views/UeberUnsTeamRalf.vue'),
-    },
-    {
-      path: '/legal',
-      component: LegalView,
+      path: '/',
+      component: DefaultLayout,
       children: [
         {
-          path: 'impressum',
+          path: '/admin-panel-login',
+          name: 'Login',
+          component: AdminMainLogin,
+        },
+        {
+          path: '/user-login',
+          name: 'ULogin',
+          component: UserLogin,
+        },
+        {
+          path: '/user-dashboard',
+          name: 'UDashboard',
+          component: UserPanelPage,
+        },
+        {
+          path: '/dashboard',
+          name: 'Dashboard',
+          component: AdminPanelPage,
+          meta: { requiresAuth: true }, // Protected Route
+        },
+        {
+          path: '/bildergalerie',
+          name: 'Bildergalerie',
+          component: () => import('@/views/BilderGalerie.vue'),
+          meta: { title: 'BilderGalerie' },
+        },
+        {
+          path: '/projekte',
+          name: 'Projekte',
+          component: () => import('@/views/ProjekteView.vue'),
+        },
+        {
+          path: '/a',
+          name: 'a',
+          component: () => import('@/views/AboutView.vue'),
+        },
+        {
+          path: '/ueber-uns',
+          name: 'über-uns',
+          component: () => import('@/views/UeberUns.vue'),
+          meta: { title: 'Über Uns' },
+        },
+        {
+          path: '/ueber-uns/team',
+          name: 'TeamView',
+          component: () => import('@/views/UeberUnsTeam.vue'),
+        },
+        {
+          path: '/ueber-uns/team/saeed-heidarizarei',
+          name: 'Team',
+          component: () => import('@/views/UeberUnsTeamSaeed.vue'),
+        },
+        {
+          path: '/ueber-uns/team/ralf-harth',
+          name: 'RalfHarth',
+          component: () => import('@/views/UeberUnsTeamRalf.vue'),
+        },
+        {
+          path: '/werkzeuge',
+          name: 'Werkzeuge',
+          component: () => import('@/views/WerkzeugeView.vue'),
+        },
+        {
+          path: '/werkzeuge/quittung',
+          name: 'Quittung',
+          component: () => import('@/views/WerkzeugeQuittung.vue'),
+        },
+        {
+          path: '/legal',
+          name: 'legal',
+          component: LegalView,
+        },
+        {
+          path: '/legal/impressum',
           name: 'Impressum',
           component: LegalViewImpressum,
         },
         {
-          path: 'datenschutz',
+          path: '/legal/datenschutz',
           name: 'Datenschutz',
           component: LegalViewDatenschutz,
         },
         {
-          path: 'datenschutzeinstellungen',
+          path: '/legal/datenschutzeinstellungen',
           name: 'Datenschutzeinstellungen',
           component: () => import('../components/organisms/WelcomeCookie.vue'),
         },
       ],
     },
+    // ohne Layout
     {
-      path: '/docs',
-      component: () => import('@/views/DocsView.vue'),
-      children: [
-        {
-          path: 'changelog',
-          name: 'Changelog',
-          component: () => import('@/views/DocsChangelogView.vue'),
-        },
-      ],
-    },
-    {
-      path: '/werkzeuge',
-      name: 'Werkzeuge',
-      component: () => import('@/views/WerkzeugeView.vue'),
-    },
-    {
-      path: '/werkzeuge/quittung',
-      name: 'Quittung',
-      component: () => import('@/views/WerkzeugeQuittung.vue'),
+      path: '/lageplan',
+      name: 'Lageplan',
+      component: () => import('@/views/LagePlan.vue'),
     },
   ],
 })

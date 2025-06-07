@@ -1,52 +1,6 @@
-<script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
-import HeaderShort from '../components/templates-layouts/headers/HeaderShort.vue'
-import FooterView from '../components/templates-layouts/footers/FooterView.vue'
-
-// Define a ref for the scrollable div
-const contentLoaded = ref(false) // Track if content is loaded
-
-// Function to scroll to the bottom of the div
-function smoothScrollTo(targetPercentage: number, duration: number = 5000) {
-  const targetScroll = document.documentElement.scrollHeight * targetPercentage
-  const startScroll = window.scrollY
-  const distance = targetScroll - startScroll
-  const startTime = performance.now()
-
-  const step = () => {
-    const elapsedTime = performance.now() - startTime
-    const progress = Math.min(elapsedTime / duration, 1)
-    const scroll = startScroll + distance * progress
-    window.scrollTo(0, scroll)
-
-    if (progress < 1) {
-      requestAnimationFrame(step)
-    }
-  }
-
-  step()
-}
-
-// Simulating an API call
-async function fetchData() {
-  // Simulate a delay for fetching data
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      contentLoaded.value = true // Indicate data has been loaded
-      resolve(true)
-    }, 1000) // Simulate 1 second delay
-  })
-}
-
-onMounted(async () => {
-  await fetchData() // Fetch the data
-  await nextTick() // Wait for next DOM update cycle
-  smoothScrollTo(0.69, 4000) // Scroll after the content has been loaded
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <HeaderShort title="Über uns" />
   <main>
     <div class="page container mx-auto px-4">
       <section class="py-8">
@@ -283,7 +237,6 @@ onMounted(async () => {
       </section>
     </div>
   </main>
-  <FooterView />
 </template>
 
 <style lang="scss" scoped>

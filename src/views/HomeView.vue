@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HeaderView from '../components/templates-layouts/headers/HeaderView.vue'
 import ASectionView from '../components/templates-layouts/sections/GallusAHome.vue'
 // import ProjectSlider from '../components/organisms/slider-all/ProjectSlider.vue'
 import HomeZeitungSection from '../components/templates-layouts/sections/HomeZeitung.vue'
@@ -8,9 +7,8 @@ import CSectionView from '../components/templates-layouts/sections/GallusCHome.v
 import CrookedSectionView from '../components/templates-layouts/sections/CrookedSection.vue'
 import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.vue'
 // import MainView from '../components/1-home/MainView.vue'
-import FooterView from '../components/templates-layouts/footers/FooterView.vue'
-
 import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
+
 import { useHead } from '@unhead/vue'
 // import { useSeo } from '@/composables/useSeo'
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
@@ -50,18 +48,14 @@ useHead({
 </script>
 
 <template>
-  <HeaderView />
-  <main>
-    <UnderConstructionPopup />
-    <!-- <ProjectSlider /> -->
-    <HomeZeitungSection id="sectiona" />
-    <ASectionView />
-    <BSectionView />
-    <CrookedSectionView class="bg-emerald-200" />
-    <CSectionView />
-    <UnsereSponsoren />
-  </main>
-  <FooterView />
+  <UnderConstructionPopup />
+  <!-- <ProjectSlider /> -->
+  <HomeZeitungSection id="sectiona" />
+  <ASectionView />
+  <BSectionView />
+  <CrookedSectionView class="bg-emerald-200" />
+  <CSectionView />
+  <UnsereSponsoren />
 </template>
 
 <style scoped></style>

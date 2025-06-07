@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TopHeaderView from '../../organisms/header-teils/TopHeader.vue'
-import AnimeChevron from '../../atoms/icons/AnimeChevron.vue'
+import TopHeaderView from '../header/TopHeader.vue'
+import AnimeChevron from '../atoms/icons/AnimeChevron.vue'
 
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId)

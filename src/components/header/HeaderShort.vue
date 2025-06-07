@@ -1,6 +1,6 @@
 <script setup lang="ts">
-defineProps<{ title: string }>()
-import TopHeaderView from '../../organisms/header-teils/TopHeader.vue'
+defineProps<{ title?: string }>()
+import TopHeaderView from './TopHeader.vue'
 </script>
 
 <template>
@@ -11,7 +11,7 @@ import TopHeaderView from '../../organisms/header-teils/TopHeader.vue'
         {{ title }}
       </h1>
       <p class="mt-4 text-lg text-white max-w-3xl mx-auto text-center">
-        Ein Garten für Alle – Urban Gardening im Gallus – Bürgergarten.
+        Wo Generationen sich treffen - Galluswarte • GallusGarten
       </p>
     </div>
   </header>
