@@ -7,7 +7,7 @@ import CSectionView from '../components/templates-layouts/sections/GallusCHome.v
 import CrookedSectionView from '../components/templates-layouts/sections/CrookedSection.vue'
 import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.vue'
 // import MainView from '../components/1-home/MainView.vue'
-import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
+// import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
 
 import { useHead } from '@unhead/vue'
 // import { useSeo } from '@/composables/useSeo'
@@ -48,9 +48,9 @@ useHead({
 </script>
 
 <template>
-  <UnderConstructionPopup />
+  <!-- <UnderConstructionPopup /> -->
   <!-- <ProjectSlider /> -->
-  <HomeZeitungSection id="sectiona" />
+  <HomeZeitungSection id="section-a" />
   <ASectionView />
   <BSectionView />
   <CrookedSectionView class="bg-emerald-200" />

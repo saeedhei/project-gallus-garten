@@ -1,3 +1,4 @@
+<!-- cspell:disable -->#696969
 <template>
   <v-group :config="{ x, y, rotation, draggable: true }">
     <!-- نشیمن -->

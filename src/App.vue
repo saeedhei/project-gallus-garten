@@ -1,3 +1,4 @@
+<!-- cspell:disable -->
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import BackToTop from './components/atoms/buttons/BackTopButton.vue'

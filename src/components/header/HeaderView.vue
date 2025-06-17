@@ -33,29 +33,35 @@ const scrollToSection = (sectionId: string) => {
 }
 
 const sentences: string[] = [
-  'Wo Generationen sich treffen',
-  // '',
-  // '',
+  'Wo Generationen gemeinsam gärtnern und gestalten.',
+  'Hier wächst nicht nur Gemüse – sondern Gemeinschaft.',
+  'Gemeinsam säen, pflegen, ernten.',
+  'Wo Natur, Nachbarn und Ideen gedeihen.',
 ]
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center" style="background-color: #509e49">
-    <header
-      class="w-full bg-cover bg-no-repeat bg-fixed bg-center h-96 relative"
-      style="background-image: url('/gallus-garten/images/header.jpg')"
-    >
-      <div class="absolute inset-0 bg-green-700 opacity-50"></div>
+  <div
+    class="min-h-screen flex items-center justify-center bg-cover bg-no-repeat"
+    style="background-color: #509e49; background-image: url('/gallus-garten/images/header.png')"
+  >
+    <header class="w-full bg-cover bg-no-repeat bg-fixed bg-center h-96 relative">
+      <!-- <div class="absolute inset-0 bg-green-700 opacity-50"></div> -->
       <div class="absolute inset-0 flex items-center justify-center">
         <div class="text-center h-32">
-          <h1 class="text-4xl font-bold text-white mb-4">GallusGarten</h1>
+          <h1 class="text-5xl font-extrabold text-white drop-shadow-lg mb-2 tracking-wide">
+            Gallus<span class="text-lime-300">Garten</span>
+          </h1>
+          <h2 class="text-xl text-gray-100 italic drop-shadow-sm mb-4">
+            Im Herzen von Galluswarte
+          </h2>
           <TypingEffect class="text-2xl text-white" :sentences="sentences"></TypingEffect>
           <TopHeaderView />
         </div>
       </div>
     </header>
   </div>
-  <a href="#sectiona" @click="scrollToSection('sectiona')">
+  <a href="#section-a" @click="scrollToSection('section-a')">
     <div class="flex items-center justify-center">
       <AnimeChevron />
     </div>
@@ -63,7 +69,12 @@ const sentences: string[] = [
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 .flex.items-center.justify-center {
   overflow: visible;
+}
+h1,
+h2 {
+  font-family: 'Inter', sans-serif;
 }
 </style>

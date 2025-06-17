@@ -1,23 +1,40 @@
+<!-- cspell:disable -->
 <template>
-  <div class="relative h-screen overflow-hidden">
+  <div class="page-container relative h-screen overflow-hidden">
     <!-- نقشه و عناصر آن -->
     <v-stage ref="stageRef" :config="stageConfig" @wheel="handleWheel" :draggable="true">
       <v-layer>
         <v-group :config="{ x: 0, y: 0, draggable: true }">
           <!-- مسیر پیاده‌رو -->
-          <Walkway :x="4" :y="0" />
+          <SideGarden :x="10" :y="10" />
+          <Walkway :x="83.7" :y="168" />
           <!-- زمین باغ -->
-          <v-rect
-            :config="{
-              x: 4,
-              y: 219,
-              width: 1200,
-              height: 500,
-              fill: '#98fb98',
-              stroke: '#2e8b57',
-              strokeWidth: 4,
-            }"
+          <TiltedGarden
+            :width="11000"
+            :height="750"
+            :topWidth="11000"
+            slantDirection="right"
+            :x="180.7"
+            :y="376"
           />
+          <!--  باغچه شش ضلعی -->
+          <template v-if="showSixBeds">
+            <v-regular-polygon
+              v-for="sixBed in wildSixBeds"
+              :key="sixBed.id"
+              :config="{
+                x: sixBed.x,
+                y: sixBed.y,
+                sides: 5,
+                radius: sixBed.radius,
+                fill: '#53392d',
+                stroke: 'green',
+                strokeWidth: 2,
+                draggable: true,
+                rotation: sixBed.rotation,
+              }"
+            />
+          </template>
 
           <!-- درخت‌ها -->
           <template v-if="showTrees">
@@ -57,6 +74,10 @@
             />
           </template>
 
+          <template>
+            <HorizontalRuler :x="200" :y="200" :rotation="0" />
+          </template>
+
           <!-- صندلی‌ها -->
           <template v-if="showBenches">
             <Bench
@@ -74,7 +95,7 @@
     </v-stage>
 
     <!-- دکمه‌های تنظیمات پایین صفحه -->
-    <div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+    <div class="settings fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
       <div class="relative">
         <button
           @click="showMenu = !showMenu"
@@ -119,8 +140,11 @@ import { ref, onMounted } from 'vue'
 import Tree from '@/components/lageplan/TreeComponent.vue'
 import Bench from '@/components/lageplan/BenchComponent.vue'
 import WildBeeBed from '@/components/lageplan/WildBeeBed.vue'
-import GardenBed from '@/components/lageplan//GardenBed.vue'
+import GardenBed from '@/components/lageplan/GardenBed.vue'
 import Walkway from '@/components/lageplan/WalkwayComponent.vue'
+import TiltedGarden from '@/components/lageplan/TiltedGarden.vue'
+import SideGarden from '@/components/lageplan/SideGarden.vue'
+import HorizontalRuler from '@/components/lageplan/HorizontalRuler.vue'
 
 Konva.hitOnDragEnabled = true
 
@@ -132,6 +156,7 @@ const showTrees = ref(true)
 const showBeds = ref(true)
 const showWildBeeBeds = ref(true)
 const showBenches = ref(true)
+const showSixBeds = ref(true)
 
 const toggleTrees = () => (showTrees.value = !showTrees.value)
 const toggleBeds = () => (showBeds.value = !showBeds.value)
@@ -259,18 +284,24 @@ onMounted(() => {
 })
 
 const beds = ref([
-  { id: 1, x: 315, y: 500, width: 160, height: 80, rotation: 0 },
-  { id: 2, x: 480, y: 500, width: 160, height: 80, rotation: 0 },
-  { id: 3, x: 725, y: 450, width: 160, height: 80, rotation: 90 },
+  { id: 1, x: 915, y: 900, width: 160, height: 80, rotation: 0 },
+  { id: 2, x: 1080, y: 900, width: 160, height: 80, rotation: 0 },
+  { id: 3, x: 1325, y: 850, width: 160, height: 80, rotation: 90 },
+])
+
+const wildSixBeds = ref([
+  { id: 1, x: 560, y: 1080, radius: 45, rotation: 0 },
+  { id: 2, x: 605, y: 1010, radius: 45, rotation: 180 },
+  { id: 3, x: 650, y: 1080, radius: 45, rotation: 0 },
 ])
 
 const wildBeeBeds = ref([
   {
     id: 1,
-    x: 100,
-    y: 5,
+    x: 300,
+    y: 50,
     width: 200,
-    height: 60,
+    height: 80,
     flowers: [
       { x: 20, y: 20, color: 'pink' },
       { x: 40, y: 30, color: 'purple' },
@@ -279,10 +310,22 @@ const wildBeeBeds = ref([
   },
   {
     id: 2,
-    x: 600,
-    y: 5,
+    x: 800,
+    y: 50,
     width: 200,
-    height: 60,
+    height: 80,
+    flowers: [
+      { x: 30, y: 10, color: 'red' },
+      { x: 60, y: 30, color: 'yellow' },
+      { x: 90, y: 20, color: 'blue' },
+    ],
+  },
+  {
+    id: 3,
+    x: 1300,
+    y: 50,
+    width: 200,
+    height: 80,
     flowers: [
       { x: 30, y: 10, color: 'red' },
       { x: 60, y: 30, color: 'yellow' },
@@ -292,17 +335,19 @@ const wildBeeBeds = ref([
 ])
 
 const benches = ref([
-  { id: 1, x: 500, y: 270, width: 140, height: 42, rotation: 180 },
-  { id: 2, x: 1000, y: 270, width: 140, height: 42, rotation: 180 },
+  { id: 1, x: 500, y: 427, width: 140, height: 42, rotation: 180 },
+  { id: 2, x: 1000, y: 427, width: 140, height: 42, rotation: 180 },
+  { id: 3, x: 1400, y: 520, width: 140, height: 42, rotation: 270 },
+  { id: 4, x: 1600, y: 380, width: 140, height: 42, rotation: 90 },
 ])
 
 const trees = ref([
-  { id: 1, x: 100, y: 650, scale: 1, rotation: 0 },
-  { id: 2, x: 300, y: 650, scale: 1.2, rotation: 0 },
-  { id: 3, x: 500, y: 620, scale: 1.4, rotation: 0 },
-  { id: 4, x: 700, y: 650, scale: 1, rotation: 0 },
-  { id: 5, x: 900, y: 650, scale: 1.2, rotation: 0 },
-  { id: 6, x: 1100, y: 650, scale: 1.2, rotation: 0 },
+  { id: 1, x: 700, y: 1050, scale: 1, rotation: 0 },
+  { id: 2, x: 900, y: 1050, scale: 1.2, rotation: 0 },
+  { id: 3, x: 1100, y: 1050, scale: 1.4, rotation: 0 },
+  { id: 4, x: 1300, y: 1050, scale: 1, rotation: 0 },
+  { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
+  { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },
 ])
 </script>
 
@@ -315,5 +360,11 @@ const trees = ref([
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+.page-container {
+  background-color: #e0f7fa;
+}
+.settings {
+  z-index: 10001;
 }
 </style>

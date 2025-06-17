@@ -8,7 +8,7 @@
         y: 0,
         width,
         height: pathHeight,
-        fill: pathColor, // #d3d3d3 by default
+        fill: pathColor,
         stroke: '#696969', // dark gray stroke
         strokeWidth: 8,
         sceneFunc: pathFunc,
@@ -25,8 +25,8 @@ const props = defineProps({
   x: { type: Number, default: 0 },
   y: { type: Number, default: 0 },
   width: { type: Number, default: 11000 },
-  pathHeight: { type: Number, default: 200 },
-  pathColor: { type: String, default: '#d3d3d3' }, // fill color
+  pathHeight: { type: Number, default: 150 },
+  pathColor: { type: String, default: '#53392d' }, // fill color
 })
 
 // 65° in radians
