@@ -17,24 +17,69 @@
             :x="180.7"
             :y="376"
           />
-          <!--  باغچه شش ضلعی -->
-          <template v-if="showSixBeds">
-            <v-regular-polygon
-              v-for="sixBed in wildSixBeds"
-              :key="sixBed.id"
+
+          <!-- تبلیغات -->
+          <v-group :config="{ x: 326, y: 460, draggable: true }">
+            <v-circle
               :config="{
-                x: sixBed.x,
-                y: sixBed.y,
-                sides: 5,
-                radius: sixBed.radius,
-                fill: '#53392d',
-                stroke: 'green',
+                x: 15,
+                y: 25,
+                radius: 90,
+                fill: '#FFFFFF',
+                stroke: '#ccc',
                 strokeWidth: 2,
-                draggable: true,
-                rotation: sixBed.rotation,
               }"
             />
-          </template>
+          </v-group>
+
+          <!-- برق -->
+          <v-group :config="{ x: 510, y: 730, draggable: true }">
+            <v-rect
+              :config="{
+                width: 35,
+                height: 150,
+                fill: '#FFFFFF',
+                stroke: '#ccc',
+                strokeWidth: 2,
+                cornerRadius: 8,
+              }"
+            />
+            <!-- متن عمودی Mainova -->
+            <v-text
+              :config="{
+                text: 'Mainova',
+                x: 26, // وسط مستطیل عرضی
+                y: 45, // وسط مستطیل عمودی
+                rotation: 90, // چرخش عمودی
+                fontSize: 18,
+                fill: '#000',
+                align: 'center',
+                verticalAlign: 'middle',
+              }"
+            />
+          </v-group>
+
+          <!-- گروه باغچه‌های شش ضلعی -->
+          <v-group :config="{ x: 25, y: 30, draggable: true }">
+            <!--  باغچه شش ضلعی -->
+            <template v-if="showSixBeds">
+              <v-regular-polygon
+                v-for="sixBed in wildSixBeds"
+                :key="sixBed.id"
+                :config="{
+                  x: sixBed.x,
+                  y: sixBed.y,
+                  sides: 5,
+                  radius: sixBed.radius,
+                  fill: '#53392d',
+                  stroke: 'green',
+                  strokeWidth: 2,
+                  draggable: true,
+                  rotation: sixBed.rotation,
+                }"
+              />
+            </template>
+          </v-group>
 
           <!-- درخت‌ها -->
           <template v-if="showTrees">
@@ -75,7 +120,10 @@
           </template>
 
           <template>
-            <HorizontalRuler :x="200" :y="200" :rotation="0" />
+            <HorizontalRuler :x="0" :y="200" :rotation="0" />
+          </template>
+          <template>
+            <HorizontalRuler :x="0" :y="0" :rotation="90" />
           </template>
 
           <!-- صندلی‌ها -->
@@ -290,9 +338,9 @@ const beds = ref([
 ])
 
 const wildSixBeds = ref([
-  { id: 1, x: 560, y: 1080, radius: 45, rotation: 0 },
-  { id: 2, x: 605, y: 1010, radius: 45, rotation: 180 },
-  { id: 3, x: 650, y: 1080, radius: 45, rotation: 0 },
+  { id: 1, x: 505, y: 943, radius: 42.5, rotation: 90 },
+  { id: 2, x: 565, y: 985, radius: 42.5, rotation: 197 },
+  { id: 3, x: 564, y: 900, radius: 42.5, rotation: -18 },
 ])
 
 const wildBeeBeds = ref([
@@ -335,7 +383,7 @@ const wildBeeBeds = ref([
 ])
 
 const benches = ref([
-  { id: 1, x: 500, y: 427, width: 140, height: 42, rotation: 180 },
+  { id: 1, x: 2000, y: 427, width: 140, height: 42, rotation: 180 },
   { id: 2, x: 1000, y: 427, width: 140, height: 42, rotation: 180 },
   { id: 3, x: 1400, y: 520, width: 140, height: 42, rotation: 270 },
   { id: 4, x: 1600, y: 380, width: 140, height: 42, rotation: 90 },
