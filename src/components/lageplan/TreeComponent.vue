@@ -1,5 +1,5 @@
 <template>
-  <v-group :config="{ x, y, rotation, scaleX: scale, scaleY: scale, draggable: true }">
+  <v-group :config="{ x, y, rotation, scaleX: scale, scaleY: scale, draggable: false }">
     <!-- تنه درخت -->
     <v-rect
       :config="{

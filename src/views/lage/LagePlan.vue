@@ -1,10 +1,37 @@
 <!-- cspell:disable -->
 <template>
+  <Modal :show="isOpen" @close="isOpen = false">
+    <div class="modal-content">
+      <h3 class="text-xl font-semibold text-green-500 mb-2">{{ selectedBed?.name }}</h3>
+
+      <p v-if="selectedBed?.radius !== undefined" class="mb-1">
+        <strong>Radius:</strong> {{ selectedBed.radius }}
+      </p>
+
+      <p v-if="selectedBed?.height !== undefined" class="mb-1">
+        <strong>Height:</strong> {{ selectedBed.height }} cm
+      </p>
+
+      <p v-if="selectedBed?.width !== undefined" class="mb-1">
+        <strong>Width:</strong> {{ selectedBed.width }} cm
+      </p>
+
+      <p class="mb-4"><strong>Beschreibung:</strong> {{ selectedBed?.beschreibung }}</p>
+
+      <button
+        @click="isOpen = false"
+        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+      >
+        Close
+      </button>
+    </div>
+  </Modal>
+
   <div class="page-container relative h-screen overflow-hidden">
     <!-- نقشه و عناصر آن -->
     <v-stage ref="stageRef" :config="stageConfig" @wheel="handleWheel" :draggable="true">
       <v-layer>
-        <v-group :config="{ x: 0, y: 0, draggable: true }">
+        <v-group :config="{ x: 0, y: 0, draggable: false }">
           <!-- مسیر پیاده‌رو -->
           <SideGarden :x="10" :y="10" />
           <Walkway :x="83.7" :y="168" />
@@ -19,7 +46,7 @@
           />
 
           <!-- تبلیغات -->
-          <v-group :config="{ x: 326, y: 460, draggable: true }">
+          <v-group :config="{ x: 326, y: 460, draggable: false }">
             <v-circle
               :config="{
                 x: 15,
@@ -33,7 +60,7 @@
           </v-group>
 
           <!-- برق -->
-          <v-group :config="{ x: 510, y: 730, draggable: true }">
+          <v-group :config="{ x: 510, y: 730, draggable: false }">
             <v-rect
               :config="{
                 width: 35,
@@ -60,24 +87,37 @@
           </v-group>
 
           <!-- گروه باغچه‌های شش ضلعی -->
-          <v-group :config="{ x: 25, y: 30, draggable: true }">
+          <v-group :config="{ x: 25, y: 30, draggable: false }">
             <!--  باغچه شش ضلعی -->
             <template v-if="showSixBeds">
-              <v-regular-polygon
-                v-for="sixBed in wildSixBeds"
-                :key="sixBed.id"
-                :config="{
-                  x: sixBed.x,
-                  y: sixBed.y,
-                  sides: 5,
-                  radius: sixBed.radius,
-                  fill: '#53392d',
-                  stroke: 'green',
-                  strokeWidth: 2,
-                  draggable: true,
-                  rotation: sixBed.rotation,
-                }"
-              />
+              <template v-for="sixBed in wildSixBeds" :key="sixBed.id">
+                <v-regular-polygon
+                  :config="{
+                    x: sixBed.x,
+                    y: sixBed.y,
+                    sides: 5,
+                    radius: sixBed.radius,
+                    fill: '#53392d',
+                    stroke: 'green',
+                    strokeWidth: 2,
+                    draggable: false,
+                    rotation: sixBed.rotation,
+                  }"
+                />
+                <v-text
+                  :config="{
+                    text: 'ⓘ',
+                    x: sixBed.x - 20,
+                    y: sixBed.y - 20,
+                    fontSize: 14,
+                    fill: 'gold',
+                    cursor: 'pointer',
+                    draggable: false,
+                  }"
+                  @click="openModal(sixBed)"
+                  @tap="openModal(sixBed)"
+                />
+              </template>
             </template>
           </v-group>
 
@@ -95,15 +135,31 @@
 
           <!-- باغچه‌ها -->
           <template v-if="showBeds">
-            <GardenBed
-              v-for="bed in beds"
-              :key="bed.id"
-              :x="bed.x"
-              :y="bed.y"
-              :width="bed.width"
-              :height="bed.height"
-              :rotation="bed.rotation"
-            />
+            <template v-for="bed in beds" :key="bed.id">
+              <v-group
+                :config="{
+                  x: bed.x,
+                  y: bed.y,
+                  rotation: bed.rotation || 0,
+                  draggable: false,
+                }"
+              >
+                <GardenBed :width="bed.width" :height="bed.height" />
+                <v-text
+                  :config="{
+                    text: 'ⓘ',
+                    x: 0,
+                    y: -20,
+                    fontSize: 14,
+                    fill: 'tomato',
+                    cursor: 'pointer',
+                    draggable: false,
+                  }"
+                  @click="openModal(bed)"
+                  @tap="openModal(bed)"
+                />
+              </v-group>
+            </template>
           </template>
 
           <!-- باغچه‌های زنبور وحشی -->
@@ -193,6 +249,7 @@ import Walkway from '@/components/lageplan/WalkwayComponent.vue'
 import TiltedGarden from '@/components/lageplan/TiltedGarden.vue'
 import SideGarden from '@/components/lageplan/SideGarden.vue'
 import HorizontalRuler from '@/components/lageplan/HorizontalRuler.vue'
+import Modal from '@/components/lageplan/ModalComponent.vue'
 
 Konva.hitOnDragEnabled = true
 
@@ -205,6 +262,20 @@ const showBeds = ref(true)
 const showWildBeeBeds = ref(true)
 const showBenches = ref(true)
 const showSixBeds = ref(true)
+interface Bed {
+  name: string
+  beschreibung: string
+  width?: number
+  height?: number
+  radius?: number
+}
+const isOpen = ref(false) // Modal
+const selectedBed = ref<Bed | null>(null)
+
+function openModal(bed: Bed) {
+  selectedBed.value = bed
+  isOpen.value = true
+}
 
 const toggleTrees = () => (showTrees.value = !showTrees.value)
 const toggleBeds = () => (showBeds.value = !showBeds.value)
@@ -332,15 +403,96 @@ onMounted(() => {
 })
 
 const beds = ref([
-  { id: 1, x: 915, y: 900, width: 160, height: 80, rotation: 0 },
-  { id: 2, x: 1080, y: 900, width: 160, height: 80, rotation: 0 },
-  { id: 3, x: 1325, y: 850, width: 160, height: 80, rotation: 90 },
+  {
+    id: 1,
+    x: 628,
+    y: 960,
+    width: 170,
+    height: 90,
+    rotation: 0,
+    name: 'Blütengarten',
+    beschreibung: 'Hochbeet aus Holz.',
+  },
+  {
+    id: 2,
+    x: 892,
+    y: 880,
+    width: 170,
+    height: 90,
+    rotation: 90,
+    name: 'Rosenecke',
+    beschreibung: 'Hochbeet aus Holz.',
+  },
+  {
+    id: 3,
+    x: 785,
+    y: 796,
+    width: 160,
+    height: 80,
+    rotation: 0,
+    name: 'Lavendelfeld',
+    beschreibung: 'Hochbeet aus Stahl.',
+  },
+  {
+    id: 4,
+    x: 948,
+    y: 796,
+    width: 160,
+    height: 80,
+    rotation: 0,
+    name: 'Kräutertraum',
+    beschreibung: 'Hochbeet aus Stahl.',
+  },
+  {
+    id: 5,
+    x: 1191,
+    y: 734,
+    width: 160,
+    height: 80,
+    rotation: 90,
+    name: 'Kleines Paradies',
+    beschreibung: 'Hochbeet aus Stahl.',
+  },
+  {
+    id: 6,
+    x: 1186,
+    y: 898,
+    width: 150,
+    height: 75,
+    rotation: 90,
+    name: 'Sommerwiese',
+    beschreibung: 'Hochbeet aus Holz.',
+  },
 ])
 
 const wildSixBeds = ref([
-  { id: 1, x: 505, y: 943, radius: 42.5, rotation: 90 },
-  { id: 2, x: 565, y: 985, radius: 42.5, rotation: 197 },
-  { id: 3, x: 564, y: 900, radius: 42.5, rotation: -18 },
+  {
+    id: 1,
+    x: 505,
+    y: 943,
+    radius: 42.5,
+    rotation: 90,
+    name: 'Fünfeckgarten',
+    beschreibung: 'Fünfeckiges Hochbett aus Holz.',
+  },
+  {
+    id: 2,
+    x: 565,
+    y: 985,
+    radius: 42.5,
+    rotation: 197,
+    name: 'Sternhof',
+    beschreibung: 'Fünfeckiges Hochbett aus Holz.',
+  },
+  {
+    id: 3,
+    x: 564,
+    y: 900,
+    radius: 42.5,
+    rotation: -18,
+    name: 'Pentagarten',
+    beschreibung: 'Fünfeckiges Hochbett aus Holz.',
+  },
 ])
 
 const wildBeeBeds = ref([
@@ -390,9 +542,7 @@ const benches = ref([
 ])
 
 const trees = ref([
-  { id: 1, x: 700, y: 1050, scale: 1, rotation: 0 },
-  { id: 2, x: 900, y: 1050, scale: 1.2, rotation: 0 },
-  { id: 3, x: 1100, y: 1050, scale: 1.4, rotation: 0 },
+  { id: 3, x: 990, y: 950, scale: 1, rotation: 0 },
   { id: 4, x: 1300, y: 1050, scale: 1, rotation: 0 },
   { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
   { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },

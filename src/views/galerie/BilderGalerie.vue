@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import GallerymainLayout from '../components/gallery/GallerymainLayout.vue'
+import GallerymainLayout from './GallerymainLayout.vue'
 //import miniGallery from '@/components/gallery/miniGallery.vue';
 </script>
 

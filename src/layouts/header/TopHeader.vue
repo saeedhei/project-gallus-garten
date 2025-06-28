@@ -193,27 +193,12 @@ onUnmounted(() => {
               </RouterLink>
 
               <RouterLink
-                to="/digitalisierung-fuer-alle"
+                to="/projekte"
                 class="block py-3 px-4 rounded hover:bg-gray-700 hover:text-white font-semibold transition"
               >
-                Digitalisierung für Alle
-              </RouterLink>
-
-              <RouterLink
-                to="/onlinetraining"
-                class="block py-3 px-4 rounded hover:bg-gray-700 hover:text-white font-semibold transition"
-              >
-                Onlinetraining
-                <span class="blink-nav-item text-white text-xs font-bold px-2 py-0.5 rounded">
-                  Neu
-                </span>
-              </RouterLink>
-
-              <RouterLink
-                to="/blog"
-                class="block py-3 px-4 rounded hover:bg-gray-700 hover:text-white font-semibold transition"
-              >
-                Blog
+                Projekte {<span class="blink-nav-item text-white text-xs font-bold rounded">
+                  Neu </span
+                >}
               </RouterLink>
 
               <RouterLink

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{ title?: string }>()
-import TopHeaderView from './TopHeader.vue'
+import TopHeaderView from '../header/TopHeader.vue'
 </script>
 
 <template>
@@ -11,7 +11,7 @@ import TopHeaderView from './TopHeader.vue'
         {{ title }}
       </h1>
       <p class="mt-4 text-lg text-white max-w-3xl mx-auto text-center">
-        Wo Generationen sich treffen - Galluswarte • GallusGarten
+        Wo Generationen gemeinsam gärtnern und gestalten.
       </p>
     </div>
   </header>

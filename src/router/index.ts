@@ -6,12 +6,12 @@ import HomeView from '../views/HomeView.vue'
 import LegalView from '../components/LegalComponent.vue'
 import LegalViewImpressum from '../components/Legal-Impressum.vue'
 import LegalViewDatenschutz from '../components/Legal-Datenschutz.vue'
-import AdminMainLogin from '@/components/gallery/adminLoginPage.vue'
-import AdminPanelPage from '@/components/gallery/adminPanelDashboard.vue'
+import AdminMainLogin from '@/views/galerie/adminLoginPage.vue'
+import AdminPanelPage from '@/views/galerie/adminPanelDashboard.vue'
 import jwtDecode from 'jwt-decode'
 
-import UserLogin from '@/components/gallery/userLogin.vue'
-import UserPanelPage from '@/components/gallery/userDashboard.vue'
+import UserLogin from '@/views/galerie/userLogin.vue'
+import UserPanelPage from '@/views/galerie/userDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,49 +51,49 @@ const router = createRouter({
         {
           path: '/bildergalerie',
           name: 'Bildergalerie',
-          component: () => import('@/views/BilderGalerie.vue'),
+          component: () => import('@/views/galerie/BilderGalerie.vue'),
           meta: { title: 'BilderGalerie' },
         },
         {
           path: '/projekte',
           name: 'Projekte',
-          component: () => import('@/views/ProjekteView.vue'),
+          component: () => import('@/views/project/ProjekteView.vue'),
         },
         {
           path: '/a',
           name: 'a',
-          component: () => import('@/views/AboutView.vue'),
+          component: () => import('@/views/about/AboutView.vue'),
         },
         {
           path: '/ueber-uns',
           name: 'über-uns',
-          component: () => import('@/views/UeberUns.vue'),
+          component: () => import('@/views/about/UeberUns.vue'),
           meta: { title: 'Über Uns' },
         },
         {
           path: '/ueber-uns/team',
           name: 'TeamView',
-          component: () => import('@/views/UeberUnsTeam.vue'),
+          component: () => import('@/views/about/UeberUnsTeam.vue'),
         },
         {
           path: '/ueber-uns/team/saeed-heidarizarei',
           name: 'Team',
-          component: () => import('@/views/UeberUnsTeamSaeed.vue'),
+          component: () => import('@/views/about/UeberUnsTeamSaeed.vue'),
         },
         {
           path: '/ueber-uns/team/ralf-harth',
           name: 'RalfHarth',
-          component: () => import('@/views/UeberUnsTeamRalf.vue'),
+          component: () => import('@/views/about/UeberUnsTeamRalf.vue'),
         },
         {
           path: '/werkzeuge',
           name: 'Werkzeuge',
-          component: () => import('@/views/WerkzeugeView.vue'),
+          component: () => import('@/views/werkzeuge/WerkzeugeView.vue'),
         },
         {
           path: '/werkzeuge/quittung',
           name: 'Quittung',
-          component: () => import('@/views/WerkzeugeQuittung.vue'),
+          component: () => import('@/views/werkzeuge/WerkzeugeQuittung.vue'),
         },
         {
           path: '/legal',
@@ -121,7 +121,7 @@ const router = createRouter({
     {
       path: '/lageplan',
       name: 'Lageplan',
-      component: () => import('@/views/LagePlan.vue'),
+      component: () => import('@/views/lage/LagePlan.vue'),
     },
   ],
 })

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import ASectionView from '../components/templates-layouts/sections/GallusAHome.vue'
+import ASectionView from './GallusAHome.vue'
 // import ProjectSlider from '../components/organisms/slider-all/ProjectSlider.vue'
-import HomeZeitungSection from '../components/templates-layouts/sections/HomeZeitung.vue'
-import BSectionView from '../components/templates-layouts/sections/GallusBHome.vue'
-import CSectionView from '../components/templates-layouts/sections/GallusCHome.vue'
-import CrookedSectionView from '../components/templates-layouts/sections/CrookedSection.vue'
+import HomeZeitungSection from './HomeZeitung.vue'
+import BSectionView from './GallusBHome.vue'
+import CSectionView from './GallusCHome.vue'
+import CrookedSectionView from './CrookedSection.vue'
 import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.vue'
 // import MainView from '../components/1-home/MainView.vue'
 // import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
@@ -50,7 +50,7 @@ useHead({
 <template>
   <!-- <UnderConstructionPopup /> -->
   <!-- <ProjectSlider /> -->
-  <HomeZeitungSection id="section-a" />
+  <HomeZeitungSection />
   <ASectionView />
   <BSectionView />
   <CrookedSectionView class="bg-emerald-200" />

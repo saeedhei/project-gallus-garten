@@ -1,14 +1,14 @@
 <script setup lang="ts">
 // import DataForm from '../components/DataForm.vue'
-import ChooseVorlage from '../components/ChooseVorlage.vue'
-import GallusHeader from '../components/GallusHeader.vue'
-import GallusVorschau from '../components/GallusVorschau.vue'
-import LiveView from '../components/LiveView.vue'
-import { storeToRefs } from 'pinia'
-import { useLiveStore } from '@/stores/live'
-const liveStore = useLiveStore()
-const { updateString } = liveStore
-const { livestring } = storeToRefs(liveStore) // to keep reactivity
+import ChooseVorlage from '../../components/ChooseVorlage.vue'
+import GallusHeader from '../../components/GallusHeader.vue'
+import GallusVorschau from '../../components/GallusVorschau.vue'
+import LiveView from '../../components/LiveView.vue'
+// import { storeToRefs } from 'pinia'
+// import { useLiveStore } from '@/stores/live'
+// const liveStore = useLiveStore()
+// const { updateString } = liveStore
+// const { livestring } = storeToRefs(liveStore) // to keep reactivity
 </script>
 
 <template>

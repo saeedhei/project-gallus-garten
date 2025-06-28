@@ -2,8 +2,8 @@
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
-import Header from '../components/header/HeaderShort.vue'
-import Footer from '../components/templates-layouts/footers/FooterView.vue'
+import Header from './header/HeaderShort.vue'
+import Footer from './footer/FooterView.vue'
 
 const route = useRoute()
 

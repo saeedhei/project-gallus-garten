@@ -1,17 +1,8 @@
+// tailwind.config.ts (for Tailwind CSS v4)
 import type { Config } from 'tailwindcss'
 
 export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  theme: {
-    extend: {
-      colors: {
-        link: {
-          DEFAULT: '#16a34a', // Green-600
-          hover: '#166534', // Green-800
-          muted: '#86efac', // Green-300
-        },
-      },
-    },
-  },
-  plugins: [],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'], // Keep if you want explicit content scanning
+  // No theme configuration here for V4
+  plugins: [], // Keep if you have plugins, otherwise remove
 } satisfies Config

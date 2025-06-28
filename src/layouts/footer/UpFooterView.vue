@@ -152,7 +152,9 @@ onMounted(() => {
           </svg>
         </div>
 
-        <p class="text-base text-green-200 mt-4">Wo Generationen sich treffen</p>
+        <p class="text-base text-green-200 mt-4">
+          Wo Generationen gemeinsam gärtnern und gestalten.
+        </p>
         <div class="flex-col mx-auto md:flex-row justify-between space-x-4">
           <img
             src="https://frankfurt.de/-/media/frankfurtde/global/image/seitenrahmen/footerlogo.ashx?la=de-de6b171b43a6e644fb88df64df25328a18&mw=1280&hash=3C8D80D1E72F6317B5444810BE0CF329"

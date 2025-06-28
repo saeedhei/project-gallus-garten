@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TopHeaderView from '../header/TopHeader.vue'
-import AnimeChevron from '../atoms/icons/AnimeChevron.vue'
+import AnimeChevron from '../../components/atoms/icons/AnimeChevron.vue'
 
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId)
@@ -50,11 +50,9 @@ const sentences: string[] = [
       <div class="absolute inset-0 flex items-center justify-center">
         <div class="text-center h-32">
           <h1 class="text-5xl font-extrabold text-white drop-shadow-lg mb-2 tracking-wide">
-            Gallus<span class="text-lime-300">Garten</span>
+            Gallus<span class="text-garden">Garten</span>
           </h1>
-          <h2 class="text-xl text-gray-100 italic drop-shadow-sm mb-4">
-            Im Herzen von Galluswarte
-          </h2>
+          <h2 class="text-xl text-gray-100 italic drop-shadow-sm mb-4">An der Galluswarte</h2>
           <TypingEffect class="text-2xl text-white" :sentences="sentences"></TypingEffect>
           <TopHeaderView />
         </div>

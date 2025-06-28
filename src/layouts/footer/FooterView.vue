@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UpfooterView from '../../organisms/footer-teils/UpFooterView.vue'
+import UpfooterView from './UpFooterView.vue'
 </script>
 
 <template>

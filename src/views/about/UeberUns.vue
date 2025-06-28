@@ -8,7 +8,7 @@
           <!-- Timeline item 2 -->
           <div class="timeline-item right">
             <div class="content">
-              <h2>October 2024</h2>
+              <h2 class="text-blue-400 text-7xl">October 2024</h2>
               <h3>Selbstorganisation und vertragliche Pflichten</h3>
               <p>
                 Interessierte Mitmenschen können als Hochbeet-Patinnen und -paten ab Februar für 12

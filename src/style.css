@@ -1,3 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* src/style.css (or src/assets/main.css) */
+
+@import 'tailwindcss'; /* This is essential for v4 */
+
+/* Custom theme configuration for Tailwind CSS v4 */
+@theme {
+  /* Define font families as CSS variables */
+  --font-family-serif: 'Playfair Display', serif;
+  --font-family-sans: 'Montserrat', sans-serif;
+
+  /* Define colors as CSS variables */
+
+  --color-garden: #71c43e;
+  --color-garden-green: #2e7d32;
+  --color-garden-light: #8bc34a;
+  --color-garden-dark: #1b5e20;
+  --color-garden-accent: #ff9800;
+
+  /* For nested colors like 'link', you need to define each variant */
+  --color-link: #16a34a; /* link-DEFAULT */
+  --color-link-hover: #166534; /* link-hover */
+  --color-link-muted: #86efac; /* link-muted */
+}
+
+/* You can also add global styles or other @layer directives here if needed */
+/* @layer base {
+  body {
+    font-family: var(--font-family-sans);
+  }
+} */
