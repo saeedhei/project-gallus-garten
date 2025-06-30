@@ -10,13 +10,13 @@ import UpfooterView from './UpFooterView.vue'
         <div class="col-lg-12 col-sm-12 col-xs-12">
           <ul class="social-media">
             <li>
-              <a href="https://www.facebook.com/mygarden"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.facebook.com/#"><i class="fab fa-facebook-f"></i></a>
             </li>
             <li>
-              <a href="https://www.instagram.com/mygarden"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.instagram.com/#"><i class="fab fa-instagram"></i></a>
             </li>
             <li>
-              <a href="https://twitter.com/mygarden"><i class="fab fa-twitter"></i></a>
+              <a href="https://twitter.com/#"><i class="fab fa-twitter"></i></a>
             </li>
           </ul>
 
@@ -41,7 +41,6 @@ import UpfooterView from './UpFooterView.vue'
 </template>
 
 <style scoped>
-@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css';
 h1,
 h2,
 h3,

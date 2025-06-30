@@ -93,63 +93,15 @@ onMounted(() => {
       </div>
 
       <div class="mt-12 sm:w-1/2 lg:w-2/5 lg:mt-0 lg:pl-12">
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="230"
-            height="50"
-            viewBox="0 0 230 50"
-            class="mx-auto sm:mx-0"
-          >
-            <g transform="translate(-193 -27)">
-              <text
-                transform="translate(280 56)"
-                fill="white"
-                font-size="24"
-                font-family="ArialRoundedMTBold, Arial Rounded MT"
-              >
-                <tspan x="0" y="0">GallusGarten</tspan>
-              </text>
-              <g transform="translate(120 27)">
-                <svg
-                  version="1.1"
-                  id="Layer_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  x="0px"
-                  y="0px"
-                  width="100%"
-                  viewBox="0 0 2956 1724"
-                  enable-background="new 0 0 2956 1724"
-                  xml:space="preserve"
-                >
-                  <rect width="2740" height="1750" x="140" y="0" style="fill: #fff" />
-                  <rect width="773" height="1550" x="400" y="84" style="fill: #71c43e" />
-                  <rect width="773" height="1550" x="1810" y="84" style="fill: #71c43e" />
-                  <text
-                    x="270"
-                    y="790"
-                    font-family="Tahoma"
-                    font-size="680"
-                    font-weight="bold"
-                    fill="#253C17"
-                  >
-                    GALLUS
-                  </text>
-                  <text
-                    x="240"
-                    y="1400"
-                    font-family="Tahoma"
-                    font-size="680"
-                    font-weight="bold"
-                    fill="#253C17"
-                  >
-                    GARTEN
-                  </text>
-                </svg>
-              </g>
-            </g>
-          </svg>
+        <div class="flex items-center space-x-4">
+          <img
+            class="w-16 h-auto sm:w-24 lg:w-32"
+            src="/images/GallusGarten.svg"
+            alt="Gallus Garten Logo"
+          />
+          <span class="text-white text-lg sm:text-xl lg:text-2xl font-semibold">
+            GallusGarten
+          </span>
         </div>
 
         <p class="text-base text-green-200 mt-4">

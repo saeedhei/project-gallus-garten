@@ -20,7 +20,7 @@
             <img
               src="/docs/zeitung.jpg"
               alt="Newsletter Beispiel"
-              class="max-w-md w-full h-auto rounded-lg shadow-lg border-4 border-white mb-2"
+              class="max-w-md w-full h-auto rounded-lg shadow-lg border-4 border-white mb-3"
             />
             <a
               href="/docs/zeitung.webp"
@@ -33,7 +33,7 @@
           <div class="lg:w-1/2 flex flex-col items-center">
             <div class="relative">
               <div
-                class="w-64 h-64 bg-garden-light bg-opacity-20 rounded-full flex items-center justify-center"
+                class="w-64 h-64 bg-garden-light bg-opacity-20 rounded-full flex items-center justify-center mb-12"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@
                   />
                 </svg>
               </div>
-              <div class="absolute -bottom-4 -right-4">
+              <div class="absolute -bottom-4">
                 <a
                   href="/newsletter-archiv"
                   class="inline-flex items-center px-6 py-3 bg-white border border-garden-green text-garden-green rounded-full font-medium hover:bg-garden-green hover:text-white transition duration-300 shadow-lg"
@@ -130,7 +130,8 @@
 
 <style scoped lang="scss">
 .newsletter-card {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
     url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
   background-size: cover;
   background-position: center;

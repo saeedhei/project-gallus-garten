@@ -60,30 +60,27 @@ const router = createRouter({
           component: () => import('@/views/project/ProjekteView.vue'),
         },
         {
-          path: '/a',
-          name: 'a',
-          component: () => import('@/views/about/AboutView.vue'),
-        },
-        {
           path: '/ueber-uns',
           name: 'über-uns',
-          component: () => import('@/views/about/UeberUns.vue'),
+          component: () => import('@/views/ueber-uns/UeberUns.vue'),
           meta: { title: 'Über Uns' },
         },
         {
           path: '/ueber-uns/team',
           name: 'TeamView',
-          component: () => import('@/views/about/UeberUnsTeam.vue'),
+          component: () => import('@/views/ueber-uns/team/TeamView.vue'),
+          meta: { title: 'Das Führungsteam' },
         },
         {
           path: '/ueber-uns/team/saeed-heidarizarei',
           name: 'Team',
-          component: () => import('@/views/about/UeberUnsTeamSaeed.vue'),
+          component: () => import('@/views/ueber-uns/team/saeed-heidarizarei/SaeedView.vue'),
+          meta: { title: 'Saeed Heidarizarei' },
         },
         {
           path: '/ueber-uns/team/ralf-harth',
           name: 'RalfHarth',
-          component: () => import('@/views/about/UeberUnsTeamRalf.vue'),
+          component: () => import('@/views/ueber-uns/team/ralf-harth/UeberUnsTeamRalf.vue'),
         },
         {
           path: '/werkzeuge',

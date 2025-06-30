@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "language": "en,de",
-  "words": ["unhead", "VITE", "Galluswarte", "Playfair"],
+  "words": ["unhead", "VITE", "Galluswarte", "Playfair", "konva", "fontawesome", "Tahoma", "xlink"],
   "dictionaries": [],
   "ignorePaths": ["node_modules", "package-lock.json", "yarn.lock", "build", "dist"]
 }
