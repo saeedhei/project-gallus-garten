@@ -1,30 +1,32 @@
+// src\services\api.ts
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_endPoint,
 });
 
-// Add a request interceptor to include the token in the headers
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+// قبل از ارسال هر درخواست، توکن JWT را به هدر اضافه می‌کنیم
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
-// Add a response interceptor to handle token expiry or invalid tokens
+// اگر پاسخ 401 دریافت شد، کاربر را به صفحه login هدایت می‌کنیم
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Token is invalid or expired
-      localStorage.removeItem('authToken'); // Clear the invalid token
+      localStorage.removeItem('authToken');
+      window.location.href = '/login'; // کاربر را به login بفرست
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

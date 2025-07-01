@@ -10,7 +10,7 @@ git remote add origin https://github.com/saeedhei/project-gallus-garten.git
 git remote -v
 
 git add .
-git commit -m "tailwind updated"
+git commit -m "structure updated/login added"
 git push origin main 
 
 error: src refspec main does not match any
