@@ -3,7 +3,7 @@
   <Modal :show="isOpen" @close="isOpen = false">
     <div class="modal-content">
       <h3 class="text-xl font-semibold text-green-500 mb-2">{{ selectedBed?.name }}</h3>
-
+      <p class="mb-1"><strong>Gärtner*in:</strong> {{ selectedBed?.gaertnerIn }}</p>
       <p v-if="selectedBed?.radius !== undefined" class="mb-1">
         <strong>Radius:</strong> {{ selectedBed.radius }}
       </p>
@@ -239,168 +239,169 @@
 </template>
 
 <script setup lang="ts">
-import Konva from 'konva'
-import { ref, onMounted } from 'vue'
-import Tree from '@/components/lageplan/TreeComponent.vue'
-import Bench from '@/components/lageplan/BenchComponent.vue'
-import WildBeeBed from '@/components/lageplan/WildBeeBed.vue'
-import GardenBed from '@/components/lageplan/GardenBed.vue'
-import Walkway from '@/components/lageplan/WalkwayComponent.vue'
-import TiltedGarden from '@/components/lageplan/TiltedGarden.vue'
-import SideGarden from '@/components/lageplan/SideGarden.vue'
-import HorizontalRuler from '@/components/lageplan/HorizontalRuler.vue'
-import Modal from '@/components/lageplan/ModalComponent.vue'
+import Konva from 'konva';
+import { ref, onMounted } from 'vue';
+import Tree from '@/components/lageplan/TreeComponent.vue';
+import Bench from '@/components/lageplan/BenchComponent.vue';
+import WildBeeBed from '@/components/lageplan/WildBeeBed.vue';
+import GardenBed from '@/components/lageplan/GardenBed.vue';
+import Walkway from '@/components/lageplan/WalkwayComponent.vue';
+import TiltedGarden from '@/components/lageplan/TiltedGarden.vue';
+import SideGarden from '@/components/lageplan/SideGarden.vue';
+import HorizontalRuler from '@/components/lageplan/HorizontalRuler.vue';
+import Modal from '@/components/lageplan/ModalComponent.vue';
 
-Konva.hitOnDragEnabled = true
+Konva.hitOnDragEnabled = true;
 
-const stageRef = ref()
-const stageConfig = { width: window.innerWidth, height: window.innerHeight }
-const showMenu = ref(false)
+const stageRef = ref();
+const stageConfig = { width: window.innerWidth, height: window.innerHeight };
+const showMenu = ref(false);
 
-const showTrees = ref(true)
-const showBeds = ref(true)
-const showWildBeeBeds = ref(true)
-const showBenches = ref(true)
-const showSixBeds = ref(true)
+const showTrees = ref(true);
+const showBeds = ref(true);
+const showWildBeeBeds = ref(true);
+const showBenches = ref(true);
+const showSixBeds = ref(true);
 interface Bed {
-  name: string
-  beschreibung: string
-  width?: number
-  height?: number
-  radius?: number
+  name: string;
+  beschreibung: string;
+  width?: number;
+  height?: number;
+  radius?: number;
+  gaertnerIn: string;
 }
-const isOpen = ref(false) // Modal
-const selectedBed = ref<Bed | null>(null)
+const isOpen = ref(false); // Modal
+const selectedBed = ref<Bed | null>(null);
 
 function openModal(bed: Bed) {
-  selectedBed.value = bed
-  isOpen.value = true
+  selectedBed.value = bed;
+  isOpen.value = true;
 }
 
-const toggleTrees = () => (showTrees.value = !showTrees.value)
-const toggleBeds = () => (showBeds.value = !showBeds.value)
-const toggleBenches = () => (showBenches.value = !showBenches.value)
-const toggleWildBeeBeds = () => (showWildBeeBeds.value = !showWildBeeBeds.value)
+const toggleTrees = () => (showTrees.value = !showTrees.value);
+const toggleBeds = () => (showBeds.value = !showBeds.value);
+const toggleBenches = () => (showBenches.value = !showBenches.value);
+const toggleWildBeeBeds = () => (showWildBeeBeds.value = !showWildBeeBeds.value);
 
 const resetView = () => {
-  const stage = stageRef.value?.getStage()
+  const stage = stageRef.value?.getStage();
   if (stage) {
-    stage.position({ x: 0, y: 0 })
-    stage.scale({ x: 1, y: 1 })
-    stage.batchDraw()
+    stage.position({ x: 0, y: 0 });
+    stage.scale({ x: 1, y: 1 });
+    stage.batchDraw();
   }
-}
+};
 
 const handleWheel = (e: Konva.KonvaEventObject<WheelEvent>) => {
-  e.evt.preventDefault()
-  const stage = stageRef.value?.getStage()
-  if (!stage) return
+  e.evt.preventDefault();
+  const stage = stageRef.value?.getStage();
+  if (!stage) return;
 
-  const oldScale = stage.scaleX()
-  const pointer = stage.getPointerPosition()
-  if (!pointer) return
+  const oldScale = stage.scaleX();
+  const pointer = stage.getPointerPosition();
+  if (!pointer) return;
 
-  const scaleBy = 1.05
-  const direction = e.evt.deltaY > 0 ? -1 : 1
-  const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy
+  const scaleBy = 1.05;
+  const direction = e.evt.deltaY > 0 ? -1 : 1;
+  const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
   const mousePointTo = {
     x: (pointer.x - stage.x()) / oldScale,
     y: (pointer.y - stage.y()) / oldScale,
-  }
+  };
 
-  stage.scale({ x: newScale, y: newScale })
+  stage.scale({ x: newScale, y: newScale });
   stage.position({
     x: pointer.x - mousePointTo.x * newScale,
     y: pointer.y - mousePointTo.y * newScale,
-  })
-  stage.batchDraw()
-}
+  });
+  stage.batchDraw();
+};
 
-type Point = { x: number; y: number }
+type Point = { x: number; y: number };
 
-let lastCenter: Point | null = null
-let lastDist: number = 0
-let dragStopped = false
+let lastCenter: Point | null = null;
+let lastDist: number = 0;
+let dragStopped = false;
 
 function getDistance(p1: Point, p2: Point): number {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 }
 
 function getCenter(p1: Point, p2: Point): Point {
   return {
     x: (p1.x + p2.x) / 2,
     y: (p1.y + p2.y) / 2,
-  }
+  };
 }
 
 onMounted(() => {
-  const stage = stageRef.value.getStage()
+  const stage = stageRef.value.getStage();
 
   stage.on('touchmove', (e: Konva.KonvaEventObject<TouchEvent>) => {
-    e.evt.preventDefault()
-    const touch1 = e.evt.touches[0]
-    const touch2 = e.evt.touches[1]
+    e.evt.preventDefault();
+    const touch1 = e.evt.touches[0];
+    const touch2 = e.evt.touches[1];
 
     if (touch1 && !touch2 && !stage.isDragging() && dragStopped) {
-      stage.startDrag()
-      dragStopped = false
+      stage.startDrag();
+      dragStopped = false;
     }
 
     if (touch1 && touch2) {
       if (stage.isDragging()) {
-        dragStopped = true
-        stage.stopDrag()
+        dragStopped = true;
+        stage.stopDrag();
       }
 
-      const p1: Point = { x: touch1.clientX, y: touch1.clientY }
-      const p2: Point = { x: touch2.clientX, y: touch2.clientY }
+      const p1: Point = { x: touch1.clientX, y: touch1.clientY };
+      const p2: Point = { x: touch2.clientX, y: touch2.clientY };
 
       if (!lastCenter) {
-        lastCenter = getCenter(p1, p2)
-        return
+        lastCenter = getCenter(p1, p2);
+        return;
       }
 
-      const newCenter = getCenter(p1, p2)
-      const dist = getDistance(p1, p2)
+      const newCenter = getCenter(p1, p2);
+      const dist = getDistance(p1, p2);
 
-      if (!lastDist) lastDist = dist
+      if (!lastDist) lastDist = dist;
 
       const pointTo = {
         x: (newCenter.x - stage.x()) / stage.scaleX(),
         y: (newCenter.y - stage.y()) / stage.scaleX(),
-      }
+      };
 
-      const scale = stage.scaleX() * (dist / lastDist)
+      const scale = stage.scaleX() * (dist / lastDist);
 
-      stage.scale({ x: scale, y: scale })
+      stage.scale({ x: scale, y: scale });
 
-      const dx = newCenter.x - lastCenter.x
-      const dy = newCenter.y - lastCenter.y
+      const dx = newCenter.x - lastCenter.x;
+      const dy = newCenter.y - lastCenter.y;
 
       const newPos = {
         x: newCenter.x - pointTo.x * scale + dx,
         y: newCenter.y - pointTo.y * scale + dy,
-      }
+      };
 
-      stage.position(newPos)
+      stage.position(newPos);
 
-      lastDist = dist
-      lastCenter = newCenter
+      lastDist = dist;
+      lastCenter = newCenter;
     }
-  })
+  });
 
   stage.on('touchend', () => {
-    lastDist = 0
-    lastCenter = null
-  })
+    lastDist = 0;
+    lastCenter = null;
+  });
 
   window.addEventListener('resize', () => {
-    stage.width(window.innerWidth)
-    stage.height(window.innerHeight)
-    stage.batchDraw()
-  })
-})
+    stage.width(window.innerWidth);
+    stage.height(window.innerHeight);
+    stage.batchDraw();
+  });
+});
 
 const beds = ref([
   {
@@ -412,6 +413,7 @@ const beds = ref([
     rotation: 0,
     name: 'Blütengarten',
     beschreibung: 'Hochbeet aus Holz.',
+    gaertnerIn: '?',
   },
   {
     id: 2,
@@ -422,6 +424,7 @@ const beds = ref([
     rotation: 90,
     name: 'Rosenecke',
     beschreibung: 'Hochbeet aus Holz.',
+    gaertnerIn: '?',
   },
   {
     id: 3,
@@ -432,6 +435,7 @@ const beds = ref([
     rotation: 0,
     name: 'Lavendelfeld',
     beschreibung: 'Hochbeet aus Stahl.',
+    gaertnerIn: '?',
   },
   {
     id: 4,
@@ -442,6 +446,7 @@ const beds = ref([
     rotation: 0,
     name: 'Kräutertraum',
     beschreibung: 'Hochbeet aus Stahl.',
+    gaertnerIn: '?',
   },
   {
     id: 5,
@@ -452,6 +457,7 @@ const beds = ref([
     rotation: 90,
     name: 'Kleines Paradies',
     beschreibung: 'Hochbeet aus Stahl.',
+    gaertnerIn: 'Hannah Elise Frank',
   },
   {
     id: 6,
@@ -462,8 +468,42 @@ const beds = ref([
     rotation: 90,
     name: 'Sommerwiese',
     beschreibung: 'Hochbeet aus Holz.',
+    gaertnerIn: '?',
   },
-])
+  {
+    id: 7,
+    x: 1189,
+    y: 938,
+    width: 210,
+    height: 110,
+    rotation: 0,
+    name: 'x',
+    beschreibung: 'Hochbeet aus Holz.',
+    gaertnerIn: 'Jugendmigrationsdienste (JMD)',
+  },
+  {
+    id: 8,
+    x: 1402,
+    y: 938,
+    width: 210,
+    height: 110,
+    rotation: 0,
+    name: 'x',
+    beschreibung: 'Hochbeet aus Holz.',
+    gaertnerIn: 'Jugendmigrationsdienste (JMD)',
+  },
+  {
+    id: 9,
+    x: 1420,
+    y: 725,
+    width: 210,
+    height: 110,
+    rotation: 90,
+    name: 'x',
+    beschreibung: 'Hochbeet aus Holz.',
+    gaertnerIn: 'Dr. Shekiba Rahim',
+  },
+]);
 
 const wildSixBeds = ref([
   {
@@ -474,6 +514,7 @@ const wildSixBeds = ref([
     rotation: 90,
     name: 'Fünfeckgarten',
     beschreibung: 'Fünfeckiges Hochbett aus Holz.',
+    gaertnerIn: 'Ralf Harth',
   },
   {
     id: 2,
@@ -483,6 +524,7 @@ const wildSixBeds = ref([
     rotation: 197,
     name: 'Sternhof',
     beschreibung: 'Fünfeckiges Hochbett aus Holz.',
+    gaertnerIn: 'Ralf Harth',
   },
   {
     id: 3,
@@ -492,8 +534,9 @@ const wildSixBeds = ref([
     rotation: -18,
     name: 'Pentagarten',
     beschreibung: 'Fünfeckiges Hochbett aus Holz.',
+    gaertnerIn: 'Ralf Harth',
   },
-])
+]);
 
 const wildBeeBeds = ref([
   {
@@ -532,21 +575,21 @@ const wildBeeBeds = ref([
       { x: 90, y: 20, color: 'blue' },
     ],
   },
-])
+]);
 
 const benches = ref([
   { id: 1, x: 2000, y: 427, width: 140, height: 42, rotation: 180 },
   { id: 2, x: 1000, y: 427, width: 140, height: 42, rotation: 180 },
   { id: 3, x: 1400, y: 520, width: 140, height: 42, rotation: 270 },
   { id: 4, x: 1600, y: 380, width: 140, height: 42, rotation: 90 },
-])
+]);
 
 const trees = ref([
   { id: 3, x: 990, y: 950, scale: 1, rotation: 0 },
   { id: 4, x: 1300, y: 1050, scale: 1, rotation: 0 },
   { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
   { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },
-])
+]);
 </script>
 
 <style scoped>

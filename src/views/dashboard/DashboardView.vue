@@ -5,9 +5,27 @@
     <aside class="w-64 bg-white shadow-md hidden md:block">
       <div class="p-6 text-xl font-semibold text-gray-800 border-b">Admin Panel</div>
       <nav class="p-4 space-y-2">
-        <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">Dashboard</a>
-        <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">Users</a>
-        <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">Settings</a>
+        <a
+          href="#"
+          class="block px-4 py-2 rounded hover:bg-gray-100"
+          :class="{ 'bg-gray-200 font-bold': currentView === 'DashboardContent' }"
+          @click.prevent="currentView = 'DashboardContent'"
+          >Dashboard</a
+        >
+        <a
+          href="#"
+          class="block px-4 py-2 rounded hover:bg-gray-100"
+          :class="{ 'bg-gray-200 font-bold': currentView === 'UsersContent' }"
+          @click.prevent="currentView = 'UsersContent'"
+          >Users</a
+        >
+        <a
+          href="#"
+          class="block px-4 py-2 rounded hover:bg-gray-100"
+          :class="{ 'bg-gray-200 font-bold': currentView === 'SettingsContent' }"
+          @click.prevent="currentView = 'SettingsContent'"
+          >Settings</a
+        >
       </nav>
     </aside>
 
@@ -24,36 +42,29 @@
         </button>
       </header>
 
-      <!-- Content area -->
+      <!-- Dynamic Content Area -->
       <main class="p-6">
-        <p class="text-gray-700 text-lg">
-          Welcome to your dashboard. This is protected content visible only after login.
-        </p>
-        <p class="text-gray-700 text-lg">
-          {{ dashboardMessage }}
-        </p>
-        <!-- Add more dashboard components here -->
+        <component :is="viewComponents[currentView]" />
       </main>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import api from '@/services/api';
-
+import DashboardContent from './DashboardContent.vue';
+import UsersContent from './UsersContent.vue'; // Optional
+import SettingsContent from './SettingsContent.vue';
 const router = useRouter();
-const dashboardMessage = ref('');
-
-onMounted(async () => {
-  try {
-    const response = await api.get('/v3/dashboard/');
-    dashboardMessage.value = response.data.message;
-  } catch (error) {
-    console.error(error);
-  }
-});
+const currentView = ref<'DashboardContent' | 'UsersContent' | 'SettingsContent'>(
+  'DashboardContent',
+);
+const viewComponents = {
+  DashboardContent,
+  UsersContent,
+  SettingsContent,
+};
 
 const logout = () => {
   localStorage.removeItem('authToken');
