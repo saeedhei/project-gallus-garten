@@ -32,6 +32,21 @@ const router = createRouter({
           component: () => import('@/views/dashboard/DashboardView.vue'),
         },
         {
+          path: '/users',
+          name: 'Users',
+          component: () => import('@/views/users/UsersView.vue'),
+        },
+        {
+          path: '/dashboard/arbeitszeiten',
+          name: 'Arbeitszeiten',
+          component: () => import('@/views/dashboard/users/arbeitszeiten/ArbeitszeitenContent.vue'),
+        },
+        {
+          path: '/users/:slug',
+          component: () => import('@/views/users/UserProfile.vue'),
+          name: 'UserProfile',
+        },
+        {
           path: '/bildergalerie',
           name: 'Bildergalerie',
           component: () => import('@/views/galerie/BilderGalerie.vue'),
@@ -93,7 +108,7 @@ const router = createRouter({
         {
           path: '/legal/datenschutzeinstellungen',
           name: 'Datenschutzeinstellungen',
-          component: () => import('../components/organisms/WelcomeCookie.vue'),
+          component: LegalViewDatenschutz,
         },
       ],
     },
@@ -108,7 +123,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem('authToken');
-  if (to.name === 'Dashboard' && !isAuthenticated) {
+  const protectedRoutes = ['Dashboard', 'Arbeitszeiten'];
+
+  if (protectedRoutes.includes(to.name as string) && !isAuthenticated) {
     next('/login');
   } else {
     next();

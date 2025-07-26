@@ -99,7 +99,7 @@ onUnmounted(() => {
           >
             <div class="flex pl-4">
               <img
-                class="w-16 h-auto sm:w-24 lg:w-32"
+                class="w-24 h-auto sm:w-32 lg:w-38"
                 src="/images/GallusGarten.svg"
                 alt="Gallus Garten Logo"
               />

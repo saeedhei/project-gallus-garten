@@ -54,7 +54,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import DashboardContent from './DashboardContent.vue';
-import UsersContent from './UsersContent.vue'; // Optional
+import UsersContent from './users/UsersContent.vue'; // Optional
 import SettingsContent from './SettingsContent.vue';
 const router = useRouter();
 const currentView = ref<'DashboardContent' | 'UsersContent' | 'SettingsContent'>(

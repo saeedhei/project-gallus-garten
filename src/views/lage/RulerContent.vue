@@ -16,7 +16,7 @@
     />
 
     <!-- خط افقی اصلی -->
-    <v-line :config="{ points: [0, 50, 1000, 50], stroke: 'red', strokeWidth: 2 }" />
+    <v-line :config="{ points: [0, 50, 2000, 50], stroke: 'red', strokeWidth: 2 }" />
 
     <!-- خط صفر -->
     <v-line
@@ -72,17 +72,19 @@
 </template>
 
 <script setup lang="ts">
-const tickSpacing = 20
-const tickCount = 50
+const tickSpacing = 20;
+// const tickCount = 50;
+const tickCount = 100; // برای 2000 پیکسل
 
-const majorTickSpacing = 100
-const majorTickCount = 10
+const majorTickSpacing = 100;
+// const majorTickCount = 10;
+const majorTickCount = 20; // برای 2000 پیکسل
 
 defineProps({
   x: { type: Number, required: true },
   y: { type: Number, required: true },
-  width: { type: Number, default: 1000 },
+  width: { type: Number, default: 2000 },
   height: { type: Number, default: 300 },
   rotation: { type: Number, default: 0 },
-})
+});
 </script>

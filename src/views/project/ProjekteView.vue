@@ -42,11 +42,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
-import Multiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
+import { ref, computed } from 'vue';
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-import type { Project } from '@/types/Project'
+import type { Project } from '@/types/Project';
 
 // Available status options
 const statusOptions = [
@@ -56,10 +56,10 @@ const statusOptions = [
   'Geplant',
   'Angehalten',
   'Storniert',
-]
+];
 
 // Multiselect reactive state
-const selectedStatuses = ref<string[]>([])
+const selectedStatuses = ref<string[]>([]);
 
 // Projects data
 const projects = ref<Project[]>([
@@ -76,7 +76,7 @@ const projects = ref<Project[]>([
     title: 'Zentrale Grünanlage',
     description: 'Anlage eines öffentlichen Parks mit moderner Beleuchtung.',
     image: '/images/placeholder-image.webp',
-    status: 'Abgeschlossen',
+    status: 'Geplant',
     ideator: 'Ralf Harth',
   },
   {
@@ -93,34 +93,52 @@ const projects = ref<Project[]>([
     description: 'Installation eines Wasserhahns zur besseren Bewässerung des Gartens.',
     image:
       'https://tgabara.com/wp-content/uploads/2021/02/%D8%A2%D8%A8%D9%BE%D8%A7%D8%B4-%D9%BE%D9%84%DB%8C%D9%85%D8%B1%DB%8C.jpg',
-    status: 'Geplant',
+    status: 'Abgeschlossen',
     ideator: 'Saeed Heidarizarei',
   },
-])
+  {
+    id: 5,
+    title: 'Dach für Garten',
+    description:
+      'Bau eines schützenden Dachs im Garten, um Sitzbereiche vor Regen und Sonne zu bewahren.',
+    image: '/images/placeholder-image.webp',
+    status: 'Angehalten',
+    ideator: 'Ralf Harth',
+  },
+  {
+    id: 6,
+    title: 'Digitalisierung für Alle',
+    description:
+      'Kostenlose Programmierkurse für alle Altersgruppen zur Förderung digitaler Fähigkeiten.',
+    image: '/images/placeholder-image.webp',
+    status: 'In Bearbeitung',
+    ideator: 'Saeed Heidarizarei',
+  },
+]);
 
 // Filter projects based on the selected statuses
 const filteredProjects = computed(() => {
-  if (selectedStatuses.value.length === 0) return projects.value
-  return projects.value.filter((p) => selectedStatuses.value.includes(p.status))
-})
+  if (selectedStatuses.value.length === 0) return projects.value;
+  return projects.value.filter((p) => selectedStatuses.value.includes(p.status));
+});
 
 // Function to return the appropriate Tailwind color for a status badge
 function statusColor(status: string): string {
   switch (status) {
     case 'In Bearbeitung':
-      return 'bg-yellow-500'
+      return 'bg-yellow-500';
     case 'Abgeschlossen':
-      return 'bg-green-600'
+      return 'bg-green-600';
     case 'Archiviert':
-      return 'bg-gray-500'
+      return 'bg-gray-500';
     case 'Geplant':
-      return 'bg-blue-500'
+      return 'bg-blue-500';
     case 'Angehalten':
-      return 'bg-orange-500'
+      return 'bg-orange-500';
     case 'Storniert':
-      return 'bg-red-600'
+      return 'bg-red-600';
     default:
-      return 'bg-black'
+      return 'bg-black';
   }
 }
 </script>

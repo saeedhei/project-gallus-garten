@@ -1,8 +1,8 @@
 <!-- cspell:disable -->
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import BackToTop from './components/atoms/buttons/BackTopButton.vue'
-import WelcomeCookie from './components/organisms/WelcomeCookie.vue'
+import { RouterView } from 'vue-router';
+import BackToTop from './components/atoms/buttons/BackTopButton.vue';
+import WelcomeCookie from '@/components/WelcomeCookie.vue';
 // import { useHead } from '@unhead/vue'
 
 // useHead({

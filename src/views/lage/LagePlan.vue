@@ -1,32 +1,5 @@
 <!-- cspell:disable -->
 <template>
-  <Modal :show="isOpen" @close="isOpen = false">
-    <div class="modal-content">
-      <h3 class="text-xl font-semibold text-green-500 mb-2">{{ selectedBed?.name }}</h3>
-      <p class="mb-1"><strong>Gärtner*in:</strong> {{ selectedBed?.gaertnerIn }}</p>
-      <p v-if="selectedBed?.radius !== undefined" class="mb-1">
-        <strong>Radius:</strong> {{ selectedBed.radius }}
-      </p>
-
-      <p v-if="selectedBed?.height !== undefined" class="mb-1">
-        <strong>Height:</strong> {{ selectedBed.height }} cm
-      </p>
-
-      <p v-if="selectedBed?.width !== undefined" class="mb-1">
-        <strong>Width:</strong> {{ selectedBed.width }} cm
-      </p>
-
-      <p class="mb-4"><strong>Beschreibung:</strong> {{ selectedBed?.beschreibung }}</p>
-
-      <button
-        @click="isOpen = false"
-        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
-      >
-        Close
-      </button>
-    </div>
-  </Modal>
-
   <div class="page-container relative h-screen overflow-hidden">
     <!-- نقشه و عناصر آن -->
     <v-stage ref="stageRef" :config="stageConfig" @wheel="handleWheel" :draggable="true">
@@ -86,80 +59,25 @@
             />
           </v-group>
 
-          <!-- گروه باغچه‌های شش ضلعی -->
-          <v-group :config="{ x: 25, y: 30, draggable: false }">
-            <!--  باغچه شش ضلعی -->
-            <template v-if="showSixBeds">
-              <template v-for="sixBed in wildSixBeds" :key="sixBed.id">
-                <v-regular-polygon
-                  :config="{
-                    x: sixBed.x,
-                    y: sixBed.y,
-                    sides: 5,
-                    radius: sixBed.radius,
-                    fill: '#53392d',
-                    stroke: 'green',
-                    strokeWidth: 2,
-                    draggable: false,
-                    rotation: sixBed.rotation,
-                  }"
-                />
-                <v-text
-                  :config="{
-                    text: 'ⓘ',
-                    x: sixBed.x - 20,
-                    y: sixBed.y - 20,
-                    fontSize: 14,
-                    fill: 'gold',
-                    cursor: 'pointer',
-                    draggable: false,
-                  }"
-                  @click="openModal(sixBed)"
-                  @tap="openModal(sixBed)"
-                />
-              </template>
-            </template>
-          </v-group>
+          <!--  باغچه شش ضلعی -->
+
+          <template v-if="showSixBeds">
+            <BedFive />
+          </template>
+
+          <template v-if="showSixBeds">
+            <BedSix />
+          </template>
 
           <!-- درخت‌ها -->
           <template v-if="showTrees">
-            <Tree
-              v-for="tree in trees"
-              :key="tree.id"
-              :x="tree.x"
-              :y="tree.y"
-              :scale="tree.scale"
-              :rotation="tree.rotation"
-            />
+            <Tree />
           </template>
 
+          <Schrank />
           <!-- باغچه‌ها -->
           <template v-if="showBeds">
-            <template v-for="bed in beds" :key="bed.id">
-              <v-group
-                :config="{
-                  x: bed.x,
-                  y: bed.y,
-                  rotation: bed.rotation || 0,
-                  draggable: false,
-                }"
-              >
-                <GardenBed :width="bed.width" :height="bed.height" />
-                <v-text
-                  :config="{
-                    text: 'ⓘ',
-                    x: 0,
-                    y: -20,
-                    fontSize: 14,
-                    fill: 'tomato',
-                    cursor: 'pointer',
-                    draggable: false,
-                  }"
-                  @click="openModal(bed)"
-                  @tap="openModal(bed)"
-                />
-              </v-group>
-            </template>
+            <Bed />
           </template>
 
           <!-- باغچه‌های زنبور وحشی -->
@@ -241,15 +159,17 @@
 <script setup lang="ts">
 import Konva from 'konva';
 import { ref, onMounted } from 'vue';
-import Tree from '@/components/lageplan/TreeComponent.vue';
+import Tree from './TreeContent.vue';
+import Bed from './BedContent.vue';
+import BedFive from './BedFiveContent.vue';
+import BedSix from './BedSixContent.vue';
+import Schrank from './SchrankContent.vue';
 import Bench from '@/components/lageplan/BenchComponent.vue';
 import WildBeeBed from '@/components/lageplan/WildBeeBed.vue';
-import GardenBed from '@/components/lageplan/GardenBed.vue';
 import Walkway from '@/components/lageplan/WalkwayComponent.vue';
 import TiltedGarden from '@/components/lageplan/TiltedGarden.vue';
 import SideGarden from '@/components/lageplan/SideGarden.vue';
-import HorizontalRuler from '@/components/lageplan/HorizontalRuler.vue';
-import Modal from '@/components/lageplan/ModalComponent.vue';
+import HorizontalRuler from './RulerContent.vue';
 
 Konva.hitOnDragEnabled = true;
 
@@ -269,13 +189,6 @@ interface Bed {
   height?: number;
   radius?: number;
   gaertnerIn: string;
-}
-const isOpen = ref(false); // Modal
-const selectedBed = ref<Bed | null>(null);
-
-function openModal(bed: Bed) {
-  selectedBed.value = bed;
-  isOpen.value = true;
 }
 
 const toggleTrees = () => (showTrees.value = !showTrees.value);
@@ -403,141 +316,6 @@ onMounted(() => {
   });
 });
 
-const beds = ref([
-  {
-    id: 1,
-    x: 628,
-    y: 960,
-    width: 170,
-    height: 90,
-    rotation: 0,
-    name: 'Blütengarten',
-    beschreibung: 'Hochbeet aus Holz.',
-    gaertnerIn: '?',
-  },
-  {
-    id: 2,
-    x: 892,
-    y: 880,
-    width: 170,
-    height: 90,
-    rotation: 90,
-    name: 'Rosenecke',
-    beschreibung: 'Hochbeet aus Holz.',
-    gaertnerIn: '?',
-  },
-  {
-    id: 3,
-    x: 785,
-    y: 796,
-    width: 160,
-    height: 80,
-    rotation: 0,
-    name: 'Lavendelfeld',
-    beschreibung: 'Hochbeet aus Stahl.',
-    gaertnerIn: '?',
-  },
-  {
-    id: 4,
-    x: 948,
-    y: 796,
-    width: 160,
-    height: 80,
-    rotation: 0,
-    name: 'Kräutertraum',
-    beschreibung: 'Hochbeet aus Stahl.',
-    gaertnerIn: '?',
-  },
-  {
-    id: 5,
-    x: 1191,
-    y: 734,
-    width: 160,
-    height: 80,
-    rotation: 90,
-    name: 'Kleines Paradies',
-    beschreibung: 'Hochbeet aus Stahl.',
-    gaertnerIn: 'Hannah Elise Frank',
-  },
-  {
-    id: 6,
-    x: 1186,
-    y: 898,
-    width: 150,
-    height: 75,
-    rotation: 90,
-    name: 'Sommerwiese',
-    beschreibung: 'Hochbeet aus Holz.',
-    gaertnerIn: '?',
-  },
-  {
-    id: 7,
-    x: 1189,
-    y: 938,
-    width: 210,
-    height: 110,
-    rotation: 0,
-    name: 'x',
-    beschreibung: 'Hochbeet aus Holz.',
-    gaertnerIn: 'Jugendmigrationsdienste (JMD)',
-  },
-  {
-    id: 8,
-    x: 1402,
-    y: 938,
-    width: 210,
-    height: 110,
-    rotation: 0,
-    name: 'x',
-    beschreibung: 'Hochbeet aus Holz.',
-    gaertnerIn: 'Jugendmigrationsdienste (JMD)',
-  },
-  {
-    id: 9,
-    x: 1420,
-    y: 725,
-    width: 210,
-    height: 110,
-    rotation: 90,
-    name: 'x',
-    beschreibung: 'Hochbeet aus Holz.',
-    gaertnerIn: 'Dr. Shekiba Rahim',
-  },
-]);
-
-const wildSixBeds = ref([
-  {
-    id: 1,
-    x: 505,
-    y: 943,
-    radius: 42.5,
-    rotation: 90,
-    name: 'Fünfeckgarten',
-    beschreibung: 'Fünfeckiges Hochbett aus Holz.',
-    gaertnerIn: 'Ralf Harth',
-  },
-  {
-    id: 2,
-    x: 565,
-    y: 985,
-    radius: 42.5,
-    rotation: 197,
-    name: 'Sternhof',
-    beschreibung: 'Fünfeckiges Hochbett aus Holz.',
-    gaertnerIn: 'Ralf Harth',
-  },
-  {
-    id: 3,
-    x: 564,
-    y: 900,
-    radius: 42.5,
-    rotation: -18,
-    name: 'Pentagarten',
-    beschreibung: 'Fünfeckiges Hochbett aus Holz.',
-    gaertnerIn: 'Ralf Harth',
-  },
-]);
-
 const wildBeeBeds = ref([
   {
     id: 1,
@@ -582,13 +360,6 @@ const benches = ref([
   { id: 2, x: 1000, y: 427, width: 140, height: 42, rotation: 180 },
   { id: 3, x: 1400, y: 520, width: 140, height: 42, rotation: 270 },
   { id: 4, x: 1600, y: 380, width: 140, height: 42, rotation: 90 },
-]);
-
-const trees = ref([
-  { id: 3, x: 990, y: 950, scale: 1, rotation: 0 },
-  { id: 4, x: 1300, y: 1050, scale: 1, rotation: 0 },
-  { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
-  { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },
 ]);
 </script>
 

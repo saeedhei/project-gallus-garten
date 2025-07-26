@@ -188,75 +188,83 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import jsPDF from 'jspdf'
-import { VueSignaturePad } from '@selemondev/vue3-signature-pad'
+import { useRoute } from 'vue-router';
+import { ref, computed } from 'vue';
+import jsPDF from 'jspdf';
+import { VueSignaturePad } from '@selemondev/vue3-signature-pad';
+
+const route = useRoute();
 
 // Signatur-Pads
-const auftragnehmerSignature = ref<InstanceType<typeof VueSignaturePad> | null>(null)
-const auftraggeberSignature = ref<InstanceType<typeof VueSignaturePad> | null>(null)
+const auftragnehmerSignature = ref<InstanceType<typeof VueSignaturePad> | null>(null);
+const auftraggeberSignature = ref<InstanceType<typeof VueSignaturePad> | null>(null);
 
 // Gespeicherte Unterschriften als Base64-Bild
-const auftragnehmerSignatureImage = ref<string | null>(null)
-const auftraggeberSignatureImage = ref<string | null>(null)
+const auftragnehmerSignatureImage = ref<string | null>(null);
+const auftraggeberSignatureImage = ref<string | null>(null);
 
 // Speichern der Unterschrift
 const saveAuftragnehmerSignature = () => {
   if (auftragnehmerSignature.value) {
-    auftragnehmerSignatureImage.value = auftragnehmerSignature.value.saveSignature()
+    auftragnehmerSignatureImage.value = auftragnehmerSignature.value.saveSignature();
   }
-}
+};
 
 const saveAuftraggeberSignature = () => {
   if (auftraggeberSignature.value) {
-    auftraggeberSignatureImage.value = auftraggeberSignature.value.saveSignature()
+    auftraggeberSignatureImage.value = auftraggeberSignature.value.saveSignature();
   }
-}
+};
 
 const clearAuftragnehmerSignature = () => {
-  auftragnehmerSignature.value?.clearCanvas()
-}
+  auftragnehmerSignature.value?.clearCanvas();
+};
 
 const clearAuftraggeberSignature = () => {
-  auftraggeberSignature.value?.clearCanvas()
-}
+  auftraggeberSignature.value?.clearCanvas();
+};
 
 const options = ref({
   penColor: 'rgb(43,44,124)',
   backgroundColor: 'rgb(255, 255, 255)',
   maxWidth: 1,
   minWidth: 1,
-})
+});
 
 // Reactive fields
-const employeeName = ref<string>('Max Mustermann')
-const employeeAddress = ref<string>('Musterweg 45, 60326 Frankfurt am Main')
-const date = ref<string>('2025-03-08')
-const workTime = ref<string>('09:00–12:00')
-const task = ref<string>('Gartenpflege')
-const hours = ref<number>(3)
-const hourlyRate = ref<number>(10)
-const payoutDate = ref<string>('2025-03-08')
+// const employeeName = ref<string>('Max Mustermann')
+// const employeeAddress = ref<string>('Musterweg 45, 60326 Frankfurt am Main')
+const employeeName = ref<string>((route.query.name as string) || 'Max Mustermann');
+const employeeAddress = ref<string>(
+  (route.query.address as string) || 'Musterweg 45, 60326 Frankfurt am Main',
+);
+
+const date = ref<string>('2025-03-08');
+const workTime = ref<string>('09:00–12:00');
+const task = ref<string>('Gartenpflege');
+const hours = ref<number>(3);
+const hourlyRate = ref<number>(10);
+const payoutDate = ref<string>('2025-03-08');
 
 // Computed field for total amount
-const totalAmount = computed(() => hours.value * hourlyRate.value)
+const totalAmount = computed(() => hours.value * hourlyRate.value);
 
 // Print functionality
 const printReceipt = (): void => {
-  window.print()
-}
+  window.print();
+};
 
 // Save as PDF functionality
 const saveAsPDF = (): void => {
-  const doc = new jsPDF('p', 'mm', [1630, 2280])
+  const doc = new jsPDF('p', 'mm', [1630, 2280]);
 
-  const receiptElement = document.querySelector('.receipt') as HTMLElement
+  const receiptElement = document.querySelector('.receipt') as HTMLElement;
 
   if (receiptElement) {
     // Use the html method to add the receipt content, with auto pagination
     doc.html(receiptElement, {
       callback: (doc: jsPDF) => {
-        doc.save('Arbeitszeit-Quittung.pdf')
+        doc.save('Arbeitszeit-Quittung.pdf');
       },
       x: 20,
       y: 20,
@@ -266,9 +274,9 @@ const saveAsPDF = (): void => {
       html2canvas: {
         scale: 2, // Use a higher scale factor for better resolution
       },
-    })
+    });
   }
-}
+};
 </script>
 
 <style scoped>

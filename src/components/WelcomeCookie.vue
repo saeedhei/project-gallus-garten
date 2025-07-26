@@ -30,35 +30,35 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-import { setCookie, checkCookie, deleteCookie } from '../../cookieUtils'
-import { useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { setCookie, checkCookie, deleteCookie } from '../cookieUtils';
+import { useRoute } from 'vue-router';
 
-const route = useRoute()
-const currentPath = route.path
+const route = useRoute();
+const currentPath = route.path;
 
-const hasVisited = ref(false)
+const hasVisited = ref(false);
 
 const setFirstVisitCookie = () => {
   if (!checkCookie('firstVisit')) {
-    setCookie('firstVisit', 'true', 7, 'None') // Cookie expires in 7 days
+    setCookie('firstVisit', 'true', 7, 'None'); // Cookie expires in 7 days
   } else {
-    hasVisited.value = true
+    hasVisited.value = true;
   }
-}
+};
 
 const dismissWelcome = () => {
-  hasVisited.value = true
-}
+  hasVisited.value = true;
+};
 
 const updateWelcome = () => {
-  deleteCookie('firstVisit')
+  deleteCookie('firstVisit');
   // hasVisited.value = null;
-}
+};
 
 onMounted(() => {
-  setFirstVisitCookie()
-})
+  setFirstVisitCookie();
+});
 </script>
 
 <style scoped>

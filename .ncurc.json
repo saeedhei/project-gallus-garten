@@ -1,0 +1,13 @@
+{
+  "reject": [
+    "vite*",
+    "@vitejs/*",
+    "vue*",
+    "@vue/*",
+    "typescript",
+    "eslint*",
+    "prettier",
+    "chart.js",
+    "konva"
+  ]
+}
