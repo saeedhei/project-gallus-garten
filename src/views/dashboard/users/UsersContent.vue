@@ -41,9 +41,20 @@
 
         <!-- Action Buttons -->
         <div class="flex flex-wrap gap-2">
-          <button class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded">
+          <router-link
+            :to="{
+              path: '/dashboard/ehrenamtsnachweis',
+              query: {
+                id: user.id,
+                name: user.firstName + ' ' + user.lastName,
+                address: user.address,
+                // activities: JSON.stringify(user.activities2025),
+              },
+            }"
+            class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded"
+          >
             🏅&nbsp;Ehrenamtsnachweis
-          </button>
+          </router-link>
           <button class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded">
             💳&nbsp;Mitgliedskarte
           </button>
@@ -58,7 +69,7 @@
             }"
             class="bg-purple-500 hover:bg-purple-600 text-white text-xs px-3 py-1 rounded"
           >
-            🧾&nbsp;Arbeitszeiten
+            ⏱️&nbsp;Arbeitszeiten
           </router-link>
           <router-link
             :to="{

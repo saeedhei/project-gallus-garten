@@ -118,12 +118,18 @@ const router = createRouter({
       name: 'Lageplan',
       component: () => import('@/views/lage/LagePlan.vue'),
     },
+    {
+      path: '/dashboard/ehrenamtsnachweis',
+      name: 'Ehrenamtsnachweis',
+      component: () =>
+        import('@/views/dashboard/users/ehrenamtsnachweis/EhrenamtBescheinigung.vue'),
+    },
   ],
 });
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem('authToken');
-  const protectedRoutes = ['Dashboard', 'Arbeitszeiten'];
+  const protectedRoutes = ['Dashboard', 'Arbeitszeiten2'];
 
   if (protectedRoutes.includes(to.name as string) && !isAuthenticated) {
     next('/login');

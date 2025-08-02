@@ -1,0 +1,1 @@
+npm install --legacy-peer-deps html2canvas jspdf

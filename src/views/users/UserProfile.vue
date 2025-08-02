@@ -142,9 +142,9 @@ const users: User[] = [
   },
   {
     id: 2,
-    name: 'Hannah Elise Frank',
-    slug: 'hannah-elise-frank',
-    email: 'hannah@example.com',
+    name: 'Hannah Frank',
+    slug: 'hannah-frank',
+    email: 'hannah@******.com',
     avatar: '/images/team/hannah-elise-frank/hannah-elise-frank.webp',
     flag: '🇩🇪 🇮🇪',
     bio: 'Urban Gardening ist mein Rückzugsort. Ich liebe das Pflanzen von Blumen und Gemüse.',
