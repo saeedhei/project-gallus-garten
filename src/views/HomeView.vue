@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import ASectionView from './GallusAHome.vue'
+import ASectionView from './GallusAHome.vue';
 // import ProjectSlider from '../components/organisms/slider-all/ProjectSlider.vue'
-import HomeZeitungSection from './HomeZeitung.vue'
-import BSectionView from './GallusBHome.vue'
-import CSectionView from './GallusCHome.vue'
-import CrookedSectionView from './CrookedSection.vue'
-import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.vue'
+import HomeZeitungSection from './HomeZeitung.vue';
+import BSectionView from './GallusBHome.vue';
+import CSectionView from './BeliebteBeitraege.vue';
+import CrookedSectionView from './CrookedSection.vue';
+import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.vue';
 // import MainView from '../components/1-home/MainView.vue'
 // import UnderConstructionPopup from '../components/molecules/UnderConstructionPopup.vue'
 
-import { useHead } from '@unhead/vue'
+import { useHead } from '@unhead/vue';
 // import { useSeo } from '@/composables/useSeo'
-const baseUrl = import.meta.env.VITE_APP_BASE_URL
+const baseUrl = import.meta.env.VITE_APP_BASE_URL;
 
 if (!baseUrl) {
   throw new Error(
     "The required environment variable 'VITE_APP_BASE_URL' is missing. Please check your .env file.",
-  )
+  );
 }
 
 useHead({
@@ -44,7 +44,7 @@ useHead({
     // Robots
     { name: 'robots', content: 'index, follow' },
   ],
-})
+});
 </script>
 
 <template>

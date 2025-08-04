@@ -47,6 +47,16 @@ const router = createRouter({
           name: 'UserProfile',
         },
         {
+          path: '/beitraege',
+          name: 'Beitraege',
+          component: () => import('@/views/beitraege/BeitraegeView.vue'),
+        },
+        {
+          path: '/beitraege/:id',
+          name: 'BeitragDetail',
+          component: () => import('@/views/beitraege/BeitragDetailView.vue'),
+        },
+        {
           path: '/bildergalerie',
           name: 'Bildergalerie',
           component: () => import('@/views/galerie/BilderGalerie.vue'),

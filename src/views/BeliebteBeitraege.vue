@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
 interface Post {
-  name: string
-  description: string
-  image: string
-  category: string
+  name: string;
+  description: string;
+  image: string;
+  category: string;
 }
 
-const posts = ref<Post[]>([])
+const posts = ref<Post[]>([]);
 
 const fetchProducts = async () => {
   try {
-    const response = await fetch('/data/posts.json')
+    const response = await fetch('/data/posts.json');
     if (!response.ok) {
-      throw new Error('Failed to fetch posts')
+      throw new Error('Failed to fetch posts');
     }
-    const data = await response.json()
+    const data = await response.json();
     // products.value = data;
-    posts.value = data.filter((post: Post) => post.category === 'popular')
+    posts.value = data.filter((post: Post) => post.category === 'beliebt');
   } catch (error) {
-    console.error('Error fetching posts:', error)
+    console.error('Error fetching posts:', error);
   }
-}
+};
 
 onMounted(() => {
-  fetchProducts()
-})
+  fetchProducts();
+});
 </script>
 
 <template>
@@ -49,8 +49,13 @@ onMounted(() => {
                   class="transition-all duration-300 cursor-pointer w-full shadow-lg hover:shadow-xl rounded-lg bg-gray-100 relative"
                 >
                   <div
-                    class="w-full h-48 bg-cover rounded-t-lg"
-                    :style="`background-image: url('${post.image}')`"
+                    class="w-full h-48 rounded-t-lg"
+                    :style="`
+                      background-image: url('${post.image}');
+                      background-size: cover;
+                      background-repeat: no-repeat;
+                      background-position: center;
+                    `"
                   ></div>
                   <div class="p-6">
                     <div class="text-lg font-bold">{{ post.name }}</div>
