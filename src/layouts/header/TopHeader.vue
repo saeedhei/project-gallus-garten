@@ -132,6 +132,13 @@ onUnmounted(() => {
               </RouterLink>
 
               <RouterLink
+                to="/beitraege"
+                class="block py-3 px-4 rounded hover:bg-gray-700 hover:text-white font-semibold transition"
+              >
+                Beiträge
+              </RouterLink>
+
+              <RouterLink
                 to="/kontakt"
                 class="block py-3 px-4 rounded hover:bg-gray-700 hover:text-white font-semibold transition"
               >

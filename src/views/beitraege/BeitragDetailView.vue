@@ -37,12 +37,19 @@
         <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ beitrag.name }}</h1>
 
         <!-- Featured image -->
-        <div class="rounded-lg overflow-hidden mb-6 shadow-md">
-          <img
-            :src="beitrag.image"
-            :alt="beitrag.name"
-            class="w-full h-auto object-cover max-h-96"
-          />
+        <!-- Multiple images -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div
+            v-for="(img, index) in beitrag.images"
+            :key="index"
+            class="rounded-lg overflow-hidden shadow-md"
+          >
+            <img
+              :src="img"
+              :alt="`${beitrag.name} - Bild ${index + 1}`"
+              class="w-full h-auto object-cover max-h-96"
+            />
+          </div>
         </div>
 
         <!-- Description -->
@@ -88,12 +95,13 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import postsData from '@/assets/data/posts.json';
 
 interface Beitrag {
   id: number;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   category: string;
 }
 
@@ -104,7 +112,8 @@ const beitraege = ref<Beitrag[]>([]);
 const beitrag = computed(() => beitraege.value.find((b) => b.id === id));
 
 onMounted(async () => {
-  const res = await fetch('/data/posts.json');
-  beitraege.value = await res.json();
+  // const res = await fetch('/data/posts.json');
+  // beitraege.value = await res.json();
+  beitraege.value = postsData;
 });
 </script>

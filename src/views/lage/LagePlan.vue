@@ -356,10 +356,10 @@ const wildBeeBeds = ref([
 ]);
 
 const benches = ref([
-  { id: 1, x: 2000, y: 427, width: 140, height: 42, rotation: 180 },
-  { id: 2, x: 1000, y: 427, width: 140, height: 42, rotation: 180 },
-  { id: 3, x: 1400, y: 520, width: 140, height: 42, rotation: 270 },
-  { id: 4, x: 1600, y: 380, width: 140, height: 42, rotation: 90 },
+  { id: 1, x: 5000, y: 427, width: 140, height: 42, rotation: 180 },
+  { id: 2, x: 6000, y: 427, width: 140, height: 42, rotation: 180 },
+  { id: 3, x: 7400, y: 520, width: 140, height: 42, rotation: 270 },
+  { id: 4, x: 8600, y: 380, width: 140, height: 42, rotation: 90 },
 ]);
 </script>
 

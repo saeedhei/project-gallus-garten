@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import ASectionView from './GallusAHome.vue';
+import Projekte from './HomeProjekte.vue';
 // import ProjectSlider from '../components/organisms/slider-all/ProjectSlider.vue'
 import HomeZeitungSection from './HomeZeitung.vue';
-import BSectionView from './GallusBHome.vue';
-import CSectionView from './BeliebteBeitraege.vue';
+import BeliebteBeitraege from './BeliebteBeitraege.vue';
+// import BSectionView from './GallusBHome.vue';
 import CrookedSectionView from './CrookedSection.vue';
 import UnsereSponsoren from '../components/organisms/slider-all/UnsereSponsoren.vue';
 // import MainView from '../components/1-home/MainView.vue'
@@ -50,11 +50,12 @@ useHead({
 <template>
   <!-- <UnderConstructionPopup /> -->
   <!-- <ProjectSlider /> -->
+  <BeliebteBeitraege />
+  <CrookedSectionView class="bg-gray-100" />
+  <Projekte class="bg-gray-100" />
   <HomeZeitungSection />
-  <ASectionView />
-  <BSectionView />
-  <CrookedSectionView class="bg-emerald-200" />
-  <CSectionView />
+  <!-- <BSectionView /> -->
+  <!-- <CrookedSectionView class="bg-emerald-200" /> -->
   <UnsereSponsoren />
 </template>
 

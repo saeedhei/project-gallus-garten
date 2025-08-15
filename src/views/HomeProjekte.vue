@@ -1,40 +1,25 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
+import projectsData from '@/assets/data/projects.json';
 
 interface Project {
-  name: string
-  description: string
-  image: string
+  name: string;
+  description: string;
+  image: string;
 }
 
-const projects = ref<Project[]>([])
-
-const fetchProducts = async () => {
-  try {
-    const response = await fetch('/data/projects.json')
-    if (!response.ok) {
-      throw new Error('Failed to fetch projects')
-    }
-    const data = await response.json()
-    // products.value = data;
-    projects.value = data.slice(-3)
-  } catch (error) {
-    console.error('Error fetching projects:', error)
-  }
-}
+const projects = ref<Project[]>([]);
 
 onMounted(() => {
-  fetchProducts()
-})
+  projects.value = projectsData.slice(-3);
+});
 </script>
 
 <template>
-  <section
-    class="bg-gray-100 flex flex-col text-center py-16 px-4 lg:px-16 md:px-8 xl:px-24 xxl:px-40"
-  >
+  <section class="flex flex-col text-center py-16 px-4 lg:px-16 md:px-8 xl:px-24 xxl:px-40">
     <div>
       <h2 class="text-2xl font-bold leading-tight tracking-tight sm:text-3xl font-heading">
-        Wie sind unsere Projekte?
+        Aktuelle Projekte
       </h2>
     </div>
 

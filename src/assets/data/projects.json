@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Project 1",
+    "description": "This is the description for Project 1.",
+    "price": 10.99,
+    "image": "/gallus-garten/images/projects/a.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Gartenprojekt für Geflüchtete",
+    "description": "Erleben Sie unser Gartenprojekt, in dem Geflüchtete mitgestalten und gleichzeitig ihre Deutschkenntnisse stärken.",
+    "price": 19.99,
+    "image": "/images/GallusGarten.png"
+  },
+  {
+    "id": 3,
+    "name": "Dach für Garten",
+    "description": "Bau eines schützenden Dachs im Garten, um Sitzbereiche vor Regen und Sonne zu bewahren.",
+    "price": 14.5,
+    "image": "/images/GallusGarten.png"
+  },
+  {
+    "id": 4,
+    "name": "Digitalisierung für Alle",
+    "description": "Entdecken Sie unsere Initiative für digitale Inklusion durch Schulungen, Ressourcen und Outreach-Programme.",
+    "price": 15.5,
+    "image": "/gallus-garten/images/projects/digital.jpg"
+  }
+]

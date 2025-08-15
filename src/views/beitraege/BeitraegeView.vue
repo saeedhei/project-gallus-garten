@@ -11,7 +11,7 @@
       >
         <div class="relative overflow-hidden h-48">
           <img
-            :src="beitrag.image"
+            :src="beitrag.images[0]"
             :alt="beitrag.name"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
@@ -38,19 +38,19 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import postsData from '@/assets/data/posts.json';
 
 interface Beitrag {
   id: number;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   category: string;
 }
 
 const beitraege = ref<Beitrag[]>([]);
 
 onMounted(async () => {
-  const res = await fetch('/data/posts.json');
-  beitraege.value = await res.json();
+  beitraege.value = postsData;
 });
 </script>
