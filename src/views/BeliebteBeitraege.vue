@@ -56,7 +56,7 @@ onMounted(() => {
           </div>
 
           <div class="mt-12 xl:mt-0 xl:ml-8">
-            <h3 class="leading-none font-black text-3xl">kürzliche Posts</h3>
+            <h3 class="leading-none font-black text-3xl">kürzliche Beiträge</h3>
             <div
               class="flex flex-col items-center lg:flex-row lg:items-stretch lg:justify-around xl:flex-col"
             >
