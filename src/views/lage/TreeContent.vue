@@ -40,8 +40,8 @@ import { ref } from 'vue';
 
 const trees = ref([
   { id: 3, x: 990, y: 950, scale: 1, rotation: 0 },
-  { id: 4, x: 1300, y: 1050, scale: 1, rotation: 0 },
-  { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
-  { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },
+  // { id: 4, x: 1300, y: 1050, scale: 1, rotation: 0 },
+  // { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
+  // { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },
 ]);
 </script>

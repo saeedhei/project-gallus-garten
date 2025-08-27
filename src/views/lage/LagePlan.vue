@@ -317,18 +317,18 @@ onMounted(() => {
 });
 
 const wildBeeBeds = ref([
-  {
-    id: 1,
-    x: 300,
-    y: 50,
-    width: 200,
-    height: 80,
-    flowers: [
-      { x: 20, y: 20, color: 'pink' },
-      { x: 40, y: 30, color: 'purple' },
-      { x: 80, y: 40, color: 'orange' },
-    ],
-  },
+  // {
+  //   id: 1,
+  //   x: 300,
+  //   y: 50,
+  //   width: 200,
+  //   height: 80,
+  //   flowers: [
+  //     { x: 20, y: 20, color: 'pink' },
+  //     { x: 40, y: 30, color: 'purple' },
+  //     { x: 80, y: 40, color: 'orange' },
+  //   ],
+  // },
   {
     id: 2,
     x: 800,

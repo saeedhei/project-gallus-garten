@@ -94,6 +94,11 @@ const router = createRouter({
           component: () => import('@/views/ueber-uns/team/ralf-harth/UeberUnsTeamRalf.vue'),
         },
         {
+          path: '/kontakt',
+          name: 'Kontakt',
+          component: () => import('@/views/kontakt/KontaktView.vue'),
+        },
+        {
           path: '/werkzeuge',
           name: 'Werkzeuge',
           component: () => import('@/views/werkzeuge/WerkzeugeView.vue'),

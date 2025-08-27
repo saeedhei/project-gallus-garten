@@ -50,7 +50,7 @@ useHead({
 <template>
   <!-- <UnderConstructionPopup /> -->
   <!-- <ProjectSlider /> -->
-  <BeliebteBeitraege />
+  <BeliebteBeitraege id="section-a" />
   <CrookedSectionView class="bg-gray-100" />
   <Projekte class="bg-gray-100" />
   <HomeZeitungSection />

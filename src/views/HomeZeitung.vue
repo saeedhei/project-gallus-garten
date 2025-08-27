@@ -1,6 +1,6 @@
 <template>
   <!-- Newsletter Section -->
-  <section class="py-16 px-4 sm:px-6 lg:px-8" id="section-a">
+  <section class="py-16 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <div class="relative overflow-hidden rounded-2xl newsletter-card p-8 md:p-12 shadow-lg">
         <!-- Leaf decorations -->
