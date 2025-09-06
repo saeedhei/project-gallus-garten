@@ -209,31 +209,6 @@
             </div>
           </div>
         </div>
-        <!-- End of Row -->
-        <div
-          class="max-w-5xl mx-auto my-6 p-4 border border-gray-200 rounded-2xl shadow-sm bg-white"
-        >
-          <p class="text-sm text-gray-600 text-center">
-            Diese Website wurde von
-            <span class="font-medium text-gray-800">Saeed Heidarizarei</span> entwickelt – mit
-            wertvoller Unterstützung unserer Junior-Entwicklerinnen und -Entwickler
-            <a
-              href="https://www.linkedin.com/in/olha-lazyniuk"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link hover:underline font-medium"
-              >Olha Lazyniuk</a
-            >
-            und
-            <a
-              href="https://arthurvarteressians.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link hover:underline font-medium"
-              >Arthur Varteressians</a
-            >. Gemeinsam haben wir ein digitales Erlebnis geschaffen, auf das wir stolz sind.
-          </p>
-        </div>
       </section>
     </div>
   </main>

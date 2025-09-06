@@ -1,5 +1,5 @@
 import './style.css';
-import 'leaflet/dist/leaflet.css';
+// import 'leaflet/dist/leaflet.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';

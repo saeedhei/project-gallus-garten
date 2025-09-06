@@ -190,7 +190,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 import { VueSignaturePad } from '@selemondev/vue3-signature-pad';
 
 const route = useRoute();
@@ -255,27 +255,22 @@ const printReceipt = (): void => {
 };
 
 // Save as PDF functionality
-const saveAsPDF = (): void => {
-  const doc = new jsPDF('p', 'mm', [1630, 2280]);
+const saveAsPDF = async (): Promise<void> => {
+  const { default: jsPDF } = await import('jspdf');
 
   const receiptElement = document.querySelector('.receipt') as HTMLElement;
+  if (!receiptElement) return;
 
-  if (receiptElement) {
-    // Use the html method to add the receipt content, with auto pagination
-    doc.html(receiptElement, {
-      callback: (doc: jsPDF) => {
-        doc.save('Arbeitszeit-Quittung.pdf');
-      },
-      x: 20,
-      y: 20,
-      width: 190, // Max width for content (should be less than 210mm for A4 paper)
-      // windowWidth: document.body.scrollWidth, // Dynamically adjust based on the content width
-      // autoPaging: true, // This ensures content is split over multiple pages if necessary
-      html2canvas: {
-        scale: 2, // Use a higher scale factor for better resolution
-      },
-    });
-  }
+  const doc = new jsPDF('p', 'mm', [1630, 2280]);
+  doc.html(receiptElement, {
+    callback: (doc) => {
+      doc.save('Arbeitszeit-Quittung.pdf');
+    },
+    x: 20,
+    y: 20,
+    width: 190,
+    html2canvas: { scale: 2 },
+  });
 };
 </script>
 

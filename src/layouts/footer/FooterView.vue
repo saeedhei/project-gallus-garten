@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import UpfooterView from './UpFooterView.vue'
+import UpfooterView from './UpFooterView.vue';
+const currentYear: number = new Date().getFullYear();
 </script>
 
 <template>
@@ -22,7 +23,7 @@ import UpfooterView from './UpFooterView.vue'
 
           <div class="a">
             <div class="copyright">
-              <p>&copy; 2024 GallusGarten</p>
+              <p>&copy; {{ currentYear }} GallusGarten</p>
             </div>
 
             <div class="developer-info">
@@ -41,13 +42,6 @@ import UpfooterView from './UpFooterView.vue'
 </template>
 
 <style scoped>
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-}
 a,
 a:hover,
 a:focus,
@@ -93,8 +87,6 @@ section {
   padding-bottom: 40px;
 }
 /*END FOOTER SOCIAL DESIGN*/
-.single_footer {
-}
 @media only screen and (max-width: 768px) {
 }
 
