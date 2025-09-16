@@ -16,7 +16,7 @@
           width: bed.width,
           height: bed.height,
           fill: '#53392d',
-          stroke: 'green',
+          stroke: bed.stroke || 'green',
           strokeWidth: 2,
         }"
       />
@@ -153,6 +153,7 @@ interface Bed {
   gaertnerIn: string;
   isAntiRat?: boolean;
   lastRenovationDate?: string;
+  stroke?: string;
 }
 
 const beds = ref<Bed[]>([
@@ -168,6 +169,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Gemeinsam',
     isAntiRat: false,
     lastRenovationDate: '2019-05-15',
+    stroke: 'tomato',
   },
   {
     id: 2,
@@ -181,6 +183,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Gemeinsam',
     isAntiRat: false,
     lastRenovationDate: '2019-05-15',
+    stroke: 'tomato',
   },
   {
     id: 3,
@@ -194,6 +197,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Gemeinsam',
     isAntiRat: false,
     lastRenovationDate: '2019-05-15',
+    stroke: 'tomato',
   },
   {
     id: 4,
@@ -207,6 +211,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Gemeinsam',
     isAntiRat: true,
     lastRenovationDate: '2025-05-15',
+    stroke: '#FFB74D',
   },
   {
     id: 5,
@@ -220,6 +225,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Gemeinsam',
     isAntiRat: true,
     lastRenovationDate: '2025-05-15',
+    stroke: '#FFB74D',
   },
   {
     id: 6,
@@ -233,6 +239,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Hannah Frank',
     isAntiRat: true,
     lastRenovationDate: '2025-05-15',
+    stroke: '#FFB74D',
   },
   {
     id: 7,
@@ -246,6 +253,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Gemeinsam',
     isAntiRat: true,
     lastRenovationDate: '2025-05-15',
+    stroke: '#F48FB1',
   },
   {
     id: 8,
@@ -259,6 +267,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Dr. Shekiba Rahim',
     isAntiRat: true,
     lastRenovationDate: '2025-05-15',
+    stroke: '#F48FB1',
   },
   {
     id: 9,
@@ -272,6 +281,7 @@ const beds = ref<Bed[]>([
     gaertnerIn: 'Gemeinsam',
     isAntiRat: true,
     lastRenovationDate: '2025-05-15',
+    stroke: '#F48FB1',
   },
   {
     id: 10,
