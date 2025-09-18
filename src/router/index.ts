@@ -134,7 +134,17 @@ const router = createRouter({
     {
       path: '/lageplan',
       name: 'Lageplan',
-      component: () => import('@/views/lage/LagePlan.vue'),
+      component: () => import('@/views/lage/IndexPage.vue'),
+    },
+    {
+      path: '/lageplan-aktuell',
+      name: 'Lageplan Aktuell',
+      component: () => import('@/views/lage/LagePlanAktuell.vue'),
+    },
+    {
+      path: '/lageplan-zukunft',
+      name: 'Lageplan Zukunft',
+      component: () => import('@/views/lage/LagePlanZukunft.vue'),
     },
     {
       path: '/dashboard/ehrenamtsnachweis',

@@ -1,3 +1,7 @@
+git add .
+git commit -m "lageplan updated"
+git push origin main 
+
 npx npm-check-updates -u
 
 rm -rf node_modules
@@ -9,9 +13,6 @@ git init
 git remote add origin https://github.com/saeedhei/project-gallus-garten.git
 git remote -v
 
-git add .
-git commit -m "rollupOptions added"
-git push origin main 
 
 error: src refspec main does not match any
 error: failed to push some refs to 'https://github.com/saeedhei/project-gallus-garten.git'
