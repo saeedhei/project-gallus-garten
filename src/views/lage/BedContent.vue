@@ -15,71 +15,77 @@
           y: 0,
           width: bed.width,
           height: bed.height,
-          fill: '#53392d',
+          fill: bed.isPlanned ? 'transparent' : '#53392d',
           stroke: bed.stroke || 'green',
           strokeWidth: 2,
+          dash: bed.isPlanned ? [10, 5] : [],
         }"
       />
 
       <!-- گل‌ها -->
-      <template v-for="(pos, i) in flowerPositions" :key="`flower-${bed.id}-${i}`">
-        <v-group :config="{ x: pos.x, y: pos.y, scaleX: 0.6, scaleY: 0.6 }">
-          <v-circle
-            v-for="j in 5"
-            :key="`petal-${i}-${j}`"
-            :config="{
-              x: Math.cos((j * 72 * Math.PI) / 180) * 12,
-              y: Math.sin((j * 72 * Math.PI) / 180) * 12,
-              radius: 6,
-              fill: 'pink',
-            }"
-          />
-          <v-circle :config="{ x: 0, y: 0, radius: 4, fill: 'yellow' }" />
-        </v-group>
+      <template v-if="!bed.isPlanned">
+        <template v-for="(pos, i) in flowerPositions" :key="`flower-${bed.id}-${i}`">
+          <v-group :config="{ x: pos.x, y: pos.y, scaleX: 0.6, scaleY: 0.6 }">
+            <v-circle
+              v-for="j in 5"
+              :key="`petal-${i}-${j}`"
+              :config="{
+                x: Math.cos((j * 72 * Math.PI) / 180) * 12,
+                y: Math.sin((j * 72 * Math.PI) / 180) * 12,
+                radius: 6,
+                fill: 'pink',
+              }"
+            />
+            <v-circle :config="{ x: 0, y: 0, radius: 4, fill: 'yellow' }" />
+          </v-group>
+        </template>
       </template>
 
       <!-- گیاه‌ها -->
-      <template v-for="(pos, i) in plantPositions" :key="`plant-${bed.id}-${i}`">
-        <v-group :config="{ x: pos.x, y: pos.y, scaleX: 0.6, scaleY: 0.6 }">
-          <v-line
-            :config="{
-              points: [0, 0, 0, 30],
-              stroke: '#228B22',
-              strokeWidth: 3,
-            }"
-          />
-          <v-ellipse
-            :config="{
-              x: -6,
-              y: 10,
-              radiusX: 6,
-              radiusY: 12,
-              fill: '#32CD32',
-              rotation: -30,
-            }"
-          />
-          <v-ellipse
-            :config="{
-              x: 6,
-              y: 15,
-              radiusX: 6,
-              radiusY: 12,
-              fill: '#32CD32',
-              rotation: 30,
-            }"
-          />
-          <v-ellipse
-            :config="{
-              x: 0,
-              y: 5,
-              radiusX: 5,
-              radiusY: 10,
-              fill: '#3CB371',
-              rotation: 0,
-            }"
-          />
-        </v-group>
+      <template v-if="!bed.isPlanned">
+        <template v-for="(pos, i) in plantPositions" :key="`plant-${bed.id}-${i}`">
+          <v-group :config="{ x: pos.x, y: pos.y, scaleX: 0.6, scaleY: 0.6 }">
+            <v-line
+              :config="{
+                points: [0, 0, 0, 30],
+                stroke: '#228B22',
+                strokeWidth: 3,
+              }"
+            />
+            <v-ellipse
+              :config="{
+                x: -6,
+                y: 10,
+                radiusX: 6,
+                radiusY: 12,
+                fill: '#32CD32',
+                rotation: -30,
+              }"
+            />
+            <v-ellipse
+              :config="{
+                x: 6,
+                y: 15,
+                radiusX: 6,
+                radiusY: 12,
+                fill: '#32CD32',
+                rotation: 30,
+              }"
+            />
+            <v-ellipse
+              :config="{
+                x: 0,
+                y: 5,
+                radiusX: 5,
+                radiusY: 10,
+                fill: '#3CB371',
+                rotation: 0,
+              }"
+            />
+          </v-group>
+        </template>
       </template>
+
       <!-- آیکن اطلاعات -->
       <v-group
         @click="openModal(bed)"
@@ -154,6 +160,7 @@ interface Bed {
   isAntiRat?: boolean;
   lastRenovationDate?: string;
   stroke?: string;
+  isPlanned?: boolean;
 }
 
 const beds = ref<Bed[]>([
@@ -251,9 +258,10 @@ const beds = ref<Bed[]>([
     name: 'JMD 1',
     beschreibung: 'Hochbeet aus Holz.',
     gaertnerIn: 'Gemeinsam',
-    isAntiRat: true,
+    isAntiRat: false,
     lastRenovationDate: '2025-05-15',
     stroke: '#F48FB1',
+    isPlanned: true,
   },
   {
     id: 8,
@@ -293,8 +301,9 @@ const beds = ref<Bed[]>([
     name: 'EPAl 1',
     beschreibung: 'Hochbeet aus Holz.',
     gaertnerIn: 'Gemeinsam',
-    isAntiRat: true,
+    isAntiRat: false,
     lastRenovationDate: '2025-07-24',
+    isPlanned: true,
   },
   {
     id: 11,
