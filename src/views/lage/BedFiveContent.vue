@@ -1,3 +1,4 @@
+<!-- src\views\lage\BedFiveContent.vue -->
 <template>
   <v-group :config="{ x: 25, y: 30, draggable: false }">
     <template v-for="FiveBed in FiveBeds" :key="FiveBed.id">

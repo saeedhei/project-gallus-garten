@@ -1,12 +1,28 @@
 <template>
   <template v-for="tree in trees" :key="tree.id">
+    <!-- دایره حفاظتی -->
+    <v-circle
+      :config="{
+        x: tree.x + 15,
+        y: tree.y + 25,
+        radius: 90,
+        stroke: 'red',
+        strokeWidth: 4,
+        dash: [10, 10],
+        opacity: 0.8,
+      }"
+    />
+
+    <!-- گروه درخت (با offset از مرکز) -->
     <v-group
       :config="{
-        x: tree.x,
-        y: tree.y,
+        x: tree.x + 15,
+        y: tree.y + 25,
         rotation: tree.rotation,
         scaleX: tree.scale,
         scaleY: tree.scale,
+        offsetX: 15,
+        offsetY: 25,
         draggable: false,
       }"
     >
@@ -20,7 +36,8 @@
           fill: '#8B4513',
         }"
       />
-      <!-- برگ ها -->
+
+      <!-- برگ‌ها -->
       <v-circle
         :config="{
           x: 15,
@@ -40,7 +57,7 @@ import { ref } from 'vue';
 
 const trees = ref([
   { id: 3, x: 990, y: 950, scale: 1, rotation: 0 },
-  // { id: 4, x: 1300, y: 1050, scale: 1, rotation: 0 },
+  { id: 4, x: 2400, y: 950, scale: 1.4, rotation: 0 },
   // { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
   // { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },
 ]);

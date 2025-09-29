@@ -7,7 +7,7 @@
     >
       <h2 class="text-4xl font-extrabold mb-6">2026 · Zukunft</h2>
       <p class="mb-4 text-gray-200 text-center max-w-xl">Ein Blick in die Zukunft des Gartens.</p>
-      <RouterLink to="/lageplan-zukunft">
+      <RouterLink to="#">
         <button
           class="px-6 py-3 bg-pink-500 text-white font-semibold rounded-2xl shadow-lg hover:bg-pink-600 transition"
         >

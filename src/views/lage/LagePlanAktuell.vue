@@ -75,6 +75,11 @@
           </template>
 
           <Schrank />
+
+          <CirclePotsContent />
+
+          <BedRhombusContent />
+
           <!-- باغچه‌ها -->
           <template v-if="showBeds">
             <Bed />
@@ -170,6 +175,8 @@ import Walkway from '@/components/lageplan/WalkwayComponent.vue';
 import TiltedGarden from '@/components/lageplan/TiltedGarden.vue';
 import SideGarden from '@/components/lageplan/SideGarden.vue';
 import HorizontalRuler from './RulerContent.vue';
+import CirclePotsContent from './CirclePotsContent.vue';
+import BedRhombusContent from './BedRhombusContent.vue';
 
 Konva.hitOnDragEnabled = true;
 
