@@ -13,7 +13,7 @@
       }"
     />
 
-    <!-- گروه درخت (با offset از مرکز) -->
+    <!-- گروه درخت واقعی -->
     <v-group
       :config="{
         x: tree.x + 15,
@@ -26,26 +26,15 @@
         draggable: false,
       }"
     >
-      <!-- تنه درخت -->
-      <v-rect
+      <!-- عکس درخت -->
+      <v-image
+        v-if="myImage"
         :config="{
-          x: 12,
-          y: 30,
-          width: 6,
-          height: 20,
-          fill: '#8B4513',
-        }"
-      />
-
-      <!-- برگ‌ها -->
-      <v-circle
-        :config="{
-          x: 15,
-          y: 25,
-          radius: 15,
-          fill: '#228B22',
-          stroke: '#006400',
-          strokeWidth: 2,
+          image: myImage,
+          x: -60, // تنظیم افست تا عکس از مرکز نمایش داده بشه
+          y: -47,
+          width: 150,
+          height: 150,
         }"
       />
     </v-group>
@@ -53,12 +42,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+
+const myImage = ref<HTMLImageElement | null>(null);
 
 const trees = ref([
   { id: 3, x: 990, y: 950, scale: 1, rotation: 0 },
-  { id: 4, x: 2400, y: 950, scale: 1.4, rotation: 0 },
-  // { id: 5, x: 1500, y: 1050, scale: 1.2, rotation: 0 },
-  // { id: 6, x: 1700, y: 1050, scale: 1.2, rotation: 0 },
+  { id: 4, x: 2400, y: 950, scale: 1.26, rotation: 0 },
 ]);
+
+onMounted(() => {
+  const img = new Image();
+  img.src = '/images/lageplan/tree.webp';
+
+  img.onload = () => {
+    myImage.value = img;
+  };
+});
 </script>
