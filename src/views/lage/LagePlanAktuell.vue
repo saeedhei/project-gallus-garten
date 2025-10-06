@@ -80,6 +80,48 @@
 
           <BedRhombusContent />
 
+          <!-- گرافیتی گالری -->
+          <v-group>
+            <v-rect
+              :config="{
+                x: 10600,
+                y: 800,
+                width: 420,
+                height: 310,
+                fillLinearGradientStartPoint: { x: 0, y: 0 },
+                fillLinearGradientEndPoint: { x: 0, y: 310 },
+                fillLinearGradientColorStops: [0, '#7F00FF', 1, '#E100FF'],
+                cornerRadius: 15,
+                shadowColor: 'rgba(0,0,0,0.3)',
+                shadowBlur: 15,
+                shadowOffset: { x: 6, y: 6 },
+                shadowOpacity: 0.5,
+                stroke: '#fff',
+                strokeWidth: 3,
+              }"
+            />
+
+            <v-text
+              :config="{
+                text: 'Graffiti Gallery',
+                x: 10600,
+                y: 800,
+                width: 420,
+                height: 310,
+                fontSize: 42,
+                fontStyle: 'bold',
+                fontFamily: 'Courier New, monospace',
+                fill: '#FFFFFF',
+                align: 'center',
+                verticalAlign: 'middle',
+                shadowColor: 'black',
+                shadowBlur: 8,
+                shadowOffset: { x: 2, y: 2 },
+                shadowOpacity: 0.6,
+              }"
+            />
+          </v-group>
+
           <!-- باغچه‌ها -->
           <template v-if="showBeds">
             <Bed />
