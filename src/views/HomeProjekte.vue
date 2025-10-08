@@ -32,7 +32,7 @@ onMounted(() => {
         <div class="h-48">
           <img :src="project.image" alt="" class="mx-auto h-full object-cover" />
         </div>
-        <h4 class="font-semibold leading-tight text-md uppercase text-green-600 font-bold mt-10">
+        <h4 class="font-semibold leading-tight text-md uppercase text-green-600 mt-10">
           {{ project.name }}
         </h4>
         <p class="text-base text-gray-600 mt-2">

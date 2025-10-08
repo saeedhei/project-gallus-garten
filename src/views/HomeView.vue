@@ -2,6 +2,7 @@
 import Projekte from './HomeProjekte.vue';
 // import ProjectSlider from '../components/organisms/slider-all/ProjectSlider.vue'
 import HomeZeitungSection from './HomeZeitung.vue';
+import HomeAiSection from './HomeAiSection.vue';
 import BeliebteBeitraege from './BeliebteBeitraege.vue';
 // import BSectionView from './GallusBHome.vue';
 import CrookedSectionView from './CrookedSection.vue';
@@ -50,10 +51,11 @@ useHead({
 <template>
   <!-- <UnderConstructionPopup /> -->
   <!-- <ProjectSlider /> -->
-  <BeliebteBeitraege id="section-a" />
-  <CrookedSectionView class="bg-gray-100" />
-  <Projekte class="bg-gray-100" />
-  <HomeZeitungSection />
+  <BeliebteBeitraege id="section-a" class="bg-gray-50" />
+  <CrookedSectionView topcolor="#F9FAFB" class="bg-gray-100" />
+  <HomeAiSection class="bg-gray-100" />
+  <Projekte class="bg-gray-200" />
+  <HomeZeitungSection class="bg-gray-100" />
   <!-- <BSectionView /> -->
   <!-- <CrookedSectionView class="bg-emerald-200" /> -->
   <UnsereSponsoren />
