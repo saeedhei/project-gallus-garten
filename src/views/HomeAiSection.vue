@@ -87,7 +87,7 @@ const fetchAIData = async () => {
 
   const interval = startThinkingAnimation();
   try {
-    const res = await axios.get('http://localhost:3000/v3/ai/latest');
+    const res = await axios.get(`${import.meta.env.VITE_endPoint}/v3/ai/latest`);
     aiData.value = res.data;
     localStorage.setItem('daily-ai', JSON.stringify(res.data));
   } catch (err) {

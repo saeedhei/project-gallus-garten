@@ -48,8 +48,8 @@ const myImage = ref<HTMLImageElement | null>(null);
 
 const trees = ref([
   { id: 3, x: 990, y: 950, scale: 1, rotation: 0 },
-  { id: 4, x: 2400, y: 950, scale: 1.26, rotation: 0 },
-  { id: 4, x: 11230, y: 950, scale: 1.2, rotation: 0 },
+  { id: 2, x: 2700, y: 950, scale: 1.26, rotation: 0 },
+  { id: 3, x: 11230, y: 950, scale: 1.2, rotation: 0 },
   { id: 4, x: 10390, y: 950, scale: 1.2, rotation: 0 },
 ]);
 

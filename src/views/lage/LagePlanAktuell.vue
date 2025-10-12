@@ -122,6 +122,175 @@
             />
           </v-group>
 
+          <!-- داخ -->
+          <v-group>
+            <v-rect
+              :config="{
+                x: 6500,
+                y: 600,
+                width: 300,
+                height: 300,
+                stroke: '#ccc',
+                strokeWidth: 3,
+                dash: [20, 10],
+              }"
+            />
+
+            <v-text
+              :config="{
+                text: 'Dach',
+                x: 6500,
+                y: 600,
+                width: 300,
+                height: 300,
+                fontSize: 42,
+                fill: 'tomato',
+                align: 'center',
+                verticalAlign: 'middle',
+              }"
+            />
+          </v-group>
+
+          <!-- lab 1 -->
+          <v-group>
+            <v-rect
+              :config="{
+                x: 10980,
+                y: 387,
+                width: 130,
+                height: 130,
+                stroke: '#ccc',
+                strokeWidth: 3,
+              }"
+            />
+
+            <v-text
+              :config="{
+                text: 'Laub 1',
+                x: 10980,
+                y: 387,
+                width: 130,
+                height: 130,
+                fontSize: 30,
+                fill: 'tomato',
+                align: 'center',
+                verticalAlign: 'middle',
+              }"
+            />
+          </v-group>
+
+          <!-- lab 2 -->
+          <v-group>
+            <v-rect
+              :config="{
+                x: 10840,
+                y: 387,
+                width: 130,
+                height: 130,
+                stroke: '#ccc',
+                strokeWidth: 3,
+              }"
+            />
+
+            <v-text
+              :config="{
+                text: 'Laub 2',
+                x: 10840,
+                y: 387,
+                width: 130,
+                height: 130,
+                fontSize: 30,
+                fill: 'tomato',
+                align: 'center',
+                verticalAlign: 'middle',
+              }"
+            />
+          </v-group>
+
+          <!-- Erde -->
+          <v-group>
+            <v-rect
+              :config="{
+                x: 1768,
+                y: 919,
+                width: 100,
+                height: 130,
+                stroke: '#ccc',
+                strokeWidth: 3,
+              }"
+            />
+
+            <v-text
+              :config="{
+                text: 'Erde',
+                x: 1768,
+                y: 919,
+                width: 100,
+                height: 130,
+                fontSize: 30,
+                fill: 'tomato',
+                align: 'center',
+                verticalAlign: 'middle',
+              }"
+            />
+          </v-group>
+
+          <!-- Holz 1  -->
+          <v-group>
+            <v-rect
+              :config="{
+                x: 2262,
+                y: 919,
+                width: 100,
+                height: 130,
+                stroke: '#ccc',
+                strokeWidth: 3,
+              }"
+            />
+
+            <v-text
+              :config="{
+                text: 'Holz 1',
+                x: 2262,
+                y: 919,
+                width: 100,
+                height: 130,
+                fontSize: 30,
+                fill: 'tomato',
+                align: 'center',
+                verticalAlign: 'middle',
+              }"
+            />
+          </v-group>
+
+          <!-- Holz 2  -->
+          <v-group>
+            <v-rect
+              :config="{
+                x: 2367,
+                y: 919,
+                width: 100,
+                height: 130,
+                stroke: '#ccc',
+                strokeWidth: 3,
+              }"
+            />
+
+            <v-text
+              :config="{
+                text: 'Holz 2',
+                x: 2367,
+                y: 919,
+                width: 100,
+                height: 130,
+                fontSize: 30,
+                fill: 'tomato',
+                align: 'center',
+                verticalAlign: 'middle',
+              }"
+            />
+          </v-group>
+
           <!-- باغچه‌ها -->
           <template v-if="showBeds">
             <Bed />
@@ -407,8 +576,7 @@ const wildBeeBeds = ref([
 const benches = ref([
   { id: 1, x: 5000, y: 427, width: 140, height: 42, rotation: 180 },
   { id: 2, x: 6000, y: 427, width: 140, height: 42, rotation: 180 },
-  { id: 3, x: 7400, y: 520, width: 140, height: 42, rotation: 270 },
-  { id: 4, x: 8600, y: 380, width: 140, height: 42, rotation: 90 },
+  { id: 3, x: 11130, y: 520, width: 140, height: 42, rotation: 270 },
 ]);
 </script>
 
