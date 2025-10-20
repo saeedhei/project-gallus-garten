@@ -1,5 +1,5 @@
 git add .
-git commit -m "KI Section added"
+git commit -m "tree updated"
 git push origin main 
 
 npx npm-check-updates -u

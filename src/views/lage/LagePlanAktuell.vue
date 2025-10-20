@@ -549,7 +549,7 @@ const wildBeeBeds = ref([
   // },
   {
     id: 2,
-    x: 800,
+    x: 550,
     y: 50,
     width: 200,
     height: 80,
