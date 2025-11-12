@@ -127,7 +127,7 @@
             <v-rect
               :config="{
                 x: 6500,
-                y: 600,
+                y: 400,
                 width: 300,
                 height: 300,
                 stroke: '#ccc',
@@ -140,7 +140,7 @@
               :config="{
                 text: 'Dach',
                 x: 6500,
-                y: 600,
+                y: 400,
                 width: 300,
                 height: 300,
                 fontSize: 42,
@@ -212,7 +212,7 @@
             <v-rect
               :config="{
                 x: 1768,
-                y: 919,
+                y: 740,
                 width: 100,
                 height: 130,
                 stroke: '#ccc',
@@ -224,7 +224,7 @@
               :config="{
                 text: 'Erde',
                 x: 1768,
-                y: 919,
+                y: 740,
                 width: 100,
                 height: 130,
                 fontSize: 30,
@@ -240,7 +240,7 @@
             <v-rect
               :config="{
                 x: 2262,
-                y: 919,
+                y: 740,
                 width: 100,
                 height: 130,
                 stroke: '#ccc',
@@ -252,7 +252,7 @@
               :config="{
                 text: 'Holz 1',
                 x: 2262,
-                y: 919,
+                y: 740,
                 width: 100,
                 height: 130,
                 fontSize: 30,
@@ -268,7 +268,7 @@
             <v-rect
               :config="{
                 x: 2367,
-                y: 919,
+                y: 740,
                 width: 100,
                 height: 130,
                 stroke: '#ccc',
@@ -280,7 +280,7 @@
               :config="{
                 text: 'Holz 2',
                 x: 2367,
-                y: 919,
+                y: 740,
                 width: 100,
                 height: 130,
                 fontSize: 30,
