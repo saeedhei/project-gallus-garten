@@ -13,9 +13,10 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <!-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">   replaceeeeeeeeeeeee -->
+    <div class="grid grid-cols-1 lg:grid-cols-1 gap-10">
       <!-- Contact Form -->
-      <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg">
+      <!-- <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg">
         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Senden Sie uns eine Nachricht</h2>
         <form @submit.prevent="submitForm" class="space-y-6">
           <div>
@@ -64,7 +65,7 @@
             <span v-else>Nachricht senden</span>
           </button>
         </form>
-      </div>
+      </div> -->
 
       <!-- Map and Contact Info -->
       <div class="space-y-8">
@@ -169,7 +170,8 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from 'vue';
+// import { reactive, ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import L from 'leaflet';
 
 // Import Leaflet CSS (important!)
@@ -195,41 +197,41 @@ const DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 // Formular-Daten
-const form = reactive({
-  name: '',
-  email: '',
-  message: '',
-});
+// const form = reactive({
+//   name: '',
+//   email: '',
+//   message: '',
+// });
 
 // Loading state
-const isLoading = ref(false);
-const isSent = ref(false);
+// const isLoading = ref(false);
+// const isSent = ref(false);
 
-const submitForm = async () => {
-  isLoading.value = true; // شروع لودینگ
-  try {
-    await fetch(`${import.meta.env.VITE_endPoint}/contact`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form),
-    });
+// const submitForm = async () => {
+//   isLoading.value = true; // شروع لودینگ
+//   try {
+//     await fetch(`${import.meta.env.VITE_endPoint}/contact`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(form),
+//     });
 
-    isSent.value = true;
-    form.name = '';
-    form.email = '';
-    form.message = '';
+//     isSent.value = true;
+//     form.name = '';
+//     form.email = '';
+//     form.message = '';
 
-    setTimeout(() => {
-      isSent.value = false; // بعد از چند ثانیه دکمه به حالت اولیه برمی‌گردد
-    }, 3000);
-  } catch (err) {
-    console.error('Fehler beim Senden:', err);
-  } finally {
-    isLoading.value = false; // پایان لودینگ
-  }
-};
+//     setTimeout(() => {
+//       isSent.value = false; // بعد از چند ثانیه دکمه به حالت اولیه برمی‌گردد
+//     }, 3000);
+//   } catch (err) {
+//     console.error('Fehler beim Senden:', err);
+//   } finally {
+//     isLoading.value = false; // پایان لودینگ
+//   }
+// };
 
 onMounted(() => {
   const map = L.map('map').setView([50.1050969, 8.6451529], 17);

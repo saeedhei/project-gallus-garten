@@ -13,7 +13,7 @@
           <img
             :src="beitrag.images[0]"
             :alt="beitrag.name"
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 bg-gray-100"
           />
         </div>
         <div class="p-4">

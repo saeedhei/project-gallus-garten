@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
 // Define state variables
-const frankfurtTime = ref<string>('')
-const labelClass = ref<string>('black')
-const labelText = ref<string>("Sorry, we're closed!")
+const frankfurtTime = ref<string>('');
+const labelClass = ref<string>('black');
+const labelText = ref<string>("Sorry, we're closed!");
 
 // Function to update Frankfurt time and label state
 const updateTime = () => {
@@ -15,33 +15,33 @@ const updateTime = () => {
     minute: '2-digit',
     second: '2-digit',
     hour12: false,
-  }
+  };
 
-  const frankfurtTimeStr = new Intl.DateTimeFormat([], options).format(new Date())
-  frankfurtTime.value = frankfurtTimeStr
+  const frankfurtTimeStr = new Intl.DateTimeFormat([], options).format(new Date());
+  frankfurtTime.value = frankfurtTimeStr;
 
   // Get current hour in Frankfurt
   const currentHour = new Date().toLocaleString('en-US', {
     timeZone: 'Europe/Berlin',
     hour: '2-digit',
     hour12: false,
-  })
+  });
 
   // Update label class and text based on time
   if (parseInt(currentHour) >= 8 && parseInt(currentHour) < 17) {
-    labelClass.value = 'green'
-    labelText.value = 'Jetzt verfügbar!'
+    labelClass.value = 'green';
+    labelText.value = 'Jetzt verfügbar!';
   } else {
-    labelClass.value = 'black'
-    labelText.value = 'Jetzt nicht verfügbar!'
+    labelClass.value = 'black';
+    labelText.value = 'Jetzt nicht verfügbar!';
   }
-}
+};
 
 // Update time every second on mounted
 onMounted(() => {
-  updateTime()
-  setInterval(updateTime, 1000)
-})
+  updateTime();
+  setInterval(updateTime, 1000);
+});
 </script>
 
 <template>
@@ -93,31 +93,77 @@ onMounted(() => {
       </div>
 
       <div class="mt-12 sm:w-1/2 lg:w-2/5 lg:mt-0 lg:pl-12">
-        <div class="flex items-center space-x-4">
+        <!-- Logo + Name -->
+        <div class="flex flex-col items-center sm:flex-row sm:items-center sm:space-x-4 mb-6">
           <img
-            class="w-16 h-auto sm:w-24 lg:w-32"
+            class="h-18 object-contain"
             src="/images/GallusGarten.svg"
             alt="Gallus Garten Logo"
           />
-          <span class="text-white text-lg sm:text-xl lg:text-2xl font-semibold">
+          <span
+            class="mt-2 sm:mt-0 text-white text-xl sm:text-2xl lg:text-3xl font-semibold text-center sm:text-left"
+          >
             GallusGarten
           </span>
         </div>
 
-        <p class="text-base text-green-200 mt-4">
+        <p class="text-base text-white mb-6 text-center sm:text-left">
           Wo Generationen gemeinsam gärtnern und gestalten.
         </p>
-        <div class="flex-col mx-auto md:flex-row justify-between space-x-4">
-          <img
-            src="https://frankfurt.de/-/media/frankfurtde/global/image/seitenrahmen/footerlogo.ashx?la=de-de6b171b43a6e644fb88df64df25328a18&mw=1280&hash=3C8D80D1E72F6317B5444810BE0CF329"
-            alt="frankfurtde"
-            class="inline h-10 border border-gray-300 rounded-md p-1 shadow transition duration-300 transform hover:shadow-2xl hover:scale-105"
-          />
-          <img
-            src="/src/assets/images/Amt67_Logo_full.png"
-            alt="gruenflaechenamt"
-            class="inline h-12 border border-gray-300 rounded-md p-1 mt-1 shadow transition duration-300 transform hover:shadow-2xl hover:scale-105"
-          />
+
+        <!-- Partner Section -->
+        <h6 class="text-sm text-green-200 font-bold uppercase mb-2 text-center sm:text-left">
+          Partner der Stadt Frankfurt
+        </h6>
+
+        <div class="flex flex-wrap justify-center sm:justify-start items-center gap-4 mb-4">
+          <div class="logo-box">
+            <a
+              href="https://www.demokratie-leben.de/dl/programm/programmbereiche/partnerschaften-fuer-demokratie/"
+              target="_blank"
+              class="text-blue-600 hover:underline"
+            >
+              <img
+                src="/logos/(1)  Logo Partnerschaft für Demokratie Frankfurt.jpg"
+                class="h-12 object-contain"
+              />
+            </a>
+          </div>
+          <div class="logo-box">
+            <a
+              href="https://www.demokratie-leben.de/"
+              target="_blank"
+              class="text-blue-600 hover:underline"
+            >
+              <img
+                src="/logos/(2) Logo BundesprogrammDemokratie leben.png"
+                class="h-12 object-contain"
+              />
+            </a>
+          </div>
+          <div class="logo-box">
+            <a href="https://frankfurt.de/" target="_blank" class="text-blue-600 hover:underline">
+              <img
+                src="/logos/(3) Logo der Stadt Frankfurt am Main.jpg"
+                class="h-12 object-contain"
+              />
+            </a>
+          </div>
+        </div>
+
+        <!-- Kooperation -->
+        <h6 class="text-sm text-green-200 font-bold uppercase mb-2 text-center sm:text-left">
+          In Kooperation mit
+        </h6>
+
+        <div class="flex flex-wrap justify-center sm:justify-start items-center gap-4">
+          <div class="logo-box">
+            <img
+              src="/logos/Amt67_Logo_full.png"
+              alt="gruenflaechenamt"
+              class="h-12 object-contain"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -162,6 +208,17 @@ a {
   color: white;
 }
 
+.logo-box {
+  background: white;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @keyframes shiny-effect {
   0% {
     background-position: 0 0;
@@ -171,19 +228,3 @@ a {
   }
 }
 </style>
-
-<!-- <div class="container">
-  <div class="grid grid-cols-3 gap-4 md:grid-cols-1">
-    <div class="col">Content 1</div>
-    <div class="col">Content 2</div>
-    <div class="col">Content 3</div>
-  </div>
-</div> -->
-
-<!-- <div class="container">
-  <div class="flex flex-col md:flex-row">
-    <div class="w-1/3 px-4 mb-4 md:mb-0">Content 1</div>
-    <div class="w-1/3 px-4 mb-4 md:mb-0">Content 2</div>
-    <div class="w-1/3 px-4">Content 3</div>
-  </div>
-</div> -->

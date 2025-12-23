@@ -35,9 +35,7 @@
       </div>
 
       <!-- Loading Indicator -->
-      <div v-if="isLoading" class="text-white text-center py-4">
-        Loading more images...
-      </div>
+      <div v-if="isLoading" class="text-white text-center py-4">Loading more images...</div>
     </div>
 
     <!-- Close Button -->
@@ -51,8 +49,8 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits, ref, watch, nextTick } from 'vue'
-import type Image from '../../types/ImageModel'
+import { ref, watch, nextTick } from 'vue';
+import type Image from '../../types/ImageModel';
 
 const props = defineProps({
   isOpen: {
@@ -71,57 +69,57 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
-const emit = defineEmits(['close', 'loadMore'])
+const emit = defineEmits(['close', 'loadMore']);
 
-const modalContainer = ref<HTMLElement | null>(null)
-const imageRefs = ref<HTMLElement[]>([])
+const modalContainer = ref<HTMLElement | null>(null);
+const imageRefs = ref<HTMLElement[]>([]);
 
 const setImageRef = (el: HTMLElement, index: number) => {
   if (el) {
-    imageRefs.value[index] = el
+    imageRefs.value[index] = el;
   }
-}
+};
 
 const scrollToImage = () => {
-  if (!imageRefs.value.length || props.selectedImage === null) return
+  if (!imageRefs.value.length || props.selectedImage === null) return;
 
-  const target = imageRefs.value[props.selectedImage]
+  const target = imageRefs.value[props.selectedImage];
   if (target) {
     target.scrollIntoView({
       behavior: 'auto',
       block: 'center',
-    })
+    });
   }
-}
+};
 
 const handleScroll = () => {
-  if (!modalContainer.value || props.isLoading) return
+  if (!modalContainer.value || props.isLoading) return;
 
-  const { scrollTop, scrollHeight, clientHeight } = modalContainer.value
-  const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100
+  const { scrollTop, scrollHeight, clientHeight } = modalContainer.value;
+  const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100;
 
   if (isNearBottom) {
-    emit('loadMore') // Emit event to fetch more images
+    emit('loadMore'); // Emit event to fetch more images
   }
-}
+};
 
 watch(
   () => props.isOpen,
   (isOpen) => {
     if (isOpen) {
-      imageRefs.value = [] // Reset refs
+      imageRefs.value = []; // Reset refs
       nextTick(() => {
-        scrollToImage() // Scroll to the selected image after DOM update
-      })
+        scrollToImage(); // Scroll to the selected image after DOM update
+      });
     }
   },
   { immediate: true },
-)
+);
 
 // Close modal
 const closeModal = () => {
-  emit('close')
-}
+  emit('close');
+};
 </script>

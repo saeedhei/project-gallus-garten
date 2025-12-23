@@ -93,8 +93,11 @@ const fetchAIData = async () => {
   } catch (err) {
     console.warn('⚠️ Fehler beim Laden der KI-Nachricht:', err);
     aiData.value = {
-      plant: '❌ Fehler',
-      message: 'Die heutige Nachricht konnte nicht geladen werden.',
+      // plant: '❌ Fehler',
+      // message: 'Die heutige Nachricht konnte nicht geladen werden.',
+      plant: 'Bambus',
+      message:
+        'Bambus ist eine schnell wachsende und vielseitige Pflanze, die in vielen Teilen der Welt verbreitet ist. Er steht für Stärke, Flexibilität und Nachhaltigkeit, da er ohne großen Pflegeaufwand wächst und vielseitig genutzt werden kann. Bambus wird sowohl als Zierpflanze in Gärten als auch als natürlicher Sichtschutz verwendet und spielt zudem eine wichtige Rolle als umweltfreundlicher Rohstoff. Durch seine dichten Halme und immergrünen Blätter trägt Bambus zu einem angenehmen Mikroklima bei und verleiht Außenräumen eine ruhige, natürliche Atmosphäre.',
       date: new Date().toLocaleDateString('de-DE'),
     };
   } finally {

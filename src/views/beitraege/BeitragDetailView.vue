@@ -47,7 +47,7 @@
             <img
               :src="img"
               :alt="`${beitrag.name} - Bild ${index + 1}`"
-              class="w-full h-auto object-cover max-h-96"
+              class="w-full h-auto object-contain max-h-96 bg-gray-100"
             />
           </div>
         </div>

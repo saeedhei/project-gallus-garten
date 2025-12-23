@@ -1,113 +1,97 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import postsData from '@/assets/data/posts.json';
-
-interface Post {
-  id: number;
-  name: string;
-  description: string;
-  images: string[];
-  category: string;
-}
-
-const posts = ref<Post[]>([]);
-
-onMounted(() => {
-  // Filter for category = 'beliebt'
-  posts.value = postsData.filter((post: Post) => post.category === 'beliebt');
-});
-</script>
-
 <template>
-  <div class="flex flex-col text-center py-16 px-4 lg:px-16 md:px-8 xl:px-24 xxl:px-40">
-    <div class="px-5 sm:px-10 md:px-20 lg:px-10 xl:px-20 py-8" id="blog-posts">
-      <div class="max-w-screen-xl mx-auto">
-        <div class="xl:flex">
-          <div>
-            <h3 class="leading-none font-black text-3xl">Beliebte Beiträge</h3>
-            <div class="flex flex-col items-center lg:flex-row lg:items-stretch lg:justify-around">
-              <router-link
-                v-for="post in posts"
-                :key="post.id"
-                :to="`/beitraege/${post.id}`"
-                class="flex w-full max-w-sm mt-6 lg:mt-8 xl:mr-8"
-              >
-                <div
-                  class="transition-all duration-300 cursor-pointer w-full shadow-lg hover:shadow-xl rounded-lg bg-gray-100 relative"
-                >
-                  <div
-                    class="w-full h-48 rounded-t-lg"
-                    :style="`
-                      background-image: url('${post.images[0]}');
-                      background-size: cover;
-                      background-repeat: no-repeat;
-                      background-position: center;
-                    `"
-                  ></div>
-                  <div class="p-6">
-                    <div class="text-lg font-bold">{{ post.name }}</div>
-                    <div class="mt-2 text-gray-900 text-sm">
-                      {{ post.description }}
-                    </div>
-                  </div>
-                </div>
-              </router-link>
-            </div>
-          </div>
+  <section class="mx-auto px-4 py-12 flex flex-col justify-center min-h-screen md:min-h-0">
+    <!-- Section Title -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Neuer Beitrag</h2>
 
-          <div class="mt-12 xl:mt-0 xl:ml-8">
-            <h3 class="leading-none font-black text-3xl">kürzliche Beiträge</h3>
-            <div
-              class="flex flex-col items-center lg:flex-row lg:items-stretch lg:justify-around xl:flex-col"
+    <!-- Featured Post -->
+    <div class="flex flex-col md:flex-row gap-8 lg:gap-12 items-center">
+      <!-- Image Wrapper - Improved -->
+      <div class="w-full md:w-5/12 flex justify-center">
+        <div class="relative w-full max-w-lg aspect-w-16 aspect-h-9 md:aspect-none">
+          <img
+            src="/images/beliebte-beitrag/winterferst-27.12.2025.webp"
+            alt="Winterfest Highlight"
+            class="w-full h-full object-cover rounded-2xl shadow-lg"
+          />
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="w-full md:w-7/12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900">Winterfest im Gallus</h2>
+
+        <p class="text-lg leading-relaxed mb-4 text-slate-800">
+          Am <span class="font-semibold">27. &amp; 28.12.2025</span> laden wir zum ersten
+          <span class="font-semibold">Winterfest im Gallus</span> an der
+          <span class="font-semibold">Galluswarte</span> ein. Auf dem Gelände
+          <span class="font-semibold">Frankenallee 99</span>
+          entsteht ein offener Begegnungsort mit Lagerfeuer, Musik und Gesprächen – für alle, die
+          über die Feiertage in Gallus bleiben.
+        </p>
+
+        <p class="text-lg leading-relaxed mb-4 text-slate-700">
+          Im Mittelpunkt steht unsere Umfrage
+          <span class="font-semibold">„Wie geht’s Gallus?“</span>. Wir sammeln Geschichten,
+          Eindrücke und Portraits aus dem Stadtteil und schaffen Raum für Zuhören, Austausch und
+          gemeinsames Erleben.
+        </p>
+
+        <p class="text-base text-slate-700 mb-6">
+          <span class="font-semibold">Programm:</span>
+          Lagerfeuer, Musik, Iglu-Workshop, Fahrradwerkstatt, Suppen &amp; Kuchen, Spiel- und
+          Gesprächszelte für Groß und Klein.
+        </p>
+        <p class="text-sm text-slate-700 mb-6 pt-5">
+          Die Veröffentlichung stellt keine Meinungsäußerung des BMFSFJ oder des BAFzA dar. Für
+          inhaltliche Aussagen tragen die Autorinnen und Autoren die Verantwortung.
+        </p>
+        <div class="text-center py-6 text-sm text-gray-600 border-t mt-12">
+          <p>
+            Gefördert durch das Bundesprogramm
+            <a
+              href="https://www.demokratie-leben.de/"
+              target="_blank"
+              class="font-semibold text-blue-600 hover:underline"
             >
-              <router-link :to="`/beitraege/4`" class="flex w-full max-w-sm mt-6 lg:mt-8">
-                <div
-                  class="transition-all duration-300 cursor-pointer w-full shadow-lg hover:shadow-xl rounded-lg bg-gray-100 relative xl:flex xl:flex-row-reverse xl:items-center xl:px-6 xl:py-8"
-                >
-                  <div
-                    class="w-full h-48 bg-cover rounded-t-lg xl:w-32 xl:h-20 xl:rounded-lg xl:ml-2"
-                    style="background-image: url('/images/beliebte-beitrag/4-1.jpg')"
-                  ></div>
-                  <div class="p-6 xl:p-0">
-                    <div class="text-lg font-bold">
-                      Ernte in Gefahr: Schädlinge vernichten erneut Dr. Rahims Kartoffelpflanzen
-                    </div>
-                    <div class="mt-2 text-gray-900 text-sm xl:hidden">
-                      Bedauerlich: erneut sind die Kartoffelpflanzen von Doktor Rahim von
-                      Schädlingen abgefressen worden. Ohne Blätter können die Kartoffeln keine
-                      Energie sammeln und groß werden.
-                    </div>
-                  </div>
-                </div>
-              </router-link>
-
-              <router-link :to="`/beitraege/5`" class="flex w-full max-w-sm mt-6 lg:mt-8">
-                <div
-                  class="transition-all duration-300 cursor-pointer w-full shadow-lg hover:shadow-xl rounded-lg bg-gray-100 relative xl:flex xl:flex-row-reverse xl:items-center xl:px-6 xl:py-8"
-                >
-                  <div
-                    class="w-full h-48 bg-cover rounded-t-lg xl:w-32 xl:h-20 xl:rounded-lg xl:ml-2"
-                    style="background-image: url('/images/beliebte-beitrag/5-1.jpg')"
-                  ></div>
-                  <div class="p-6 xl:p-0">
-                    <div class="text-lg font-bold">
-                      Gallus Garten: Ein Treffpunkt für Begegnung, Ruhe und Gemeinschaft
-                    </div>
-                    <div class="mt-2 text-gray-900 text-sm xl:hidden">
-                      Der Gallus Garten, Galluswarte als sozialer Ort der Begegnung und das
-                      Miteinander. Am 7. August lernte ich diese Gruppe von jungen indischen
-                      Studenten kennen. Sie wohnen in der Nähe in einer Wohngemeinschaft und wollten
-                      bei dieser Hitze am Abend an der frischen Luft, ohne Baustellenlärm,
-                      zusammensetzen.Unsere zwölf Stämme sind für ein solches Beisammensein, ein
-                      Sitzplatz mit hoher Aufenthaltsqualität.
-                    </div>
-                  </div>
-                </div>
-              </router-link>
-            </div>
-          </div>
+              „Demokratie leben!“
+            </a>
+            des Bundesministeriums für Familie, Senioren, Frauen und Jugend (BMFSFJ).
+          </p>
+          <p class="mt-2">
+            <a
+              href="https://www.demokratie-leben.de/"
+              target="_blank"
+              class="text-blue-600 hover:underline"
+            >
+              www.demokratie-leben.de
+            </a>
+          </p>
+        </div>
+        <div
+          class="inline-block bg-slate-900 text-white font-semibold px-5 py-3 rounded-xl shadow-md mb-4"
+        >
+          📍 27./28.12. | 13–17 Uhr
+        </div>
+        <div>
+          <RouterLink
+            to="/beitraege/1"
+            class="inline-flex items-center font-medium text-blue-600 hover:underline"
+          >
+            Mehr lesen
+            <span class="ml-1">→</span>
+          </RouterLink>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-12">
+      <RouterLink
+        to="/beitraege"
+        class="inline-flex items-center justify-center rounded-full bg-black text-white px-8 py-3 font-semibold hover:bg-gray-800 transition"
+      >
+        Alle Beiträge anzeigen
+      </RouterLink>
+    </div>
+  </section>
 </template>

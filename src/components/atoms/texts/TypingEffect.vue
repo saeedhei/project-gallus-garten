@@ -6,54 +6,54 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from 'vue'
+import { ref, onMounted } from 'vue';
 
 // Define types for the props
 type Props = {
-  sentences: string[]
-}
+  sentences: string[];
+};
 
 // Define props with type safety
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
-const currentSentenceIndex = ref<number>(0)
-const displayedText = ref<string>('')
-const typingSpeed = 120
-const erasingSpeed = 60
+const currentSentenceIndex = ref<number>(0);
+const displayedText = ref<string>('');
+const typingSpeed = 120;
+const erasingSpeed = 60;
 
 function typeWriter(text: string) {
-  let i = 0
-  displayedText.value = ''
+  let i = 0;
+  displayedText.value = '';
   const typingInterval = setInterval(() => {
     if (i < text.length) {
-      displayedText.value += text[i]
-      i++
+      displayedText.value += text[i];
+      i++;
     } else {
-      clearInterval(typingInterval)
-      eraseAndTypeNext()
+      clearInterval(typingInterval);
+      eraseAndTypeNext();
     }
-  }, typingSpeed)
+  }, typingSpeed);
 }
 
 function eraseAndTypeNext() {
-  let i = displayedText.value.length
+  let i = displayedText.value.length;
   const erasingInterval = setInterval(() => {
     if (i > 0) {
-      displayedText.value = displayedText.value.substring(0, i - 1)
-      i--
+      displayedText.value = displayedText.value.substring(0, i - 1);
+      i--;
     } else {
-      clearInterval(erasingInterval)
-      currentSentenceIndex.value = (currentSentenceIndex.value + 1) % props.sentences.length
-      typeWriter(props.sentences[currentSentenceIndex.value])
+      clearInterval(erasingInterval);
+      currentSentenceIndex.value = (currentSentenceIndex.value + 1) % props.sentences.length;
+      typeWriter(props.sentences[currentSentenceIndex.value]);
     }
-  }, erasingSpeed)
+  }, erasingSpeed);
 }
 
 onMounted(() => {
   if (props.sentences.length > 0) {
-    typeWriter(props.sentences[currentSentenceIndex.value])
+    typeWriter(props.sentences[currentSentenceIndex.value]);
   }
-})
+});
 </script>
 
 <style scoped>
